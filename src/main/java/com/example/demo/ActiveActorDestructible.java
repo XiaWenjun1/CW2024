@@ -1,23 +1,23 @@
 package com.example.demo;
 
-public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
+public abstract class ActiveActorDestructible extends ActiveActor {
 
 	private boolean isDestroyed;
 
-	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos) {
-		super(imageName, imageHeight, initialXPos, initialYPos);
+	public ActiveActorDestructible(String imageName, double imageWidth, int imageHeight, double initialXPos, double initialYPos) {
+		super(imageName, imageWidth, imageHeight, initialXPos, initialYPos);
 		isDestroyed = false;
 	}
 
-	@Override
 	public abstract void updatePosition();
 
 	public abstract void updateActor();
 
-	@Override
-	public abstract void takeDamage();
+	//Destroy function
+	public void takeDamage() {
+		// Logic for handling damage
+	}
 
-	@Override
 	public void destroy() {
 		setDestroyed(true);
 	}
@@ -29,5 +29,4 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	public boolean isDestroyed() {
 		return isDestroyed;
 	}
-	
 }

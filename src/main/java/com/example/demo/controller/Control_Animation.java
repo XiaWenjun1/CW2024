@@ -54,7 +54,7 @@ public class Control_Animation {
 
     private void setElementSizes() {
         setImageViewSize(planeImageView, 200, 150);
-        setImageViewSize(userfireImageView, 300, 300);
+        setImageViewSize(userfireImageView, 50, 50);
         setImageViewSize(enemyImageView, 200, 150);
         setImageViewSize(enemyfireImageView, 50, 50);
         setImageViewSize(bossImageView, 200, 150);
@@ -127,8 +127,8 @@ public class Control_Animation {
 
     private void fireBullet() {
         if (!bulletVisible) {
-            userfireImageView.setLayoutX(planeXPosition + 90);
-            userfireImageView.setLayoutY(220);
+            userfireImageView.setLayoutX(planeXPosition + 200);
+            userfireImageView.setLayoutY(340);
             userfireImageView.setVisible(true);
             bulletVisible = true;
         }
@@ -211,12 +211,12 @@ public class Control_Animation {
     }
 
     public void switchToAnotherScene() {
-        stopAnimations(); // 停止所有动画
-        // 切换到另一个场景的逻辑
+        stopAnimations();// Stop all animations
+        // Logic for switching to another scene
     }
 
     public void returnToMainScene() {
-        startAnimations(); // 重新启动所有动画
-        // 返回主场景的逻辑
+        startAnimations();// Restart all animations
+        // Return to the logic of the main scene
     }
 }
