@@ -37,7 +37,7 @@ public abstract class LevelParent extends Observable {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.user = new UserPlane(playerInitialHealth);
+		this.user = new UserPlane(playerInitialHealth, this);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -107,14 +107,20 @@ public abstract class LevelParent extends Observable {
 			public void handle(KeyEvent e) {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP) user.moveUp();
+				if (kc == KeyCode.RIGHT) user.moveRight();
 				if (kc == KeyCode.DOWN) user.moveDown();
+				if (kc == KeyCode.LEFT) user.moveLeft();
 				if (kc == KeyCode.SPACE) fireProjectile();
 			}
 		});
 		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
+				if (kc == KeyCode.UP || kc == KeyCode.DOWN) {
+					user.stop();
+				} else if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) {
+					user.stop();
+				}
 			}
 		});
 		root.getChildren().add(background);
@@ -152,9 +158,17 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(actor -> actor.isDestroyed())
+		List<ActiveActorDestructible> destroyedActors = actors.stream()
+				.filter(ActiveActorDestructible::isDestroyed)
 				.collect(Collectors.toList());
-		root.getChildren().removeAll(destroyedActors);
+
+		destroyedActors.forEach(actor -> {
+			root.getChildren().remove(actor);
+			if (actor instanceof ActiveActor) {
+				root.getChildren().remove(((ActiveActor) actor).getHitbox());
+			}
+		});
+
 		actors.removeAll(destroyedActors);
 	}
 
@@ -230,6 +244,8 @@ public abstract class LevelParent extends Observable {
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		enemyUnits.add(enemy);
 		root.getChildren().add(enemy);
+		// 添加 hitbox 到场景中
+		root.getChildren().add(((ActiveActor) enemy).getHitbox());
 	}
 
 	protected double getEnemyMaximumYPosition() {

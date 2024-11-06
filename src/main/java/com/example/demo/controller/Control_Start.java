@@ -23,7 +23,7 @@ public class Control_Start implements Observer {
     public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
             InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
         stage.show();
-        goToLevel(LEVEL_ONE_CLASS_NAME); // 启动第一关
+        goToLevel(LEVEL_ONE_CLASS_NAME);// Start the first level
     }
 
     private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,

@@ -2,7 +2,10 @@ package com.example.demo;
 
 public class EnemyPlane extends FighterPlane {
 
+	private LevelParent levelParent;  // 添加 LevelParent 实例
+
 	private static final String IMAGE_NAME = "enemyplane.png";
+	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;
 	private static final int HORIZONTAL_VELOCITY = -6;
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
@@ -10,8 +13,10 @@ public class EnemyPlane extends FighterPlane {
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
 
-	public EnemyPlane(double initialXPos, double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
+	public EnemyPlane(double initialXPos, double initialYPos, LevelParent levelParent) {
+		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
+		this.levelParent = levelParent;
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
 	}
 
 	@Override
@@ -24,7 +29,7 @@ public class EnemyPlane extends FighterPlane {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPostion);
+			return new EnemyProjectile(projectileXPosition, projectileYPostion, levelParent);
 		}
 		return null;
 	}
@@ -32,6 +37,7 @@ public class EnemyPlane extends FighterPlane {
 	@Override
 	public void updateActor() {
 		updatePosition();
+		updateHitbox();
 	}
 
 }

@@ -12,7 +12,7 @@ public class BattlePlane extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/Main/Main.fxml"));
         Parent root = fxmlLoader.load();
 
-        primaryStage.setScene(new Scene(root, 1300, 750));
+        primaryStage.setScene(new Scene(root, 1300, 700));
         primaryStage.setResizable(false);
         primaryStage.setTitle("Sky Battle");
 
