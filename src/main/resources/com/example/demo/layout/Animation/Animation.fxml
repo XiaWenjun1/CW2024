@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.demo.controller.Control_Animation">
+
+    <!-- Start background -->
+    <ImageView fx:id="backgroundImageView" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Plane image -->
+    <ImageView fx:id="planeImageView" layoutX="-300" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Userfire image -->
+    <ImageView fx:id="userfireImageView" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Enemy image -->
+    <ImageView fx:id="enemyImageView" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Enemyfire image -->
+    <ImageView fx:id="enemyfireImageView" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Boss image -->
+    <ImageView fx:id="bossImageView" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Bossfire image -->
+    <ImageView fx:id="bossfireImageView" pickOnBounds="true" preserveRatio="true"/>
+
+</AnchorPane>

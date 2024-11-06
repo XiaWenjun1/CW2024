@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.demo.controller.Control_Setting"
+            stylesheets="@Style.css">
+
+    <!-- Settings overlay panel -->
+    <Text layoutX="50" layoutY="100" text="Settings" styleClass="text-setting"/>
+
+    <!-- Close button for settings overlay -->
+    <Button fx:id="closeButton" layoutX="1200" layoutY="50" text="CLOSE" onAction="#closeSettings" styleClass="button"/>
+
+    <!-- Background Music Control -->
+    <Text layoutX="500" layoutY="200" text="Voice Control" styleClass="text-setting"/>
+
+    <Text layoutX="630" layoutY="260" text="Music" styleClass="text-control"/>
+    <HBox layoutX="550" layoutY="280" spacing="10">
+        <Text text="0" styleClass="text-control"/>
+        <Slider fx:id="musicSlider" min="0" max="1" value="1" styleClass="slider"/>
+        <Text text="100" styleClass="text-control"/>
+    </HBox>
+
+    <Text layoutX="600" layoutY="360" text="Game Sound" styleClass="text-control"/>
+    <HBox layoutX="550" layoutY="380" spacing="10">
+        <Text text="0" styleClass="text-control"/>
+        <Slider fx:id="effectSlider" min="0" max="1" value="1" styleClass="slider"/>
+        <Text text="100" styleClass="text-control"/>
+    </HBox>
+
+</AnchorPane>

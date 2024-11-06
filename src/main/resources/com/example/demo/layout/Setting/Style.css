@@ -1,0 +1,43 @@
+/* Set the panel background */
+#settingsPane {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Set text style */
+.text-setting {
+    -fx-font-size: 50px;
+    -fx-fill: white;
+}
+
+/* Slider track style */
+.slider .track {
+    -fx-background-color: #333;
+    -fx-background-radius: 5;
+    -fx-pref-height: 6px;
+}
+
+/* Slider filled track style */
+.slider .track .fill {
+    -fx-background-color: #FFA500;
+    -fx-background-radius: 5;
+}
+
+/* Slider thumb style */
+.slider .thumb {
+    -fx-background-color: #FFA500;
+    -fx-background-radius: 15;
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+}
+
+/* Slider thumb hover effect */
+.slider .thumb:hover {
+    -fx-background-color: #FFB733;
+}
+
+/* Text style */
+.text-control {
+    -fx-font-size: 15px;
+    -fx-fill: #FFA500;
+    -fx-font-weight: bold;
+}
