@@ -32,7 +32,9 @@ public class LevelTwo extends LevelParent {
 		// 如果当前没有敌人并且 Boss 还没有被添加，才添加 Boss
 		if (getCurrentNumberOfEnemies() == 0 && !isBossAdded()) {
 			addEnemyUnit(boss); // 将 Boss 添加到敌人列表
-			getRoot().getChildren().add(boss);  // 确保 Boss 被添加到场景中
+			if (!getRoot().getChildren().contains(boss)) {
+				getRoot().getChildren().add(boss);  // 确保 Boss 被添加到场景中
+			}
 			setBossAdded(true); // 标记 Boss 已经添加
 		}
 	}

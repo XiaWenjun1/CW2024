@@ -14,6 +14,8 @@ import com.example.demo.LevelParent;
 public class Control_Start implements Observer {
 
     private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
+    private static final double LEVEL_WIDTH = 1300;
+    private static final double LEVEL_HEIGHT = 750;
     private final Stage stage;
 
     // Variable to store the current active level
@@ -40,7 +42,7 @@ public class Control_Start implements Observer {
         // Create a new level instance and assign it to currentLevel
         Class<?> myClass = Class.forName(className);
         Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-        currentLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+        currentLevel = (LevelParent) constructor.newInstance(LEVEL_HEIGHT, LEVEL_WIDTH);
         currentLevel.addObserver(this);
 
         // Initialize the scene and start the game
