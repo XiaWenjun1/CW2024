@@ -88,7 +88,7 @@ public class Control_Main {
         releaseAnimationResources(); // Release animation resources
         Control_Start controlStart = new Control_Start((Stage) rootPane.getScene().getWindow()); // Get the current window Stage
         try {
-            controlStart.launchGame(); // Start the game
+            controlStart.launchGame();
         } catch (Exception e) {
             e.printStackTrace();
         }

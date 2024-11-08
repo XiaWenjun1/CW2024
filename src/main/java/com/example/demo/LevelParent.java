@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
@@ -29,7 +30,9 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
-	
+
+	private boolean isSpacePressed = false;  // 标志位，用来判断空格是否按下
+
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
 
@@ -74,6 +77,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void goToNextLevel(String levelName) {
+		cleanUp();
 		setChanged();
 		notifyObservers(levelName);
 	}
@@ -110,16 +114,25 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.RIGHT) user.moveRight();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.LEFT) user.moveLeft();
-				if (kc == KeyCode.SPACE) fireProjectile();
+				// 检查空格键是否被按下且未发射过子弹
+				if (kc == KeyCode.SPACE && !isSpacePressed) {
+					fireProjectile();  // 发射子弹
+					isSpacePressed = true;  // 设置标志位，防止长按发射多个子弹
+				}
 			}
 		});
 		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP || kc == KeyCode.DOWN) {
-					user.stop();
+					user.stopVerticalMovement();
 				} else if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) {
-					user.stop();
+					user.stopHorizontalMovement();
+				}
+
+				// 空格键松开时重置标志位
+				if (kc == KeyCode.SPACE) {
+					isSpacePressed = false;  // 重置标志位
 				}
 			}
 		});
@@ -185,7 +198,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void handleCollisions(List<ActiveActorDestructible> actors1,
-			List<ActiveActorDestructible> actors2) {
+								  List<ActiveActorDestructible> actors2) {
 		for (ActiveActorDestructible actor : actors2) {
 			for (ActiveActorDestructible otherActor : actors1) {
 				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
@@ -242,11 +255,21 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		enemyUnits.add(enemy);
-		root.getChildren().add(enemy);
-		// 添加 hitbox 到场景中
-		root.getChildren().add(((ActiveActor) enemy).getHitbox());
+		if (!enemyUnits.contains(enemy)) { // 检查敌人列表中是否已经存在该敌人
+			enemyUnits.add(enemy);
+			if (!getRoot().getChildren().contains(enemy)) { // 确认没有重复添加到场景中
+				getRoot().getChildren().add(enemy);
+			}
+			// 添加 hitbox 到场景中，确保不重复
+			if (enemy instanceof ActiveActor) {
+				Node hitbox = ((ActiveActor) enemy).getHitbox();
+				if (!getRoot().getChildren().contains(hitbox)) {
+					getRoot().getChildren().add(hitbox);
+				}
+			}
+		}
 	}
+
 
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
@@ -262,6 +285,16 @@ public abstract class LevelParent extends Observable {
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
+	}
+
+	//clean up
+	public void cleanUp() {
+		timeline.stop();
+		root.getChildren().clear();
+		friendlyUnits.clear();
+		enemyUnits.clear();
+		userProjectiles.clear();
+		enemyProjectiles.clear();
 	}
 
 }

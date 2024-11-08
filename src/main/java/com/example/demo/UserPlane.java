@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.scene.input.MouseEvent;
+
 public class UserPlane extends FighterPlane {
 
 	private LevelParent levelParent;  // 添加 LevelParent 实例
@@ -13,46 +15,113 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;
-	private static final int VERTICAL_VELOCITY = 40;
-	private static final int HORIZONTAL_VELOCITY = 40;
-	private static final int PROJECTILE_X_POSITION = 110;
+	private static final int VERTICAL_VELOCITY = 8;
+	private static final int HORIZONTAL_VELOCITY = 8;
+	private static final int PROJECTILE_X_POSITION_OFFSET = 150;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 	private int velocityMultiplierY;
 	private int velocityMultiplierX;
 	private int numberOfKills;
 
+	private double initialMouseX;
+	private double initialMouseY;
+	private boolean isDragging; // Used to determine whether the aircraft is being dragged
+
+
 	public UserPlane(int initialHealth, LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
-		this.levelParent = levelParent;  // 保存 LevelParent 实例
+		this.levelParent = levelParent;
 		velocityMultiplierY = 0;
 		velocityMultiplierX = 0;
+		isDragging = false; // No dragging during initialization
 
-		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.25);
 
-		// 将 hitbox 添加到 LevelParent 的 root 中
+		// Add the hitbox to the root of LevelParent
 		levelParent.getRoot().getChildren().add(getHitbox());
-		getHitbox().toFront();  // 确保 hitbox 在最上层
+		getHitbox().toFront(); // Make sure the hitbox is on top
+
+		// Bind mouse events to the hitbox
+		getHitbox().setOnMousePressed(this::handleMousePressed);
+		getHitbox().setOnMouseDragged(this::handleMouseDragged);
+		getHitbox().setOnMouseReleased(this::handleMouseReleased);
+		getHitbox().setOnMouseEntered(this::handleMouseEntered);
+		getHitbox().setOnMouseExited(this::handleMouseExited);
 	}
 
-	@Override
-	public void updatePosition() {
-		if (isMoving()) {
-			double initialTranslateX = getTranslateX();
-			double initialTranslateY = getTranslateY();
+	//Record the current position when the mouse is pressed
+	private void handleMousePressed(MouseEvent event) {
+		if (event.getButton().toString().equals("PRIMARY")) { // Dragging is only allowed when the left button is pressed
+			initialMouseX = event.getSceneX();
+			initialMouseY = event.getSceneY();
 
-			this.moveHorizontally(HORIZONTAL_VELOCITY * velocityMultiplierX);
-			this.moveVertically(VERTICAL_VELOCITY * velocityMultiplierY);
+			if (isMouseInsidePlane(event.getSceneX(), event.getSceneY())) {  // Check if the mouse is in the aircraft area
+				isDragging = true;
+			}
+		}
+	}
 
+	// Check if the mouse is clicked in the aircraft area
+	private boolean isMouseInsidePlane(double mouseX, double mouseY) {
+		// Get the hitbox bounds of the aircraft
+		double planeMinX = getHitbox().getBoundsInParent().getMinX();
+		double planeMaxX = getHitbox().getBoundsInParent().getMaxX();
+		double planeMinY = getHitbox().getBoundsInParent().getMinY();
+		double planeMaxY = getHitbox().getBoundsInParent().getMaxY();
+
+		// Determine whether the mouse is in the hitbox area
+		return mouseX >= planeMinX && mouseX <= planeMaxX && mouseY >= planeMinY && mouseY <= planeMaxY;
+	}
+
+	// Determine whether the mouse is in the hitbox area
+	private void handleMouseDragged(MouseEvent event) {
+		if (isDragging) {
+			double deltaX = event.getSceneX() - initialMouseX;
+			double deltaY = event.getSceneY() - initialMouseY;
+
+			// Update the aircraft's position
+			this.setTranslateX(getTranslateX() + deltaX);
+			this.setTranslateY(getTranslateY() + deltaY);
+
+			// Update the initial mouse position
+			initialMouseX = event.getSceneX();
+			initialMouseY = event.getSceneY();
+
+			// Prevent the aircraft from going beyond the boundary
 			double newPositionX = getLayoutX() + getTranslateX();
 			double newPositionY = getLayoutY() + getTranslateY();
 
 			if (newPositionX < X_LEFT_BOUND || newPositionX > X_RIGHT_BOUND) {
-				this.setTranslateX(initialTranslateX);
+				this.setTranslateX(getTranslateX() - deltaX); // Restore position
 			}
 			if (newPositionY < Y_UPPER_BOUND || newPositionY > Y_LOWER_BOUND) {
-				this.setTranslateY(initialTranslateY);
+				this.setTranslateY(getTranslateY() - deltaY); // Restore position
 			}
 		}
+	}
+
+	// Stop dragging when the mouse is released
+	private void handleMouseReleased(MouseEvent event) {
+		if (event.getButton().toString().equals("PRIMARY")) { // Stop dragging only when the left button is released
+			isDragging = false;
+		}
+	}
+
+	// When the mouse enters the hitbox area, change the cursor style to pointer
+	private void handleMouseEntered(MouseEvent event) {
+		getHitbox().setStyle("-fx-cursor: hand;");  // Set the cursor to finger
+	}
+
+	// When the mouse leaves the hitbox area, restore the default cursor style
+	private void handleMouseExited(MouseEvent event) {
+		getHitbox().setStyle("-fx-cursor: default;");  // Restore the default cursor
+	}
+
+	@Override
+	public void updatePosition() {
+		// Keep the original keyboard movement processing logic
+		this.moveHorizontally(HORIZONTAL_VELOCITY * velocityMultiplierX);
+		this.moveVertically(VERTICAL_VELOCITY * velocityMultiplierY);
 	}
 
 	@Override
@@ -64,11 +133,9 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		// 将 int 转换为 double 类型
-		double projectileXPosition = (double) PROJECTILE_X_POSITION;
+		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 		double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 
-		// 传递正确的 LevelParent 实例
 		return new UserProjectile(projectileXPosition, projectileYPosition, levelParent);
 	}
 
@@ -92,9 +159,19 @@ public class UserPlane extends FighterPlane {
 		velocityMultiplierY = 1;
 	}
 
-	public void stop() {
+	// Improved stop method to stop vertical and horizontal movement respectively
+	public void stopVerticalMovement() {
 		velocityMultiplierY = 0;
+	}
+
+	public void stopHorizontalMovement() {
 		velocityMultiplierX = 0;
+	}
+
+	// Used to control the smoothing effect when the aircraft stops
+	public void stop() {
+		stopVerticalMovement();
+		stopHorizontalMovement();
 	}
 
 	public int getNumberOfKills() {
@@ -104,5 +181,4 @@ public class UserPlane extends FighterPlane {
 	public void incrementKillCount() {
 		numberOfKills++;
 	}
-
 }
