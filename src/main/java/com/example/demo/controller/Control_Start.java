@@ -16,26 +16,37 @@ public class Control_Start implements Observer {
     private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
     private final Stage stage;
 
+    // Variable to store the current active level
+    private LevelParent currentLevel = null;
+
     public Control_Start(Stage stage) {
         this.stage = stage;
     }
 
     public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
+            InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         stage.show();
-        goToLevel(LEVEL_ONE_CLASS_NAME);// Start the first level
+        goToLevel(LEVEL_ONE_CLASS_NAME);
     }
 
     private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
             InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+
+        // If the current level is already loaded and matches the requested class, return to avoid reloading
+        if (currentLevel != null && currentLevel.getClass().getName().equals(className)) {
+            return;
+        }
+
+        // Create a new level instance and assign it to currentLevel
         Class<?> myClass = Class.forName(className);
         Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-        LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
-        myLevel.addObserver(this);
-        Scene scene = myLevel.initializeScene();
-        stage.setScene(scene);
-        myLevel.startGame();
+        currentLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+        currentLevel.addObserver(this);
 
+        // Initialize the scene and start the game
+        Scene scene = currentLevel.initializeScene();
+        stage.setScene(scene);
+        currentLevel.startGame();
     }
 
     @Override
@@ -49,5 +60,4 @@ public class Control_Start implements Observer {
             alert.show();
         }
     }
-
 }

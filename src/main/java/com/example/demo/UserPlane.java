@@ -27,7 +27,7 @@ public class UserPlane extends FighterPlane {
 		velocityMultiplierY = 0;
 		velocityMultiplierX = 0;
 
-		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.25);
 
 		// 将 hitbox 添加到 LevelParent 的 root 中
 		levelParent.getRoot().getChildren().add(getHitbox());

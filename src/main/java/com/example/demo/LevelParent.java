@@ -74,6 +74,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void goToNextLevel(String levelName) {
+		cleanUp();
 		setChanged();
 		notifyObservers(levelName);
 	}
@@ -262,6 +263,16 @@ public abstract class LevelParent extends Observable {
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
+	}
+
+	//clean up
+	public void cleanUp() {
+		timeline.stop();
+		root.getChildren().clear();
+		friendlyUnits.clear();
+		enemyUnits.clear();
+		userProjectiles.clear();
+		enemyProjectiles.clear();
 	}
 
 }

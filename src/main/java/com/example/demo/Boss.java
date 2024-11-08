@@ -3,6 +3,7 @@ package com.example.demo;
 import java.util.*;
 
 public class Boss extends FighterPlane {
+	private LevelParent levelParent;  // 添加 LevelParent 实例
 
 	private static final String IMAGE_NAME = "bossplane.png";
 	private static final double INITIAL_X_POSITION = 1000.0;
@@ -26,13 +27,17 @@ public class Boss extends FighterPlane {
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
 
-	public Boss() {
+	public Boss(LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
 		framesWithShieldActivated = 0;
 		isShielded = false;
+
+		this.levelParent = levelParent;
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.2);
+
 		initializeMovePattern();
 	}
 
@@ -45,18 +50,19 @@ public class Boss extends FighterPlane {
 			setTranslateY(initialTranslateY);
 		}
 	}
-	
+
 	@Override
 	public void updateActor() {
 		updatePosition();
 		updateShield();
+		updateHitbox();
 	}
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
+		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition(), levelParent) : null;
 	}
-	
+
 	@Override
 	public void takeDamage() {
 		if (!isShielded) {
@@ -73,9 +79,14 @@ public class Boss extends FighterPlane {
 		Collections.shuffle(movePattern);
 	}
 
+	public boolean checkCollision(ActiveActor otherActor) {
+		// 使用 hitbox 进行碰撞检测
+		return getHitbox().getBoundsInParent().intersects(otherActor.getHitbox().getBoundsInParent());
+	}
+
 	private void updateShield() {
 		if (isShielded) framesWithShieldActivated++;
-		else if (shieldShouldBeActivated()) activateShield();	
+		else if (shieldShouldBeActivated()) activateShield();
 		if (shieldExhausted()) deactivateShield();
 	}
 

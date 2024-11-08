@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 public abstract class ActiveActor extends ImageView {
 	
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
-	private Rectangle hitbox;  // 新增：用于显示和计算碰撞的 hitbox
+	private Rectangle hitbox; // New: hitbox for displaying and calculating collisions
 
 	public ActiveActor(String imageName, double imageWidth, int imageHeight, double initialXPos, double initialYPos) {
 		this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
@@ -17,19 +17,19 @@ public abstract class ActiveActor extends ImageView {
 		this.setFitHeight(imageHeight);
 		this.setPreserveRatio(true);
 
-		// 初始化 hitbox
+		// Initialize the hitbox
 		hitbox = new Rectangle(imageWidth, imageHeight);
 		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));  // 半透明红色
-		hitbox.setStroke(Color.RED);        // 设置为红色边框用于调试
-		hitbox.setStrokeWidth(2);           // 设置边框宽度，确保能看到
+		hitbox.setStroke(Color.RED); // Set to a red border for debugging
+		hitbox.setStrokeWidth(2); // Set the border width to ensure that you can see
 	}
 
 	public abstract void updatePosition();
 
-	// 在更新位置时同步更新 hitbox
+	// Update the hitbox synchronously when updating the position
 	protected void updateHitbox() {
-		hitbox.setX(getLayoutX() + getTranslateX());  // 更新 hitbox 的 X 坐标
-		hitbox.setY(getLayoutY() + getTranslateY());  // 更新 hitbox 的 Y 坐标
+		hitbox.setX(getLayoutX() + getTranslateX()); // Update the X coordinate of the hitbox
+		hitbox.setY(getLayoutY() + getTranslateY()); // Update the Y coordinate of the hitbox
 	}
 
 	public void setHitboxSize(double width, double height) {
@@ -37,12 +37,12 @@ public abstract class ActiveActor extends ImageView {
 		hitbox.setHeight(height);
 	}
 
-	// 返回当前的 hitbox
+	// Return the current hitbox
 	public Rectangle getHitbox() {
 		return hitbox;
 	}
 
-	// 检查与其他 ActiveActor 的碰撞
+	// Check for collision with other ActiveActors
 	public boolean checkCollision(ActiveActor otherActor) {
 		return hitbox.getBoundsInParent().intersects(otherActor.getHitbox().getBoundsInParent());
 	}
