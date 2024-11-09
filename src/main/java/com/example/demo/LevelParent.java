@@ -233,12 +233,12 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected void winGame() {
-		timeline.stop();
+		cleanUp();
 		levelView.showWinImage();
 	}
 
 	protected void loseGame() {
-		timeline.stop();
+		cleanUp();
 		levelView.showGameOverImage();
 	}
 

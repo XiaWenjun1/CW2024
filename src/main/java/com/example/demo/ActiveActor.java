@@ -19,9 +19,10 @@ public abstract class ActiveActor extends ImageView {
 
 		// Initialize the hitbox
 		hitbox = new Rectangle(imageWidth, imageHeight);
-		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));  // 半透明红色
-		hitbox.setStroke(Color.RED); // Set to a red border for debugging
-		hitbox.setStrokeWidth(2); // Set the border width to ensure that you can see
+		hitbox.setFill(Color.TRANSPARENT);  // 设置填充为透明
+		hitbox.setStrokeWidth(2);           // 设置边框宽度
+		hitbox.setVisible(true);            // 确保 hitbox 可见
+
 	}
 
 	public abstract void updatePosition();
