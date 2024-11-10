@@ -7,6 +7,7 @@ Remove Destructible interface and move to ActiveActor.
 and Controller classes where levels were being reloaded unnecessarily.
 Now, the goToLevel method checks if the current level matches the requested level to
 avoid redundant loading. This reduces potential lag and improves performance.
+- **Shield Loading**: Shield will track boss x and y position and show up when it activated.
 
 ## Implemented Features
 
@@ -25,7 +26,7 @@ with the boss having a more complex movement pattern.
 
 ### Settings Screen
 
-- **Volume Control**: The settings screen allows adjusting the background music volume via a slider.
+- **Background Music Control**: The settings screen allows setting the background music via a toggle.
 - **Close Settings Screen**: Returns to the main screen and removes the blur effect.
 
 ### Scene Switching
@@ -38,7 +39,7 @@ automatically pausing or restarting animations as needed.
 - **Common features**: Add width to control image size more flexible. Add hitbox to make the hit range more reasonable.
 - **User Plane**: Add left and right to make plane move horizontally. Add mouse control function.
 - **User Projectile**: Add xPosition, fired at user plane's location.
-- **Boss**:
+- **Boss**: Fix shield and limit movement.
 - **Boss Projectile**:
 - **Enemy**:
 - **Enemy Projectile**:
@@ -66,3 +67,5 @@ The mouse has been added to move the user plane. When the mouse moves to the use
 it will be displayed as a finger, and elsewhere as a pointer. 
 Users can drag the plane by holding down the left mouse button, and stop when they release it. 
 At the same time, the original movement method is also retained.
+- **2024-11-09**: Remove slider. Now, using toggle (checkbox) to control volume of background sound and game sound. Fix bugs:
+boss cannot move out of the border. And shield image will show when it activated.

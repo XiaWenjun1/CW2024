@@ -4,7 +4,7 @@ import javafx.scene.input.MouseEvent;
 
 public class UserPlane extends FighterPlane {
 
-	private LevelParent levelParent;  // 添加 LevelParent 实例
+	private LevelParent levelParent;
 
 	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = -25;
@@ -119,9 +119,24 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public void updatePosition() {
-		// Keep the original keyboard movement processing logic
 		this.moveHorizontally(HORIZONTAL_VELOCITY * velocityMultiplierX);
 		this.moveVertically(VERTICAL_VELOCITY * velocityMultiplierY);
+
+		// Check and limit the horizontal and vertical boundaries of the aircraft
+		double newPositionX = getLayoutX() + getTranslateX();
+		double newPositionY = getLayoutY() + getTranslateY();
+
+		if (newPositionX < X_LEFT_BOUND) {
+			setTranslateX(X_LEFT_BOUND - getLayoutX());
+		} else if (newPositionX > X_RIGHT_BOUND) {
+			setTranslateX(X_RIGHT_BOUND - getLayoutX());
+		}
+
+		if (newPositionY < Y_UPPER_BOUND) {
+			setTranslateY(Y_UPPER_BOUND - getLayoutY());
+		} else if (newPositionY > Y_LOWER_BOUND) {
+			setTranslateY(Y_LOWER_BOUND - getLayoutY());
+		}
 	}
 
 	@Override
