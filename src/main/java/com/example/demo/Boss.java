@@ -1,14 +1,17 @@
 package com.example.demo;
 
+import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
+
 import java.util.*;
 
 public class Boss extends FighterPlane {
-	private LevelParent levelParent;  // 添加 LevelParent 实例
+	private LevelParent levelParent;
 
 	private static final String IMAGE_NAME = "bossplane.png";
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
-	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
+	private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0;
 	private static final double BOSS_FIRE_RATE = .04;
 	private static final double BOSS_SHIELD_PROBABILITY = .002;
 	private static final int IMAGE_WIDTH = 300;
@@ -29,6 +32,9 @@ public class Boss extends FighterPlane {
 
 	private ShieldImage shieldImage;
 
+	//Declare healthBar as a class member variable
+	private ProgressBar healthBar;
+
 	public Boss(LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
@@ -42,21 +48,30 @@ public class Boss extends FighterPlane {
 
 		initializeMovePattern();
 
-		// 创建并初始化 ShieldImage
+		// Create and initialize ShieldImage
 		shieldImage = new ShieldImage(INITIAL_X_POSITION, INITIAL_Y_POSITION);
-		// 添加 shieldImage 到 LevelParent 的 root 中
+		// Add shieldImage to the root of LevelParent
 		if (levelParent != null && levelParent.getRoot() != null) {
-			levelParent.getRoot().getChildren().add(shieldImage);  // 通过 root 添加 shieldImage
+			levelParent.getRoot().getChildren().add(shieldImage);
 		}
+
+		// Call the createHealthBar method to create and initialize the health bar
+		healthBar = createHealthBar();
+		// Delay adding the health bar to the scene to ensure root is initialized
+		Platform.runLater(() -> {
+			if (levelParent != null && levelParent.getRoot() != null) {
+				levelParent.getRoot().getChildren().add(healthBar);
+			}
+		});
 	}
 
 	@Override
 	public void updatePosition() {
 		double initialTranslateY = getTranslateY();
-		moveVertically(getNextMove());  // 你现有的逻辑来更新 Boss 的垂直位置
+		moveVertically(getNextMove());
 		double currentPositionY = getLayoutY() + getTranslateY();
 		if (currentPositionY < Y_UPPER_BOUND || currentPositionY > Y_LOWER_BOUND) {
-			setTranslateY(initialTranslateY);  // 如果超出边界，恢复 Y 位置
+			setTranslateY(initialTranslateY);
 		}
 	}
 
@@ -66,6 +81,7 @@ public class Boss extends FighterPlane {
 		updatePosition();
 		updateShield();
 		updateHitbox();
+		updateHealthBar();
 	}
 
 
@@ -79,6 +95,13 @@ public class Boss extends FighterPlane {
 		if (!isShielded) {
 			super.takeDamage();
 		}
+
+		double healthPercentage = Math.max(0, (double) getHealth() / HEALTH);
+		healthBar.setProgress(healthPercentage);
+
+		if (getHealth() <= 0) {
+			die();
+		}
 	}
 
 	private void initializeMovePattern() {
@@ -91,16 +114,45 @@ public class Boss extends FighterPlane {
 	}
 
 	public boolean checkCollision(ActiveActor otherActor) {
-		// 使用 hitbox 进行碰撞检测
 		return getHitbox().getBoundsInParent().intersects(otherActor.getHitbox().getBoundsInParent());
+	}
+
+	private ProgressBar createHealthBar() {
+		double currentPositionY = getLayoutY() + getTranslateY();
+
+		// Create and initialize the health bar
+		ProgressBar healthBar = new ProgressBar();
+		healthBar.setPrefWidth(IMAGE_WIDTH);
+		healthBar.setPrefHeight(10);
+		healthBar.setStyle("-fx-accent: red; -fx-background-color: lightgray;");
+		healthBar.setProgress(1.0);
+
+		// Bind the health bar layout to the Boss layout
+		healthBar.setLayoutX(getLayoutX());
+		healthBar.setLayoutY(currentPositionY + 60);
+
+		return healthBar;
+	}
+
+	private void updateHealthBar() {
+		// Calculate the current position of the Boss
+		double currentPositionY = getLayoutY() + getTranslateY();
+
+		// Update the position of the health bar
+		healthBar.setLayoutX(getLayoutX());
+		healthBar.setLayoutY(currentPositionY + 60);
+
+		// Update the health bar progress bar
+		double healthPercentage = Math.max(0, (double) getHealth() / HEALTH);
+		healthBar.setProgress(healthPercentage);
 	}
 
 	private void updateShield() {
 		double currentPosition = getLayoutY() + getTranslateY();
 
-		// 更新 shieldImage 位置
-		shieldImage.setLayoutX(getLayoutX());  // 使 shield 与 Boss 的 X 坐标同步
-		shieldImage.setLayoutY(currentPosition);  // 使 shield 与 Boss 的 Y 坐标同步
+		// Update shieldImage position
+		shieldImage.setLayoutX(getLayoutX());
+		shieldImage.setLayoutY(currentPosition);
 
 		if (isShielded) {
 			framesWithShieldActivated++;
@@ -155,6 +207,10 @@ public class Boss extends FighterPlane {
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
+	}
+
+	private void die() {
+		System.out.println("Boss is died！");
 	}
 
 }

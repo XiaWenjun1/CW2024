@@ -107,36 +107,34 @@ public abstract class LevelParent extends Observable {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
-		background.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent e) {
-				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP) user.moveUp();
-				if (kc == KeyCode.RIGHT) user.moveRight();
-				if (kc == KeyCode.DOWN) user.moveDown();
-				if (kc == KeyCode.LEFT) user.moveLeft();
-				// 检查空格键是否被按下且未发射过子弹
-				if (kc == KeyCode.SPACE && !isSpacePressed) {
-					fireProjectile();  // 发射子弹
-					isSpacePressed = true;  // 设置标志位，防止长按发射多个子弹
-				}
-			}
-		});
-		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent e) {
-				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP || kc == KeyCode.DOWN) {
-					user.stopVerticalMovement();
-				} else if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) {
-					user.stopHorizontalMovement();
-				}
-
-				// 空格键松开时重置标志位
-				if (kc == KeyCode.SPACE) {
-					isSpacePressed = false;  // 重置标志位
-				}
-			}
-		});
+		background.setOnKeyPressed(this::handleKeyPressed);
+		background.setOnKeyReleased(this::handleKeyReleased);
 		root.getChildren().add(background);
+	}
+
+	private void handleKeyPressed(KeyEvent e) {
+		KeyCode kc = e.getCode();
+		switch (kc) {
+			case UP -> user.moveUp();
+			case RIGHT -> user.moveRight();
+			case DOWN -> user.moveDown();
+			case LEFT -> user.moveLeft();
+			case SPACE -> {
+				if (!isSpacePressed) {
+					fireProjectile();
+					isSpacePressed = true;
+				}
+			}
+		}
+	}
+
+	private void handleKeyReleased(KeyEvent e) {
+		KeyCode kc = e.getCode();
+		switch (kc) {
+			case UP, DOWN -> user.stopVerticalMovement();
+			case LEFT, RIGHT -> user.stopHorizontalMovement();
+			case SPACE -> isSpacePressed = false;
+		}
 	}
 
 	private void fireProjectile() {
