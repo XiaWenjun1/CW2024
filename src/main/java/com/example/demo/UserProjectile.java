@@ -7,7 +7,7 @@ public class UserProjectile extends Projectile {
 	private static final String IMAGE_NAME = "userfire.png";
 	private static final int IMAGE_WIDTH = 50;
 	private static final int IMAGE_HEIGHT = 50;
-	private static final int HORIZONTAL_VELOCITY = 15;
+	private static final int HORIZONTAL_VELOCITY = 6;
 
 	public UserProjectile(double initialXPos, double initialYPos, LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos);

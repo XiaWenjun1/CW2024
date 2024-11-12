@@ -4,18 +4,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import javafx.animation.*;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
+import javafx.scene.media.AudioClip;
 
 public abstract class LevelParent extends Observable {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
-	private static final int MILLISECOND_DELAY = 50;
+	private static final int MILLISECOND_DELAY = 16;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
@@ -36,6 +36,10 @@ public abstract class LevelParent extends Observable {
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
 
+	private static final String EXPLOSION_SOUND_PATH = "/com/example/demo/sounds/explosion.mp3";
+	private static AudioClip explosionSound;
+	private static boolean explosionSoundEnabled = true;
+
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
@@ -52,8 +56,10 @@ public abstract class LevelParent extends Observable {
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
+
 		initializeTimeline();
 		friendlyUnits.add(user);
+		explosionSound = new AudioClip(getClass().getResource(EXPLOSION_SOUND_PATH).toExternalForm());
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -174,13 +180,53 @@ public abstract class LevelParent extends Observable {
 				.collect(Collectors.toList());
 
 		destroyedActors.forEach(actor -> {
-			root.getChildren().remove(actor);
-			if (actor instanceof ActiveActor) {
-				root.getChildren().remove(((ActiveActor) actor).getHitbox());
+			// 如果是敌机或我方飞机类型，则播放爆炸声音和显示爆炸效果
+			if (actor instanceof FighterPlane) {
+				// 只有在 explosionSoundEnabled 为 true 时才播放音效
+				if (LevelParent.isExplosionSoundEnabled()) {
+					explosionSound.play();
+				}
+
+				// 获取飞机的相对于场景的绝对位置
+				double actorX = actor.localToScene(actor.getBoundsInLocal()).getMinX();
+				double actorY = actor.localToScene(actor.getBoundsInLocal()).getMinY();
+
+				// 创建爆炸图片
+				ImageView explosionImage = new ImageView(new Image(getClass().getResource("/com/example/demo/images/explosion.png").toExternalForm()));
+				explosionImage.setFitWidth(150);  // 设置爆炸图片的宽度
+				explosionImage.setFitHeight(150); // 设置爆炸图片的高度
+				explosionImage.setX(actorX);  // 使用飞机的位置
+				explosionImage.setY(actorY);  // 使用飞机的位置
+
+				// 将爆炸图片添加到场景中
+				root.getChildren().add(explosionImage);
+
+				// 使用 Timeline 在 1 秒后移除爆炸图片
+				Timeline removeExplosion = new Timeline(new KeyFrame(Duration.seconds(1), e -> root.getChildren().remove(explosionImage)));
+				removeExplosion.setCycleCount(1);
+				removeExplosion.play();
 			}
+
+			// 移除飞机
+			root.getChildren().remove(actor);
 		});
 
 		actors.removeAll(destroyedActors);
+	}
+
+	public static void setExplosionSoundEnabled(boolean enabled) {
+		explosionSoundEnabled = enabled; // 正确保存音效状态
+	}
+
+	// 播放爆炸音效的方法（根据爆炸音效的开关来决定是否播放）
+	public static void playExplosionSound() {
+		if (explosionSoundEnabled) {
+			explosionSound.play();
+		}
+	}
+
+	public static boolean isExplosionSoundEnabled() {
+		return explosionSoundEnabled;
 	}
 
 	private void handlePlaneCollisions() {
@@ -199,9 +245,13 @@ public abstract class LevelParent extends Observable {
 								  List<ActiveActorDestructible> actors2) {
 		for (ActiveActorDestructible actor : actors2) {
 			for (ActiveActorDestructible otherActor : actors1) {
-				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-					actor.takeDamage();
-					otherActor.takeDamage();
+				if (actor instanceof ActiveActor && otherActor instanceof ActiveActor) {
+					Node actorHitbox = ((ActiveActor) actor).getHitbox();
+					Node otherActorHitbox = ((ActiveActor) otherActor).getHitbox();
+					if (actorHitbox.getBoundsInParent().intersects(otherActorHitbox.getBoundsInParent())) {
+						actor.takeDamage();
+						otherActor.takeDamage();
+					}
 				}
 			}
 		}
