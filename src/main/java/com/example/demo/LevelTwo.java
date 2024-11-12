@@ -55,5 +55,4 @@ public class LevelTwo extends LevelParent {
 		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
 		return levelView;
 	}
-
 }

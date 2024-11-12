@@ -1,8 +1,8 @@
 ## Improvements
 - **Rename controller and classes**: Rename Main to BattlePlane. Controller to Control start. 
 Remove Destructible interface and move to ActiveActor.
-- **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
-handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
+  - **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
+  handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
 
 ## Bug Fixes
 - **Prevented Repeated Level Loading**: Fixed a bug in the Control_Start 
@@ -25,10 +25,12 @@ with the boss having a more complex movement pattern.
 
 - **Button Hover Sound**: Each button plays a sound effect (`btnhover.wav`) on hover.
 - **Background Music**: Background music (`bg.mp3`) loops on the main screen and during gameplay.
+- **Game Sound**: Explosion sound (`explosion.mp3`) when fighter plane destroyed.
 
 ### Settings Screen
 
 - **Background Music Control**: The settings screen allows setting the background music via a toggle.
+- **Game Sound Control**: The settings screen allows setting the explosion sound via a toggle.
 - **Close Settings Screen**: Returns to the main screen and removes the blur effect.
 
 ### Scene Switching
@@ -57,7 +59,7 @@ automatically pausing or restarting animations as needed.
 - **Control_Start**: Manages game level transitions and prevents redundant loading of levels by checking the current active level.
 - **Control_Animation**: Manages animations for all elements (plane, bullets, enemies, and boss).
 - **Control_Main**: Controls the main screen, including background music and button actions.
-- **Control_Setting**: Manages the settings screen, including volume adjustment and close functionality.
+- **Control_Setting**: Manages the settings screen, including background music, game sounds and close functionality.
 
 ## Changelog
 
@@ -73,3 +75,5 @@ At the same time, the original movement method is also retained.
 boss cannot move out of the border. And shield image will show when it activated.
 - **2024-11-10**: Add health bar to boss. Reconstruct initialBackground method. Method encapsulation:
 handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
+- **2024-11-11**: Add fighter plane destroyed sound(explosion sound), and user can use settings to turn off (background and explosion sounds).
+- **2024-11-12**: Add fighter plane destroyed image(explosion image added). Changing to 60 FPS.

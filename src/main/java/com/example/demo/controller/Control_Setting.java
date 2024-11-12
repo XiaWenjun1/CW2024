@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.LevelParent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -11,6 +12,7 @@ import javafx.scene.media.AudioClip;
 public class Control_Setting {
 
     @FXML private CheckBox bgToggle; // Used to switch background music
+    @FXML private CheckBox gsToggle;  // Switch to control the explosion sound effect
     @FXML private Button closeButton; // Close button
 
     private Pane mainRoot; // The root container of the main interface
@@ -25,6 +27,12 @@ public class Control_Setting {
 
         // Monitor the changes of the music switch CheckBox
         bgToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleBackgroundMusic(newValue));
+
+        // Monitor the changes of the explosion sound effect toggle
+        gsToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleExplosionSound(newValue));
+
+        // Initialize the explosion sound toggle with the current state from LevelParent (only once)
+        gsToggle.setSelected(LevelParent.isExplosionSoundEnabled());
     }
 
     // Method to add hover sound effect
@@ -47,6 +55,11 @@ public class Control_Setting {
                 backgroundMusic.pause(); // Pause the music
             }
         }
+    }
+
+    private void toggleExplosionSound(boolean play) {
+        // Save the game sound status for use elsewhere
+        LevelParent.setExplosionSoundEnabled(play);
     }
 
     // Set the root container of the main interface to remove the blur effect when closing
