@@ -2,6 +2,7 @@ package com.example.demo;
 
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 
 import java.util.*;
 
@@ -207,6 +208,15 @@ public class Boss extends FighterPlane {
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
+	}
+
+	// Getter 方法
+	public ProgressBar getHealthBar() {
+		return healthBar;
+	}
+
+	public ImageView getShieldImage() {
+		return shieldImage;
 	}
 
 	private void die() {

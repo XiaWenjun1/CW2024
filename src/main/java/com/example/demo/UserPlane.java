@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 public class UserPlane extends FighterPlane {
 
 	private LevelParent levelParent;
+	private boolean isPaused = false;
 
 	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = -25;
@@ -47,6 +48,21 @@ public class UserPlane extends FighterPlane {
 		getHitbox().setOnMouseReleased(this::handleMouseReleased);
 		getHitbox().setOnMouseEntered(this::handleMouseEntered);
 		getHitbox().setOnMouseExited(this::handleMouseExited);
+	}
+
+	public void setPaused(boolean paused) {
+		isPaused = paused;
+		if (paused) {
+			// 暂停时禁用所有事件
+			getHitbox().setOnMousePressed(null);
+			getHitbox().setOnMouseDragged(null);
+			getHitbox().setOnMouseReleased(null);
+		} else {
+			// 恢复游戏时，重新绑定事件
+			getHitbox().setOnMousePressed(this::handleMousePressed);
+			getHitbox().setOnMouseDragged(this::handleMouseDragged);
+			getHitbox().setOnMouseReleased(this::handleMouseReleased);
+		}
 	}
 
 	//Record the current position when the mouse is pressed
@@ -148,6 +164,10 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
+		if (isPaused) {
+			return null;  // 暂停时不发射子弹
+		}
+
 		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 		double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 

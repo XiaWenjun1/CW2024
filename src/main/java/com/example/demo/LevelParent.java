@@ -3,10 +3,11 @@ package com.example.demo;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.demo.controller.Control_PauseMenu;
 import javafx.animation.*;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
@@ -40,6 +41,10 @@ public abstract class LevelParent extends Observable {
 	private static AudioClip explosionSound;
 	private static boolean explosionSoundEnabled = true;
 
+	private boolean isPaused = false;
+	private Control_PauseMenu Control_PauseMenu;
+	private Parent pauseMenuRoot;
+
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
@@ -60,6 +65,16 @@ public abstract class LevelParent extends Observable {
 		initializeTimeline();
 		friendlyUnits.add(user);
 		explosionSound = new AudioClip(getClass().getResource(EXPLOSION_SOUND_PATH).toExternalForm());
+
+		// 加载 FXML 文件
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/PauseMenu/PauseMenu.fxml"));
+			pauseMenuRoot = loader.load();
+			Control_PauseMenu = loader.getController();
+			Control_PauseMenu.initialize(this);  // 传递当前游戏的引用
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -74,6 +89,13 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+
+		// 设置鼠标事件监听
+		scene.setOnMouseClicked(this::handleMouseMiddleClick);
+
+		// 添加暂停菜单到场景中
+		root.getChildren().add(pauseMenuRoot);
+
 		return scene;
 	}
 
@@ -144,6 +166,12 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile() {
+		// 检查游戏是否暂停，如果是，直接返回，不发射子弹
+		if (isPaused) {
+			return;
+		}
+
+		// 发射子弹的正常逻辑
 		ActiveActorDestructible projectile = user.fireProjectile();
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
@@ -294,7 +322,7 @@ public abstract class LevelParent extends Observable {
 		return user;
 	}
 
-	protected Group getRoot() {
+	public Group getRoot() {
 		return root;
 	}
 
@@ -333,6 +361,116 @@ public abstract class LevelParent extends Observable {
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
+	}
+
+	private void handleMouseMiddleClick(MouseEvent event) {
+		if (event.getButton() == MouseButton.MIDDLE) {
+			togglePause();
+		}
+	}
+
+	// 切换暂停和继续
+	private void togglePause() {
+		if (isPaused) {
+			continueGame();
+		} else {
+			pauseGame();
+		}
+	}
+
+	public void pauseGame() {
+		isPaused = true;
+		timeline.stop(); // 停止游戏循环
+		user.setPaused(true);  // 暂停时禁用输入
+
+		// 禁用按键事件
+		scene.setOnKeyPressed(event -> {
+			// 暂停时不响应任何按键
+		});
+
+		// 为背景和所有活跃的 Actor 添加虚化效果
+		GaussianBlur blur = new GaussianBlur(10);
+		background.setEffect(blur);
+		applyBlurToActiveActors(10);  // 给所有 Actor 加上虚化效果
+
+		// 显示暂停菜单
+		Control_PauseMenu.showPauseMenu();
+	}
+
+	public void continueGame() {
+		isPaused = false;
+		timeline.play(); // 恢复游戏循环
+		user.setPaused(false);
+
+		// 移除背景的虚化效果
+		background.setEffect(null);
+
+		// 移除ActiveActor的虚化效果
+		removeBlurFromActiveActors();
+
+		// 隐藏暂停菜单
+		Control_PauseMenu.showPauseMenu(); // 隐藏暂停界面
+	}
+
+	// 假设这是LevelParent中的applyBlurToActiveActors方法
+	private void applyBlurToActiveActors(double radius) {
+		// 为所有 ActiveActor 对象添加虚化效果
+		List<ActiveActorDestructible> allActors = new ArrayList<>();
+		allActors.addAll(friendlyUnits);    // 友军单位
+		allActors.addAll(enemyUnits);       // 敌军单位
+		allActors.addAll(userProjectiles);  // 用户子弹
+		allActors.addAll(enemyProjectiles); // 敌方子弹
+
+		for (ActiveActorDestructible actor : allActors) {
+			if (actor instanceof Node) {
+				((Node) actor).setEffect(new GaussianBlur(radius));
+			}
+
+			// 检查是否是Boss对象，并对Boss的血条和护盾应用虚化
+			if (actor instanceof Boss) {
+				Boss boss = (Boss) actor;
+
+				// 对Boss的血条进行虚化
+				if (boss.getHealthBar() != null) {
+					boss.getHealthBar().setEffect(new GaussianBlur(radius));
+				}
+
+				// 对Boss的护盾进行虚化
+				if (boss.getShieldImage() != null) {
+					boss.getShieldImage().setEffect(new GaussianBlur(radius));
+				}
+			}
+		}
+	}
+
+	// 恢复虚化效果的代码（移除虚化）
+	private void removeBlurFromActiveActors() {
+		List<ActiveActorDestructible> allActors = new ArrayList<>();
+		allActors.addAll(friendlyUnits);
+		allActors.addAll(enemyUnits);
+		allActors.addAll(userProjectiles);
+		allActors.addAll(enemyProjectiles);
+
+		for (ActiveActorDestructible actor : allActors) {
+			if (actor instanceof Node) {
+				((Node) actor).setEffect(null); // 清除虚化效果
+			}
+
+			// 对Boss的血条和护盾移除虚化效果
+			if (actor instanceof Boss) {
+				Boss boss = (Boss) actor;
+
+				// 移除Boss的血条虚化
+				if (boss.getHealthBar() != null) {
+					boss.getHealthBar().setEffect(null);
+				}
+
+				// 移除Boss的护盾虚化
+				if (boss.getShieldImage() != null) {
+					boss.getShieldImage().setEffect(null);
+				}
+			}
+		}
 	}
 
 	//clean up
