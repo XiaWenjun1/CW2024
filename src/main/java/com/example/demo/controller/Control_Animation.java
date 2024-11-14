@@ -209,14 +209,4 @@ public class Control_Animation {
             bossPathTransition.play();
         }
     }
-
-    public void switchToAnotherScene() {
-        stopAnimations();// Stop all animations
-        // Logic for switching to another scene
-    }
-
-    public void returnToMainScene() {
-        startAnimations();// Restart all animations
-        // Return to the logic of the main scene
-    }
 }

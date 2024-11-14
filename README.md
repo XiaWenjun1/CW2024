@@ -77,3 +77,5 @@ boss cannot move out of the border. And shield image will show when it activated
 handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
 - **2024-11-11**: Add fighter plane destroyed sound(explosion sound), and user can use settings to turn off (background and explosion sounds).
 - **2024-11-12**: Add fighter plane destroyed image(explosion image added). Changing to 60 FPS.
+- **2024-11-13**: Add pause menu when game playing. Middle mouse to open pause menu, it will stop timeline and make background blur.
+Click middle mouse to continue or click continue button to resume game.
