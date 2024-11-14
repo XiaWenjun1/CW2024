@@ -17,8 +17,5 @@
 
         <!-- 继续按钮 -->
         <Button fx:id="continueButton" text="Continue" onAction="#handleContinue" styleClass="button-style"/>
-
-        <!-- 返回按钮 -->
-        <Button fx:id="backButton" text="Back to Main" onAction="#handleBackToMain" styleClass="button-style"/>
     </VBox>
 </AnchorPane>

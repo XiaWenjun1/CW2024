@@ -66,15 +66,8 @@ public abstract class LevelParent extends Observable {
 		friendlyUnits.add(user);
 		explosionSound = new AudioClip(getClass().getResource(EXPLOSION_SOUND_PATH).toExternalForm());
 
-		// 加载 FXML 文件
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/PauseMenu/PauseMenu.fxml"));
-			pauseMenuRoot = loader.load();
-			Control_PauseMenu = loader.getController();
-			Control_PauseMenu.initialize(this);  // 传递当前游戏的引用
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		// 只加载一次 FXML 文件
+		loadPauseMenu();
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -84,6 +77,18 @@ public abstract class LevelParent extends Observable {
 	protected abstract void spawnEnemyUnits();
 
 	protected abstract LevelView instantiateLevelView();
+
+	// 单独一个方法来加载暂停菜单
+	private void loadPauseMenu() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/PauseMenu/PauseMenu.fxml"));
+			pauseMenuRoot = loader.load();
+			Control_PauseMenu = loader.getController();
+			Control_PauseMenu.initialize(this);  // 传递当前游戏的引用
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public Scene initializeScene() {
 		initializeBackground();
