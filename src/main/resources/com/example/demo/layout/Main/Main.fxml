@@ -7,17 +7,21 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.demo.controller.Control_Main"
-            stylesheets="@Style.css">
+            stylesheets="@Style.css"
+            prefHeight="1300"
+            prefWidth="750">
 
     <StackPane fx:id="rootPane">
         <fx:include fx:id="animationController" source="../Animation/Animation.fxml"/>
+
         <AnchorPane>
             <!-- Title -->
-            <Text layoutX="550" layoutY="200" text="SKY  BATTLE" styleClass="title"/>
+            <Text fx:id="title" text="SKY BATTLE" styleClass="title" AnchorPane.leftAnchor="550" AnchorPane.topAnchor="200"/>
+
             <!-- Button -->
-            <Button fx:id="startButton" layoutX="500" layoutY="400" text="START GAME" styleClass="button"/>
-            <Button fx:id="controlButton" layoutX="700" layoutY="400" text="CONTROL" styleClass="button"/>
-            <Button fx:id="settingsButton" layoutX="620" layoutY="450" text="SETTINGS" styleClass="button"/>
+            <Button fx:id="startButton" text="START GAME" styleClass="button" AnchorPane.leftAnchor="500" AnchorPane.topAnchor="400"/>
+            <Button fx:id="controlButton" text="CONTROL" styleClass="button" AnchorPane.leftAnchor="700" AnchorPane.topAnchor="400"/>
+            <Button fx:id="settingsButton" text="SETTINGS" styleClass="button" AnchorPane.leftAnchor="620" AnchorPane.topAnchor="450"/>
         </AnchorPane>
     </StackPane>
 </AnchorPane>

@@ -15,8 +15,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Control_Main {
-    private AudioClip hoverSound; // Audio file path
-    private MediaPlayer backgroundMusic; // Background music
     private Control_Animation controlAnimation; // Animation controller
     private Control_Setting settingsController; // 保存设置控制器的实例
 
@@ -31,10 +29,20 @@ public class Control_Main {
     private AnchorPane settingsPane; // 保存设置面板的实例
 
     public void initialize() {
-        loadAnimation(); // Load the animation controller
-        loadAudio(); // Load the audio
-        setupButtonHoverSounds(); // Set the button hover sound effect
-        playBackgroundMusic(); // Play background music
+        loadAnimation(); // 加载动画控制器
+
+        // 初始化背景音乐，仅在第一次进入主界面时初始化
+        if (AudioManager.getBackgroundMusic() == null) {
+            AudioManager.initBackgroundMusic(); // 初始化背景音乐
+        }
+
+        // 仅在背景音乐启用状态为 true 且背景音乐未播放时才播放
+        if (AudioManager.isBackgroundMusicEnabled() && !AudioManager.isBackgroundMusicPlaying()) {
+            AudioManager.playBackgroundMusic();
+        }
+
+        // 设置按钮的鼠标悬停音效
+        setupButtonHoverSounds();
 
         settingsButton.setOnAction(event -> openSettings());
         startButton.setOnAction(event -> startGame());
@@ -59,60 +67,22 @@ public class Control_Main {
         }
     }
 
-    private void loadAudio() {
-        try {
-            // 检查音频是否已经加载
-            if (backgroundMusic == null && hoverSound == null) {
-                // 初始化 hoverSound
-                hoverSound = new AudioClip(getClass().getResource("/com/example/demo/sounds/btnhover.wav").toExternalForm());
-
-                // 初始化 backgroundMusic
-                Media media = new Media(getClass().getResource("/com/example/demo/sounds/bg.mp3").toExternalForm());
-                backgroundMusic = new MediaPlayer(media);
-                backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setupButtonHoverSounds() {
-        // 检查 hoverSound 是否已加载，若未加载则初始化
-        if (hoverSound == null) {
-            loadButtonHoverSound();  // 加载音效
-        }
-
         // 为每个按钮添加鼠标悬停时的音效
         addHoverSoundToButton(startButton);
         addHoverSoundToButton(controlButton);
         addHoverSoundToButton(settingsButton);
     }
 
-    private void loadButtonHoverSound() {
-        try {
-            // 初始化 hoverSound
-            hoverSound = new AudioClip(getClass().getResource("/com/example/demo/sounds/btnhover.wav").toExternalForm());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void addHoverSoundToButton(Button button) {
         button.setOnMouseEntered(event -> {
-            // 确保 hoverSound 已初始化
-            if (hoverSound != null) {
-                hoverSound.play(); // 播放音效
-            }
+            // 播放按钮悬停音效
+            AudioManager.playHoverSound();
         });
-    }
-
-    private void playBackgroundMusic() {
-        backgroundMusic.play(); // Play background music
     }
 
     private void startGame() {
         releaseAnimationResources(); // Release animation resources
-        releaseBtnHoverResources();
         Control_Start controlStart = new Control_Start((Stage) rootPane.getScene().getWindow()); // Get the current window Stage
         try {
             controlStart.launchGame();
@@ -128,10 +98,9 @@ public class Control_Main {
                 settingsPane = loader.load();
                 settingsPane.setId("settingsPane");
 
-                // 获取Control_Setting控制器实例，并设置主界面和背景音乐
+                // 获取Control_Setting控制器实例，并设置主界面
                 settingsController = loader.getController();
                 settingsController.setMainRoot(rootPane);
-                settingsController.setBackgroundMusic(backgroundMusic);
             }
 
             // 为rootPane应用模糊效果（排除settingsPane）
@@ -152,15 +121,7 @@ public class Control_Main {
 
     private void releaseAnimationResources() {
         if (controlAnimation != null) {
-            controlAnimation.stopAnimations(); // Stop the animation
-            controlAnimation = null; // Release the controller reference to allow garbage collection
-        }
-    }
-
-    private void releaseBtnHoverResources() {
-        if (hoverSound != null) {
-            hoverSound.stop();
-            hoverSound = null;
+            controlAnimation.stopAnimations();
         }
     }
 }

@@ -1,20 +1,24 @@
 package com.example.demo;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.demo.controller.Control_EndGameMenu;
 import com.example.demo.controller.Control_PauseMenu;
 import javafx.animation.*;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.media.AudioClip;
 
 public abstract class LevelParent extends Observable {
-
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 16;
 	private final double screenHeight;
@@ -314,13 +318,62 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected void winGame() {
-		cleanUp();
-		levelView.showWinImage();
+		// 获取当前 Stage
+		Stage currentStage = getCurrentStage();
+
+		// 在清理当前游戏状态后，再处理 UI 更新
+		Platform.runLater(() -> {
+			cleanUp();  // 清理当前游戏状态
+			levelView.showWinImage();  // 显示胜利图像
+
+			// 延迟两秒钟后再加载 EndGameMenu
+			PauseTransition delay = new PauseTransition(Duration.seconds(2));
+			delay.setOnFinished(event -> showEndGameMenu(currentStage, true));  // true 表示是胜利画面
+			delay.play();
+		});
 	}
 
 	protected void loseGame() {
-		cleanUp();
-		levelView.showGameOverImage();
+		// 获取当前 Stage
+		Stage currentStage = getCurrentStage();
+
+		// 在清理当前游戏状态后，再处理 UI 更新
+		Platform.runLater(() -> {
+			cleanUp();  // 清理当前游戏状态
+			levelView.showGameOverImage();  // 显示游戏失败图像
+
+			// 延迟两秒钟后再加载 EndGameMenu
+			PauseTransition delay = new PauseTransition(Duration.seconds(2));
+			delay.setOnFinished(event -> showEndGameMenu(currentStage, false));  // false 表示是失败画面
+			delay.play();
+		});
+	}
+
+	private Stage getCurrentStage() {
+		Scene currentScene = root.getScene();  // 获取当前 Scene
+		if (currentScene != null) {
+			return (Stage) currentScene.getWindow();
+		}
+		return null;  // 如果没有找到 Stage，返回 null
+	}
+
+	private void showEndGameMenu(Stage stage, boolean isWin) {
+		try {
+			// 加载 EndGameMenu 控制器并初始化
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml"));
+			Parent endGameRoot = loader.load();
+
+			// 获取 EndGameMenu 控制器并初始化
+			Control_EndGameMenu controller = loader.getController();
+			controller.initialize(this);  // 将 LevelParent 对象传入控制器
+
+			// 创建新场景并设置为当前 stage
+			Scene endGameScene = new Scene(endGameRoot);
+			stage.setScene(endGameScene);  // 替换场景
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected UserPlane getUser() {
@@ -478,10 +531,56 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	//clean up
 	public void cleanUp() {
+		// 停止时间线，停止所有动画
 		timeline.stop();
+
+		// 清除所有在 Group 中的节点，避免清理和 Stage 相关的 UI 元素
 		root.getChildren().clear();
+
+		// 清理所有与游戏相关的列表
+		cleanUpActors();
+
+		// 清理与音效相关的资源
+		if (explosionSound != null) {
+			explosionSound.stop();   // 停止播放爆炸音效
+		}
+
+		// 如果有虚化效果，移除所有虚化效果
+		removeBlurFromActiveActors();
+
+		// 确保暂停菜单的清理
+		if (pauseMenuRoot != null) {
+			pauseMenuRoot.setVisible(false);  // 隐藏暂停菜单
+			pauseMenuRoot = null;  // 清理引用，防止内存泄漏
+		}
+	}
+
+	// 清理所有的 Actor 对象（包括 Boss）
+	private void cleanUpActors() {
+		// 清空友军、敌军、子弹列表的同时，也要从场景中移除它们
+		for (ActiveActorDestructible actor : friendlyUnits) {
+			if (actor instanceof Node) {
+				root.getChildren().remove(actor); // 从场景中移除
+			}
+		}
+		for (ActiveActorDestructible actor : enemyUnits) {
+			if (actor instanceof Node) {
+				root.getChildren().remove(actor); // 从场景中移除
+			}
+		}
+		for (ActiveActorDestructible actor : userProjectiles) {
+			if (actor instanceof Node) {
+				root.getChildren().remove(actor); // 从场景中移除
+			}
+		}
+		for (ActiveActorDestructible actor : enemyProjectiles) {
+			if (actor instanceof Node) {
+				root.getChildren().remove(actor); // 从场景中移除
+			}
+		}
+
+		// 清空列表
 		friendlyUnits.clear();
 		enemyUnits.clear();
 		userProjectiles.clear();

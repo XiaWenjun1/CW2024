@@ -1,0 +1,68 @@
+/* Background and overall container style */
+.root {
+    -fx-background-color: rgba(0, 0, 0, 0.7); /* 半透明背景 */
+    -fx-padding: 20;
+    -fx-alignment: center;  /* 确保内容居中 */
+}
+
+/* Title style */
+.title {
+    -fx-font-size: 48px;  /* 加大字体 */
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 20;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-alignment: center;  /* 标题居中 */
+}
+
+/* VBox layout styling */
+.VBox {
+    -fx-spacing: 25;
+    -fx-alignment: center;
+    -fx-pref-width: 650; /* 固定宽度使按钮水平居中 */
+}
+
+/* Button style */
+.button {
+    -fx-font-size: 20px;
+    -fx-background-color: #3c3c3c;
+    -fx-text-fill: white;
+    -fx-padding: 15px 30px;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 3);
+    -fx-cursor: hand;
+    -fx-min-width: 350px; /* 设置按钮最小宽度，确保按钮大小一致 */
+    -fx-max-width: 350px; /* 设置最大宽度使按钮保持一致 */
+}
+
+/* Hover effect for buttons */
+.button:hover {
+    -fx-background-color: #555555;
+}
+
+/* Active effect for buttons */
+.button:pressed {
+    -fx-background-color: #333333;
+}
+
+/* Exit button style */
+#exitButton {
+    -fx-background-color: #cc0000;
+}
+
+/* Hover effect for Exit button */
+#exitButton:hover {
+    -fx-background-color: #990000;
+}
+
+/* Active effect for Exit button */
+#exitButton:pressed {
+    -fx-background-color: #660000;
+}
+
+/* Game result image style */
+#gameResultImage {
+    -fx-opacity: 1.0; /* 确保图像不透明 */
+    -fx-z-index: 1;  /* 确保图像在背景上方 */
+}
