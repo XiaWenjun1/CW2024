@@ -44,10 +44,17 @@ public class AudioManager {
         return backgroundMusic != null && backgroundMusic.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
+    // 初始化悬停音效
+    public static void initHoverSound() {
+        if (hoverSound == null) {
+            hoverSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/btnhover.wav").toExternalForm());
+        }
+    }
+
     // 播放按钮悬停音效
     public static void playHoverSound() {
         if (hoverSound == null) {
-            hoverSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/btnhover.wav").toExternalForm());
+            initHoverSound();  // 如果 hoverSound 未初始化，先初始化
         }
         hoverSound.play();
     }

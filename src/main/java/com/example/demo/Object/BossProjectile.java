@@ -1,4 +1,7 @@
-package com.example.demo;
+package com.example.demo.Object;
+
+import com.example.demo.Level.LevelParent;
+import com.example.demo.Object.BossProjectile;
 
 public class BossProjectile extends Projectile {
 	private LevelParent levelParent;  // 添加 LevelParent 实例

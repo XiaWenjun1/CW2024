@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import com.example.demo.LevelParent;
+import com.example.demo.Level.LevelParent;
 import javafx.application.Platform;
 
 import java.io.IOException;

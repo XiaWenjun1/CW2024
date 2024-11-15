@@ -1,13 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.LevelParent;
+import com.example.demo.Level.LevelParent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.Node;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.AudioClip;
 
 public class Control_Setting {
 
