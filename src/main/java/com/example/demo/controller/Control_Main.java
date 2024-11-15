@@ -6,10 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Button;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 import java.io.IOException;

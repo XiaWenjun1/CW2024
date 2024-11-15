@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.Object;
 
+import com.example.demo.Actor.ActiveActor;
+import com.example.demo.Actor.ActiveActorDestructible;
+import com.example.demo.Level.LevelParent;
+import com.example.demo.Display.ShieldImage;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
