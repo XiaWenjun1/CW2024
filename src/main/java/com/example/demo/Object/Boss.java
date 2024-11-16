@@ -26,7 +26,7 @@ public class Boss extends FighterPlane {
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int Y_UPPER_BOUND = 0;
+	private static final int Y_UPPER_BOUND = 50;
 	private static final int Y_LOWER_BOUND = 700;
 	private static final int MAX_FRAMES_WITH_SHIELD = 500;
 	private final List<Integer> movePattern;

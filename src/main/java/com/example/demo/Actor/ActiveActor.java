@@ -23,6 +23,14 @@ public abstract class ActiveActor extends ImageView {
 		hitbox.setStrokeWidth(2);           // 设置边框宽度
 		hitbox.setVisible(true);            // 确保 hitbox 可见
 
+		/*
+		// Test hitbox
+		hitbox = new Rectangle(imageWidth, imageHeight);
+		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));  // 半透明红色
+		hitbox.setStroke(Color.RED);        // 设置为红色边框用于调试
+		hitbox.setStrokeWidth(2);           // 设置边框宽度，确保能看到
+
+		 */
 	}
 
 	public abstract void updatePosition();

@@ -36,12 +36,15 @@ public class LevelOne extends LevelParent {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
+				double minY = 50;
+				double maxY = getEnemyMaximumYPosition();
+				double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
 				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, LevelOne.this);
 				addEnemyUnit(newEnemy);
 			}
 		}
 	}
+
 
 	@Override
 	protected LevelView instantiateLevelView() {
