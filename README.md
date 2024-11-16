@@ -1,8 +1,8 @@
 ## Improvements
 - **Rename controller and classes**: Rename Main to BattlePlane. Controller to Control start. 
 Remove Destructible interface and move to ActiveActor.
-  - **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
-  handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
+- **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
+handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
 
 ## Bug Fixes
 - **Prevented Repeated Level Loading**: Fixed a bug in the Control_Start 
@@ -42,11 +42,13 @@ automatically pausing or restarting animations as needed.
 
 - **Common features**: Add width to control image size more flexible. Add hitBox to make the hit range more reasonable.
 - **User Plane**: Add left and right to make plane move horizontally. Add mouse control function.
-- **User Projectile**: Add xPosition, fired at user plane's location.
+- **User Projectile**: Add xPosition, fired at user plane's location. Add 3 levels projectile.
 - **Boss**: Fix shield and limit movement. Add health bar.
 - **Boss Projectile**:
 - **Enemy**:
 - **Enemy Projectile**:
+- **Ammo Box**: It is an item spawn randomly in game. When collision with user plane, user projectile will update (max 3 level)
+user projectile will be bigger image(bigger hit box) and faster speed.
 
 ## Issues Encountered
 
@@ -85,3 +87,6 @@ handleKeyPressed and handleKeyReleased are independent methods to facilitate und
 Click middle mouse to continue or click continue button to resume game.
 - **2024-11-14**: Add EndGameMenu. When game win or lose, it will show a game over pane after 2 seconds of win or lose images, with two buttons(Return to Main, Exit)
 when click 'Return to Main', user will return to main page and the settings follow your previous settings. Click 'Exit', exit program.
+- **2024-11-15**: Add folders for better handling class.
+- **2024-11-16**: Add ammo box, spawn randomly in game. When collision with user plane, it will update user projectile(bigger image, hit box and faster speed), 
+maximum user projectile level is 3, default is 1.

@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
+import com.example.demo.Object.AmmoBox;
 import com.example.demo.Display.LevelView;
 import com.example.demo.Object.Boss;
-import com.example.demo.Object.EnemyPlane;
 import com.example.demo.Object.FighterPlane;
 import com.example.demo.Object.UserPlane;
 import com.example.demo.controller.Control_EndGameMenu;
@@ -41,6 +41,10 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
+	private List<AmmoBox> ammoBoxes;
+	private Random random = new Random();
+
+	private static final double SPAWN_PROBABILITY = 0.005;  // 每次更新时，生成 AmmoBox 的概率（0 到 1 之间）
 
 	private boolean isSpacePressed = false;  // 标志位，用来判断空格是否按下
 
@@ -64,6 +68,7 @@ public abstract class LevelParent extends Observable {
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
 		this.enemyProjectiles = new ArrayList<>();
+		this.ammoBoxes = new ArrayList<>();
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
@@ -130,11 +135,14 @@ public abstract class LevelParent extends Observable {
 		updateActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();
+		spawnRandomAmmoBox();
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
 		handlePlaneCollisions();
+		handleUserPlaneAndAmmoBoxCollisions(user, ammoBoxes);
 		removeAllDestroyedActors();
+		removeAmmoBox();
 		updateKillCount();
 		updateLevelView();
 		checkIfGameOver();
@@ -208,6 +216,7 @@ public abstract class LevelParent extends Observable {
 		enemyUnits.forEach(enemy -> enemy.updateActor());
 		userProjectiles.forEach(projectile -> projectile.updateActor());
 		enemyProjectiles.forEach(projectile -> projectile.updateActor());
+		ammoBoxes.forEach(box -> box.updateActor());
 	}
 
 	private void removeAllDestroyedActors() {
@@ -218,43 +227,52 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
+		// 筛选出已销毁的演员
 		List<ActiveActorDestructible> destroyedActors = actors.stream()
 				.filter(ActiveActorDestructible::isDestroyed)
 				.collect(Collectors.toList());
 
 		destroyedActors.forEach(actor -> {
-			// 如果是敌机或我方飞机类型，则播放爆炸声音和显示爆炸效果
+			// 调用 destroy 方法
+			actor.destroy();
+
+			// 处理爆炸效果
 			if (actor instanceof FighterPlane) {
-				// 只有在 explosionSoundEnabled 为 true 时才播放音效
-				if (LevelParent.isExplosionSoundEnabled()) {
-					explosionSound.play();
-				}
-
-				// 获取飞机的相对于场景的绝对位置
-				double actorX = actor.localToScene(actor.getBoundsInLocal()).getMinX();
-				double actorY = actor.localToScene(actor.getBoundsInLocal()).getMinY();
-
-				// 创建爆炸图片
-				ImageView explosionImage = new ImageView(new Image(getClass().getResource("/com/example/demo/images/explosion.png").toExternalForm()));
-				explosionImage.setFitWidth(150);  // 设置爆炸图片的宽度
-				explosionImage.setFitHeight(150); // 设置爆炸图片的高度
-				explosionImage.setX(actorX);  // 使用飞机的位置
-				explosionImage.setY(actorY);  // 使用飞机的位置
-
-				// 将爆炸图片添加到场景中
-				root.getChildren().add(explosionImage);
-
-				// 使用 Timeline 在 1 秒后移除爆炸图片
-				Timeline removeExplosion = new Timeline(new KeyFrame(Duration.seconds(1), e -> root.getChildren().remove(explosionImage)));
-				removeExplosion.setCycleCount(1);
-				removeExplosion.play();
+				handleExplosionEffect((FighterPlane) actor);
 			}
 
-			// 移除飞机
-			root.getChildren().remove(actor);
+			// 从场景中移除
+			removeActorFromScene(actor);
 		});
 
+		// 从列表中移除已销毁的演员
 		actors.removeAll(destroyedActors);
+	}
+
+	// 处理爆炸效果
+	private void handleExplosionEffect(FighterPlane fighterPlane) {
+		if (LevelParent.isExplosionSoundEnabled()) {
+			explosionSound.play();
+		}
+
+		// 计算飞机的场景位置
+		double actorX = fighterPlane.localToScene(fighterPlane.getBoundsInLocal()).getMinX();
+		double actorY = fighterPlane.localToScene(fighterPlane.getBoundsInLocal()).getMinY();
+
+		// 创建并添加爆炸图片
+		ImageView explosionImage = new ImageView(new Image(
+				getClass().getResource("/com/example/demo/images/explosion.png").toExternalForm()));
+		explosionImage.setFitWidth(150);
+		explosionImage.setFitHeight(150);
+		explosionImage.setX(actorX);
+		explosionImage.setY(actorY);
+
+		root.getChildren().add(explosionImage);
+
+		// 定时移除爆炸图片
+		Timeline removeExplosion = new Timeline(new KeyFrame(Duration.seconds(1), e -> root.getChildren().remove(explosionImage)));
+		removeExplosion.setCycleCount(1);
+		removeExplosion.play();
 	}
 
 	public static void setExplosionSoundEnabled(boolean enabled) {
@@ -300,6 +318,22 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
+	private void handleUserPlaneAndAmmoBoxCollisions(UserPlane userPlane, List<AmmoBox> ammoBoxes) {
+		Iterator<AmmoBox> iterator = ammoBoxes.iterator();
+		while (iterator.hasNext()) {
+			AmmoBox ammoBox = iterator.next();
+			if (userPlane.checkCollision(ammoBox)) {
+				handleAmmoBoxPickup(userPlane, ammoBox);
+				iterator.remove();
+			}
+		}
+	}
+
+	private void handleAmmoBoxPickup(UserPlane userPlane, AmmoBox ammoBox) {
+		userPlane.upgradeProjectile();
+		ammoBox.destroy();
+	}
+
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {
@@ -324,33 +358,27 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected void winGame() {
-		// 获取当前 Stage
 		Stage currentStage = getCurrentStage();
 
-		// 在清理当前游戏状态后，再处理 UI 更新
 		Platform.runLater(() -> {
-			cleanUp();  // 清理当前游戏状态
-			levelView.showWinImage();  // 显示胜利图像
+			cleanUp();
+			levelView.showWinImage();
 
-			// 延迟两秒钟后再加载 EndGameMenu
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
-			delay.setOnFinished(event -> showEndGameMenu(currentStage, true));  // true 表示是胜利画面
+			delay.setOnFinished(event -> showEndGameMenu(currentStage, true));
 			delay.play();
 		});
 	}
 
 	protected void loseGame() {
-		// 获取当前 Stage
 		Stage currentStage = getCurrentStage();
 
-		// 在清理当前游戏状态后，再处理 UI 更新
 		Platform.runLater(() -> {
-			cleanUp();  // 清理当前游戏状态
-			levelView.showGameOverImage();  // 显示游戏失败图像
+			cleanUp();
+			levelView.showGameOverImage();
 
-			// 延迟两秒钟后再加载 EndGameMenu
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
-			delay.setOnFinished(event -> showEndGameMenu(currentStage, false));  // false 表示是失败画面
+			delay.setOnFinished(event -> showEndGameMenu(currentStage, false));
 			delay.play();
 		});
 	}
@@ -430,6 +458,37 @@ public abstract class LevelParent extends Observable {
 	private void handleMouseMiddleClick(MouseEvent event) {
 		if (event.getButton() == MouseButton.MIDDLE) {
 			togglePause();
+		}
+	}
+
+	// 随机生成 AmmoBox 的方法
+	private void spawnRandomAmmoBox() {
+		// 使用随机概率来决定是否生成 AmmoBox
+		if (random.nextDouble() < SPAWN_PROBABILITY) {
+			// 随机生成 AmmoBox 的位置
+			double randomX = random.nextDouble(screenWidth);  // 随机 X 位置
+			double randomY = random.nextDouble(screenWidth);  // 随机 Y 位置
+
+			// 创建 AmmoBox 并设置位置
+			AmmoBox ammoBox = new AmmoBox(randomX, randomY, this);
+
+			// 添加到场景中
+			addAmmoBox(ammoBox);
+		}
+	}
+
+	// 添加 AmmoBox 的方法（参考之前的逻辑）
+	protected void addAmmoBox(AmmoBox ammoBox) {
+		if (!ammoBoxes.contains(ammoBox)) {
+			ammoBoxes.add(ammoBox);
+			if (!getRoot().getChildren().contains(ammoBox)) {
+				getRoot().getChildren().add(ammoBox);
+			}
+
+			Node hitbox = ammoBox.getHitbox();
+			if (!getRoot().getChildren().contains(hitbox)) {
+				getRoot().getChildren().add(hitbox);
+			}
 		}
 	}
 
@@ -535,6 +594,18 @@ public abstract class LevelParent extends Observable {
 				}
 			}
 		}
+	}
+
+	public void removeAmmoBox() {
+		getRoot().getChildren().removeIf(node ->
+				node instanceof AmmoBox && !node.isVisible()
+		);
+	}
+
+	// 从场景中移除对象
+	private void removeActorFromScene(ActiveActorDestructible actor) {
+		root.getChildren().remove(actor);          // 移除演员本体
+		root.getChildren().remove(actor.getHitbox()); // 移除演员的 hitbox
 	}
 
 	public void cleanUp() {

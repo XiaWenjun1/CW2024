@@ -2,8 +2,6 @@ package com.example.demo.Object;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelParent;
-import com.example.demo.Object.FighterPlane;
-import com.example.demo.Object.UserProjectile;
 import javafx.scene.input.MouseEvent;
 
 public class UserPlane extends FighterPlane {
@@ -12,7 +10,7 @@ public class UserPlane extends FighterPlane {
 	private boolean isPaused = false;
 
 	private static final String IMAGE_NAME = "userplane.png";
-	private static final double Y_UPPER_BOUND = -25;
+	private static final double Y_UPPER_BOUND = 50;
 	private static final double Y_LOWER_BOUND = 700.0;
 	private static final double X_LEFT_BOUND = 0;
 	private static final double X_RIGHT_BOUND = 1200.0;
@@ -30,39 +28,38 @@ public class UserPlane extends FighterPlane {
 
 	private double initialMouseX;
 	private double initialMouseY;
-	private boolean isDragging; // Used to determine whether the aircraft is being dragged
+	private boolean isDragging;
 
+	private UserProjectile userProjectile;
 
 	public UserPlane(int initialHealth, LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		this.levelParent = levelParent;
-		velocityMultiplierY = 0;
-		velocityMultiplierX = 0;
-		isDragging = false; // No dragging during initialization
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
 
-		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.25);
+		userProjectile = new UserProjectile(INITIAL_X_POSITION, INITIAL_Y_POSITION, levelParent, 50, 50);
+		updateProjectileSize();
 
-		// Add the hitbox to the root of LevelParent
 		levelParent.getRoot().getChildren().add(getHitbox());
-		getHitbox().toFront(); // Make sure the hitbox is on top
+		getHitbox().toFront();
 
-		// Bind mouse events to the hitbox
-		getHitbox().setOnMousePressed(this::handleMousePressed);
-		getHitbox().setOnMouseDragged(this::handleMouseDragged);
-		getHitbox().setOnMouseReleased(this::handleMouseReleased);
-		getHitbox().setOnMouseEntered(this::handleMouseEntered);
-		getHitbox().setOnMouseExited(this::handleMouseExited);
+		// Use a single method to handle mouse events
+		bindMouseEvents();
+	}
+
+	public void upgradeProjectile() {
+		if (userProjectile.getPowerLevel() < 3) {
+			userProjectile.setPowerLevel(userProjectile.getPowerLevel() + 1);
+		}
 	}
 
 	public void setPaused(boolean paused) {
 		isPaused = paused;
 		if (paused) {
-			// 暂停时禁用所有事件
 			getHitbox().setOnMousePressed(null);
 			getHitbox().setOnMouseDragged(null);
 			getHitbox().setOnMouseReleased(null);
 		} else {
-			// 恢复游戏时，重新绑定事件
 			getHitbox().setOnMousePressed(this::handleMousePressed);
 			getHitbox().setOnMouseDragged(this::handleMouseDragged);
 			getHitbox().setOnMouseReleased(this::handleMouseReleased);
@@ -137,12 +134,19 @@ public class UserPlane extends FighterPlane {
 		getHitbox().setStyle("-fx-cursor: default;");  // Restore the default cursor
 	}
 
+	private void bindMouseEvents() {
+		getHitbox().setOnMousePressed(this::handleMousePressed);
+		getHitbox().setOnMouseDragged(this::handleMouseDragged);
+		getHitbox().setOnMouseReleased(this::handleMouseReleased);
+		getHitbox().setOnMouseEntered(this::handleMouseEntered);
+		getHitbox().setOnMouseExited(this::handleMouseExited);
+	}
+
 	@Override
 	public void updatePosition() {
 		this.moveHorizontally(HORIZONTAL_VELOCITY * velocityMultiplierX);
 		this.moveVertically(VERTICAL_VELOCITY * velocityMultiplierY);
 
-		// Check and limit the horizontal and vertical boundaries of the aircraft
 		double newPositionX = getLayoutX() + getTranslateX();
 		double newPositionY = getLayoutY() + getTranslateY();
 
@@ -169,17 +173,25 @@ public class UserPlane extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (isPaused) {
-			return null;  // 暂停时不发射子弹
+			return null;
 		}
 
 		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 		double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 
-		return new UserProjectile(projectileXPosition, projectileYPosition, levelParent);
+		UserProjectile projectile = new UserProjectile(
+				projectileXPosition,
+				projectileYPosition,
+				levelParent,
+				(int) userProjectile.getWidth(),
+				(int) userProjectile.getHeight()
+		);
+		projectile.setPowerLevel(userProjectile.getPowerLevel());
+		return projectile;
 	}
 
-	private boolean isMoving() {
-		return velocityMultiplierY != 0 || velocityMultiplierX != 0;
+	private void updateProjectileSize() {
+		userProjectile.updateProjectileState();
 	}
 
 	public void moveUp() {
@@ -205,12 +217,6 @@ public class UserPlane extends FighterPlane {
 
 	public void stopHorizontalMovement() {
 		velocityMultiplierX = 0;
-	}
-
-	// Used to control the smoothing effect when the aircraft stops
-	public void stop() {
-		stopVerticalMovement();
-		stopHorizontalMovement();
 	}
 
 	public int getNumberOfKills() {
