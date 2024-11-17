@@ -1,6 +1,5 @@
 package com.example.demo.Level;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,19 +7,11 @@ import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Object.*;
 import com.example.demo.Display.LevelView;
-import com.example.demo.controller.Control_EndGameMenu;
-import com.example.demo.controller.Control_PauseMenu;
 import javafx.animation.*;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.media.AudioClip;
 
 public abstract class LevelParent extends Observable {
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
@@ -36,6 +27,7 @@ public abstract class LevelParent extends Observable {
 	private final ImageView background;
 	private PauseMenuManager pauseMenuManager;
 	private boolean isPaused = false;
+	private EndGameMenuManager endGameMenuManager;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -72,6 +64,8 @@ public abstract class LevelParent extends Observable {
 		pauseMenuManager = new PauseMenuManager(timeline, scene, user, background, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles, ammoBoxes);
 		pauseMenuManager.loadPauseMenu();
 
+		this.endGameMenuManager = new EndGameMenuManager(this);
+
 		initializeTimeline();
 		friendlyUnits.add(user);
 	}
@@ -99,6 +93,14 @@ public abstract class LevelParent extends Observable {
 	public void startGame() {
 		background.requestFocus();
 		timeline.play();
+	}
+
+	public void winGame() {
+		endGameMenuManager.winGame();
+	}
+
+	public void loseGame() {
+		endGameMenuManager.loseGame();
 	}
 
 	public void goToNextLevel(String levelName) {
@@ -265,59 +267,6 @@ public abstract class LevelParent extends Observable {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
 	}
 
-	protected void winGame() {
-		Stage currentStage = getCurrentStage();
-
-		Platform.runLater(() -> {
-			cleanUp();
-			levelView.showWinImage();
-
-			PauseTransition delay = new PauseTransition(Duration.seconds(2));
-			delay.setOnFinished(event -> showEndGameMenu(currentStage, true));
-			delay.play();
-		});
-	}
-
-	protected void loseGame() {
-		Stage currentStage = getCurrentStage();
-
-		Platform.runLater(() -> {
-			cleanUp();
-			levelView.showGameOverImage();
-
-			PauseTransition delay = new PauseTransition(Duration.seconds(2));
-			delay.setOnFinished(event -> showEndGameMenu(currentStage, false));
-			delay.play();
-		});
-	}
-
-	private Stage getCurrentStage() {
-		Scene currentScene = root.getScene();
-		if (currentScene != null) {
-			return (Stage) currentScene.getWindow();
-		}
-		return null;
-	}
-
-	private void showEndGameMenu(Stage stage, boolean isWin) {
-		try {
-			// 加载 EndGameMenu 控制器并初始化
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml"));
-			Parent endGameRoot = loader.load();
-
-			// 获取 EndGameMenu 控制器并初始化
-			Control_EndGameMenu controller = loader.getController();
-			controller.initialize(this);  // 将 LevelParent 对象传入控制器
-
-			// 创建新场景并设置为当前 stage
-			Scene endGameScene = new Scene(endGameRoot);
-			stage.setScene(endGameScene);  // 替换场景
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public UserPlane getUser() {
 		return user;
 	}
@@ -329,6 +278,8 @@ public abstract class LevelParent extends Observable {
 	protected int getCurrentNumberOfEnemies() {
 		return enemyUnits.size();
 	}
+
+	public LevelView getLevelView() { return levelView; }
 
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		if (!enemyUnits.contains(enemy)) { // 检查敌人列表中是否已经存在该敌人

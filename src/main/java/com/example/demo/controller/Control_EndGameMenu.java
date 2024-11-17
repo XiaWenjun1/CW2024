@@ -20,23 +20,20 @@ public class Control_EndGameMenu {
     @FXML
     private Button exitButton;
 
-    private LevelParent levelParent; // 引用 LevelParent，用于返回主界面
+    private LevelParent levelParent;
 
-    // 初始化控制器
     public void initialize(LevelParent levelParent) {
         this.levelParent = levelParent;
     }
 
     @FXML
     private void handleReturnToMainButton(ActionEvent event) {
-        // 清理当前的游戏资源
         levelParent.cleanUp();
 
-        // 加载主界面
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/Main/Main.fxml"));
             Parent mainRoot = loader.load();
-            Scene mainScene = new Scene(mainRoot, 1300, 750);  // 设置 Scene 大小
+            Scene mainScene = new Scene(mainRoot, 1300, 750);
 
             Stage stage = (Stage) returnToMainButton.getScene().getWindow();
 
@@ -47,10 +44,8 @@ public class Control_EndGameMenu {
         }
     }
 
-    // 点击 "Exit" 按钮时的处理
     @FXML
     private void handleExitButton(ActionEvent event) {
-        // 退出游戏
         Platform.exit();
     }
 }

@@ -1,25 +1,25 @@
 /* Background and overall container style */
 .root {
-    -fx-background-color: rgba(0, 0, 0, 0.7); /* 半透明背景 */
+    -fx-background-color: rgba(0, 0, 0, 0.7);
     -fx-padding: 20;
-    -fx-alignment: center;  /* 确保内容居中 */
+    -fx-alignment: center;
 }
 
 /* Title style */
 .title {
-    -fx-font-size: 48px;  /* 加大字体 */
+    -fx-font-size: 48px;
     -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
     -fx-padding: 20;
     -fx-font-family: "Arial", sans-serif;
-    -fx-alignment: center;  /* 标题居中 */
+    -fx-alignment: center;
 }
 
 /* VBox layout styling */
 .VBox {
     -fx-spacing: 25;
     -fx-alignment: center;
-    -fx-pref-width: 650; /* 固定宽度使按钮水平居中 */
+    -fx-pref-width: 650;
 }
 
 /* Button style */
@@ -32,18 +32,35 @@
     -fx-background-radius: 12;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 3);
     -fx-cursor: hand;
-    -fx-min-width: 350px; /* 设置按钮最小宽度，确保按钮大小一致 */
-    -fx-max-width: 350px; /* 设置最大宽度使按钮保持一致 */
+    -fx-min-width: 350px;
+    -fx-max-width: 350px;
+    -fx-background-insets: 0;
 }
 
 /* Hover effect for buttons */
 .button:hover {
     -fx-background-color: #555555;
+    -fx-transition: background-color 0.3s ease;
 }
 
 /* Active effect for buttons */
 .button:pressed {
     -fx-background-color: #333333;
+}
+
+/* Return to Main button style */
+#returnToMainButton {
+    -fx-background-color: #0066cc;
+}
+
+/* Hover effect for Return to Main button */
+#returnToMainButton:hover {
+    -fx-background-color: #004999;
+}
+
+/* Active effect for Return to Main button */
+#returnToMainButton:pressed {
+    -fx-background-color: #003366;
 }
 
 /* Exit button style */
@@ -63,6 +80,6 @@
 
 /* Game result image style */
 #gameResultImage {
-    -fx-opacity: 1.0; /* 确保图像不透明 */
-    -fx-z-index: 1;  /* 确保图像在背景上方 */
+    -fx-opacity: 1.0;
+    -fx-z-index: 1;
 }

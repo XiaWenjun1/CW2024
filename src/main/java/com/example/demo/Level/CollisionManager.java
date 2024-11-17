@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 
 public class CollisionManager {
 
-    // 处理两个列表中的碰撞
     public static void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
         for (ActiveActorDestructible actor : actors2) {
             for (ActiveActorDestructible otherActor : actors1) {
@@ -30,17 +29,14 @@ public class CollisionManager {
         }
     }
 
-    // 处理用户子弹和敌人之间的碰撞
     public static void handleUserProjectileCollisions(List<ActiveActorDestructible> userProjectiles, List<ActiveActorDestructible> enemyUnits) {
         handleCollisions(userProjectiles, enemyUnits);
     }
 
-    // 处理敌人子弹和友军飞机之间的碰撞
     public static void handleEnemyProjectileCollisions(List<ActiveActorDestructible> enemyProjectiles, List<ActiveActorDestructible> friendlyUnits) {
         handleCollisions(enemyProjectiles, friendlyUnits);
     }
 
-    // 处理用户飞机和物品箱子之间的碰撞
     public static void handleUserPlaneAndAmmoBoxCollisions(ActiveActorDestructible userPlane, List<ActiveActorDestructible> ammoBoxes) {
         for (ActiveActorDestructible ammoBox : ammoBoxes) {
             if (userPlane.checkCollision(ammoBox)) {
@@ -50,11 +46,11 @@ public class CollisionManager {
     }
 
     private static void handleAmmoBoxPickup(ActiveActorDestructible userPlane, ActiveActorDestructible ammoBox) {
-        if (!ammoBox.isDestroyed()) { // 确保箱子未被销毁
+        if (!ammoBox.isDestroyed()) {
             if (userPlane instanceof UserPlane) {
                 ((UserPlane) userPlane).upgradeProjectile();
             }
-            ammoBox.destroy(); // 设置箱子为已销毁状态
+            ammoBox.destroy();
         }
     }
 
@@ -67,7 +63,6 @@ public class CollisionManager {
             Consumer<ActiveActorDestructible> removeActorFromScene,
             BiPredicate<Rectangle, Rectangle> checkCollision) {
 
-        // 清理用户子弹
         Iterator<ActiveActorDestructible> userIterator = userProjectiles.iterator();
         while (userIterator.hasNext()) {
             ActiveActorDestructible bullet = userIterator.next();
@@ -78,7 +73,6 @@ public class CollisionManager {
             }
         }
 
-        // 清理敌人子弹
         Iterator<ActiveActorDestructible> enemyIterator = enemyProjectiles.iterator();
         while (enemyIterator.hasNext()) {
             ActiveActorDestructible bullet = enemyIterator.next();
@@ -89,7 +83,6 @@ public class CollisionManager {
             }
         }
 
-        // 清理弹药箱
         Iterator<ActiveActorDestructible> ammoBoxIterator = ammoBoxes.iterator();
         while (ammoBoxIterator.hasNext()) {
             ActiveActorDestructible ammoBox = ammoBoxIterator.next();
