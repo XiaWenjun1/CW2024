@@ -4,6 +4,9 @@ import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelParent;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserPlane extends FighterPlane {
 
 	private LevelParent levelParent;
@@ -18,8 +21,8 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;
-	private static final int VERTICAL_VELOCITY = 5;
-	private static final int HORIZONTAL_VELOCITY = 5;
+	private static final int VERTICAL_VELOCITY = 8;
+	private static final int HORIZONTAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION_OFFSET = 150;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 	private int velocityMultiplierY;
@@ -171,14 +174,17 @@ public class UserPlane extends FighterPlane {
 	}
 
 	@Override
-	public ActiveActorDestructible fireProjectile() {
+	public List<ActiveActorDestructible> fireProjectiles() {
 		if (isPaused) {
-			return null;
+			return new ArrayList<>(); // 返回一个空的列表而不是 null
 		}
+
+		List<ActiveActorDestructible> projectiles = new ArrayList<>();
 
 		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 		double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 
+		// 创建 UserProjectile 并添加到列表
 		UserProjectile projectile = new UserProjectile(
 				projectileXPosition,
 				projectileYPosition,
@@ -187,7 +193,9 @@ public class UserPlane extends FighterPlane {
 				(int) userProjectile.getHeight()
 		);
 		projectile.setPowerLevel(userProjectile.getPowerLevel());
-		return projectile;
+
+		projectiles.add(projectile); // 添加到列表中
+		return projectiles;
 	}
 
 	private void updateProjectileSize() {

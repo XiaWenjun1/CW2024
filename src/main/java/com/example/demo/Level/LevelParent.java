@@ -6,11 +6,8 @@ import java.util.stream.Collectors;
 
 import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.AmmoBox;
+import com.example.demo.Object.*;
 import com.example.demo.Display.LevelView;
-import com.example.demo.Object.Boss;
-import com.example.demo.Object.FighterPlane;
-import com.example.demo.Object.UserPlane;
 import com.example.demo.controller.Control_EndGameMenu;
 import com.example.demo.controller.Control_PauseMenu;
 import javafx.animation.*;
@@ -20,6 +17,7 @@ import javafx.scene.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.media.AudioClip;
@@ -41,15 +39,15 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
-	private List<AmmoBox> ammoBoxes;
-	private Random random = new Random();
+	private final List<AmmoBox> ammoBoxes;
+	private final Random random = new Random();
 
 	private static final double SPAWN_PROBABILITY = 0.005;  // 每次更新时，生成 AmmoBox 的概率（0 到 1 之间）
 
 	private boolean isSpacePressed = false;  // 标志位，用来判断空格是否按下
 
 	private int currentNumberOfEnemies;
-	private LevelView levelView;
+	private final LevelView levelView;
 
 	private static final String EXPLOSION_SOUND_PATH = "/com/example/demo/sounds/explosion.mp3";
 	private static AudioClip explosionSound;
@@ -142,7 +140,7 @@ public abstract class LevelParent extends Observable {
 		handlePlaneCollisions();
 		handleUserPlaneAndAmmoBoxCollisions(user, ammoBoxes);
 		removeAllDestroyedActors();
-		removeAmmoBox();
+		cleanObj();
 		updateKillCount();
 		updateLevelView();
 		checkIfGameOver();
@@ -195,13 +193,24 @@ public abstract class LevelParent extends Observable {
 		}
 
 		// 发射子弹的正常逻辑
-		ActiveActorDestructible projectile = user.fireProjectile();
-		root.getChildren().add(projectile);
-		userProjectiles.add(projectile);
+		List<ActiveActorDestructible> projectiles = user.fireProjectiles(); // 修改为返回列表
+		if (projectiles != null) {
+			projectiles.forEach(projectile -> {
+				root.getChildren().add(projectile); // 添加到场景
+				userProjectiles.add(projectile);    // 添加到用户子弹列表
+			});
+		}
 	}
 
 	private void generateEnemyFire() {
-		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
+		enemyUnits.forEach(enemy -> {
+			if (enemy instanceof FighterPlane) {
+				List<ActiveActorDestructible> projectiles = ((FighterPlane) enemy).fireProjectiles(); // 调用 fireProjectiles()
+				if (projectiles != null) {
+					projectiles.forEach(this::spawnEnemyProjectile); // 添加每个子弹
+				}
+			}
+		});
 	}
 
 	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
@@ -227,39 +236,31 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		// 筛选出已销毁的演员
 		List<ActiveActorDestructible> destroyedActors = actors.stream()
 				.filter(ActiveActorDestructible::isDestroyed)
 				.collect(Collectors.toList());
 
 		destroyedActors.forEach(actor -> {
-			// 调用 destroy 方法
 			actor.destroy();
 
-			// 处理爆炸效果
 			if (actor instanceof FighterPlane) {
 				handleExplosionEffect((FighterPlane) actor);
 			}
 
-			// 从场景中移除
 			removeActorFromScene(actor);
 		});
 
-		// 从列表中移除已销毁的演员
 		actors.removeAll(destroyedActors);
 	}
 
-	// 处理爆炸效果
 	private void handleExplosionEffect(FighterPlane fighterPlane) {
 		if (LevelParent.isExplosionSoundEnabled()) {
 			explosionSound.play();
 		}
 
-		// 计算飞机的场景位置
 		double actorX = fighterPlane.localToScene(fighterPlane.getBoundsInLocal()).getMinX();
 		double actorY = fighterPlane.localToScene(fighterPlane.getBoundsInLocal()).getMinY();
 
-		// 创建并添加爆炸图片
 		ImageView explosionImage = new ImageView(new Image(
 				getClass().getResource("/com/example/demo/images/explosion.png").toExternalForm()));
 		explosionImage.setFitWidth(150);
@@ -269,17 +270,15 @@ public abstract class LevelParent extends Observable {
 
 		root.getChildren().add(explosionImage);
 
-		// 定时移除爆炸图片
 		Timeline removeExplosion = new Timeline(new KeyFrame(Duration.seconds(1), e -> root.getChildren().remove(explosionImage)));
 		removeExplosion.setCycleCount(1);
 		removeExplosion.play();
 	}
 
 	public static void setExplosionSoundEnabled(boolean enabled) {
-		explosionSoundEnabled = enabled; // 正确保存音效状态
+		explosionSoundEnabled = enabled;
 	}
 
-	// 播放爆炸音效的方法（根据爆炸音效的开关来决定是否播放）
 	public static void playExplosionSound() {
 		if (explosionSoundEnabled) {
 			explosionSound.play();
@@ -384,11 +383,11 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private Stage getCurrentStage() {
-		Scene currentScene = root.getScene();  // 获取当前 Scene
+		Scene currentScene = root.getScene();
 		if (currentScene != null) {
 			return (Stage) currentScene.getWindow();
 		}
-		return null;  // 如果没有找到 Stage，返回 null
+		return null;
 	}
 
 	private void showEndGameMenu(Stage stage, boolean isWin) {
@@ -410,7 +409,7 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	protected UserPlane getUser() {
+	public UserPlane getUser() {
 		return user;
 	}
 
@@ -596,68 +595,89 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	public void removeAmmoBox() {
-		getRoot().getChildren().removeIf(node ->
-				node instanceof AmmoBox && !node.isVisible()
-		);
+	private void removeActorFromScene(ActiveActorDestructible actor) {
+		root.getChildren().remove(actor);
+		root.getChildren().remove(actor.getHitbox());
 	}
 
-	// 从场景中移除对象
-	private void removeActorFromScene(ActiveActorDestructible actor) {
-		root.getChildren().remove(actor);          // 移除演员本体
-		root.getChildren().remove(actor.getHitbox()); // 移除演员的 hitbox
+	public void cleanObj() {
+		Boundary rightBoundary = new Boundary(1400, 0, 1, 900);  // 右边界
+		Boundary leftBoundary = new Boundary(-100, 0, 1, 900);   // 左边界
+
+		Iterator<ActiveActorDestructible> userIterator = userProjectiles.iterator();
+		while (userIterator.hasNext()) {
+			ActiveActorDestructible bullet = userIterator.next();
+			if (checkCollision(bullet.getHitbox(), rightBoundary)) {
+				bullet.destroy();
+				removeActorFromScene(bullet);
+				userIterator.remove();
+			}
+		}
+
+		Iterator<ActiveActorDestructible> enemyIterator = enemyProjectiles.iterator();
+		while (enemyIterator.hasNext()) {
+			ActiveActorDestructible bullet = enemyIterator.next();
+			if (checkCollision(bullet.getHitbox(), leftBoundary)) {
+				bullet.destroy();
+				removeActorFromScene(bullet);
+				enemyIterator.remove();
+			}
+		}
+
+		// 清理弹药箱：检查与边界碰撞
+		Iterator<AmmoBox> ammoBoxIterator = ammoBoxes.iterator();
+		while (ammoBoxIterator.hasNext()) {
+			AmmoBox ammoBox = ammoBoxIterator.next();
+			if (checkCollision(ammoBox.getHitbox(), rightBoundary) || checkCollision(ammoBox.getHitbox(), leftBoundary)) {
+				removeActorFromScene(ammoBox);
+				ammoBoxIterator.remove();
+			}
+		}
+	}
+
+	public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
+		return rect1.getBoundsInParent().intersects(rect2.getBoundsInParent());
 	}
 
 	public void cleanUp() {
-		// 停止时间线，停止所有动画
 		timeline.stop();
-
-		// 清除所有在 Group 中的节点，避免清理和 Stage 相关的 UI 元素
 		root.getChildren().clear();
 
-		// 清理所有与游戏相关的列表
 		cleanUpActors();
 
-		// 清理与音效相关的资源
 		if (explosionSound != null) {
-			explosionSound.stop();   // 停止播放爆炸音效
+			explosionSound.stop();
 		}
-
-		// 如果有虚化效果，移除所有虚化效果
 		removeBlurFromActiveActors();
 
-		// 确保暂停菜单的清理
 		if (pauseMenuRoot != null) {
-			pauseMenuRoot.setVisible(false);  // 隐藏暂停菜单
-			pauseMenuRoot = null;  // 清理引用，防止内存泄漏
+			pauseMenuRoot.setVisible(false);
+			pauseMenuRoot = null;
 		}
 	}
 
-	// 清理所有的 Actor 对象（包括 Boss）
 	private void cleanUpActors() {
-		// 清空友军、敌军、子弹列表的同时，也要从场景中移除它们
 		for (ActiveActorDestructible actor : friendlyUnits) {
 			if (actor instanceof Node) {
-				root.getChildren().remove(actor); // 从场景中移除
+				root.getChildren().remove(actor);
 			}
 		}
 		for (ActiveActorDestructible actor : enemyUnits) {
 			if (actor instanceof Node) {
-				root.getChildren().remove(actor); // 从场景中移除
+				root.getChildren().remove(actor);
 			}
 		}
 		for (ActiveActorDestructible actor : userProjectiles) {
 			if (actor instanceof Node) {
-				root.getChildren().remove(actor); // 从场景中移除
+				root.getChildren().remove(actor);
 			}
 		}
 		for (ActiveActorDestructible actor : enemyProjectiles) {
 			if (actor instanceof Node) {
-				root.getChildren().remove(actor); // 从场景中移除
+				root.getChildren().remove(actor);
 			}
 		}
 
-		// 清空列表
 		friendlyUnits.clear();
 		enemyUnits.clear();
 		userProjectiles.clear();

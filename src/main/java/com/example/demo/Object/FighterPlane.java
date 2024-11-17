@@ -2,6 +2,8 @@ package com.example.demo.Object;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 
+import java.util.List;
+
 public abstract class FighterPlane extends ActiveActorDestructible {
 
 	private int health;
@@ -11,7 +13,7 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 		this.health = health;
 	}
 
-	public abstract ActiveActorDestructible fireProjectile();
+	public abstract List<ActiveActorDestructible> fireProjectiles();
 	
 	@Override
 	public void takeDamage() {
