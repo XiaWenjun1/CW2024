@@ -41,4 +41,8 @@ public class AmmoBox extends ActiveActorDestructible {
         this.setVisible(false);
         this.setDisable(true);
     }
+
+    @Override
+    public void takeDamage() {
+    }
 }

@@ -17,7 +17,7 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0;
-	private static final double BOSS_FIRE_RATE = .01;
+	private static final double BOSS_FIRE_RATE = 0.02;
 	private static final double BOSS_SHIELD_PROBABILITY = .0005;
 	private static final int IMAGE_WIDTH = 300;
 	private static final int IMAGE_HEIGHT = 300;
@@ -89,10 +89,54 @@ public class Boss extends FighterPlane {
 		updateHealthBar();
 	}
 
-
 	@Override
-	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition(), levelParent) : null;
+	public List<ActiveActorDestructible> fireProjectiles() {
+		List<ActiveActorDestructible> projectiles = new ArrayList<>();
+
+		// 只有在当前帧需要发射子弹时才执行
+		if (bossFiresInCurrentFrame()) {
+			// 选择攻击模式
+			int attackType = selectAttackType();
+			if (attackType == 1) {
+				// 单发子弹
+				projectiles.add(createStraightProjectile());
+			} else if (attackType == 2) {
+				// 散射子弹
+				projectiles.addAll(createScatterProjectiles());
+			}
+		}
+
+		return projectiles;
+	}
+
+	private int selectAttackType() {
+		return (int) (Math.random() * 2) + 1;
+	}
+
+	private ActiveActorDestructible createStraightProjectile() {
+		double projectileXPosition = getLayoutX();  // 直接使用飞机的 X 坐标
+		double projectileYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;  // 获取 Y 坐标
+
+		return new BossProjectile(projectileXPosition, projectileYPosition, levelParent);  // 创建 BossProjectile
+	}
+
+	private List<ActiveActorDestructible> createScatterProjectiles() {
+		List<ActiveActorDestructible> projectiles = new ArrayList<>();
+		double[] yOffsets = {-50, 0, 50}; // Y轴的散射偏移量
+
+		for (double yOffset : yOffsets) {
+			double projectileXPosition = getLayoutX();
+			double projectileYPosition = getLayoutY() + getTranslateY() + yOffset;
+
+			BossProjectile projectile = new BossProjectile(projectileXPosition, projectileYPosition, levelParent);
+			projectile.setLayoutY(projectileYPosition);
+
+			if (!levelParent.getRoot().getChildren().contains(projectile.getHitbox())) {
+				levelParent.getRoot().getChildren().add(projectile.getHitbox());
+			}
+			projectiles.add(projectile);
+		}
+		return projectiles;
 	}
 
 	@Override

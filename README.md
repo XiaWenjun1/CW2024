@@ -44,11 +44,12 @@ automatically pausing or restarting animations as needed.
 - **User Plane**: Add left and right to make plane move horizontally. Add mouse control function.
 - **User Projectile**: Add xPosition, fired at user plane's location. Add 3 levels projectile.
 - **Boss**: Fix shield and limit movement. Add health bar.
-- **Boss Projectile**:
+- **Boss Projectile**: Add one more fire pattern. Fire 3 balls one time.
 - **Enemy**:
 - **Enemy Projectile**:
 - **Ammo Box**: It is an item spawn randomly in game. When collision with user plane, user projectile will update (max 3 level)
 user projectile will be bigger image(bigger hit box) and faster speed.
+- **Boundary**: Collision with user and enemy bullets as well as ammo box to clean image.
 
 ## Issues Encountered
 
@@ -69,7 +70,7 @@ click 'Continue' to resume or click middle mouse again to resume game.
 
 ## Changelog
 
-- **2024-11-06**: Completed animations for plane, bullets, enemies, and boss. Added sound effects and background music control.
+- **2024-11-06**: Completed animations for plane, bullets, enemies, and boss for main menu. Added sound effects and background music control.
 - **2024-11-07**: Fixed bug preventing repeated level loading. Make the plane can move horizontally. 
 Add hitBox to make hit range more reasonable.
 - **2024-11-08**: Users cannot long press the space button to fire bullets. Each press can fire one bullet. 
@@ -90,3 +91,6 @@ when click 'Return to Main', user will return to main page and the settings foll
 - **2024-11-15**: Add folders for better handling class.
 - **2024-11-16**: Add ammo box, spawn randomly in game. When collision with user plane, it will update user projectile(bigger image, hit box and faster speed), 
 maximum user projectile level is 3, default is 1.
+- **2024-11-17**: Add boundaries for collision with user and enemy projectile and object(ammo box) to clean projectile and object(ammo box).
+Reconstruct FighterPlane class fireprojectiles method to make it a list. Add boss one more fire pattern(fi
+- re 3 balls one time) and it will change fire pattern automatically.
