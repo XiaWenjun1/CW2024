@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.Level.LevelParent;
+import com.example.demo.Level.ExplosionEffectManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -16,40 +16,28 @@ public class Control_Setting {
     private Pane mainRoot; // The root container of the main interface
 
     public void initialize() {
-        // 添加按钮悬停音效
         addHoverSoundToButton(closeButton);
-
-        // 监听背景音乐开关的变化
         bgToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleBackgroundMusic(newValue));
-
-        // 监听爆炸音效开关的变化
         gsToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleExplosionSound(newValue));
-
-        // 初始化爆炸音效开关的状态
-        gsToggle.setSelected(LevelParent.isExplosionSoundEnabled());
-
-        // 初始化背景音乐开关的状态
+        gsToggle.setSelected(ExplosionEffectManager.isExplosionSoundEnabled());
         bgToggle.setSelected(AudioManager.isBackgroundMusicPlaying());
     }
 
-    // 为按钮添加悬停音效
     private void addHoverSoundToButton(Button button) {
         button.setOnMouseEntered(event -> AudioManager.playHoverSound());
     }
 
-    // 设置背景音乐播放器，并根据复选框的状态初始化音乐
     private void toggleBackgroundMusic(boolean play) {
         AudioManager.setBackgroundMusicEnabled(play);
         if (play) {
-            AudioManager.playBackgroundMusic(); // 播放背景音乐
+            AudioManager.playBackgroundMusic();
         } else {
-            AudioManager.pauseBackgroundMusic(); // 暂停背景音乐
+            AudioManager.pauseBackgroundMusic();
         }
     }
 
     private void toggleExplosionSound(boolean play) {
-        // Save the game sound status for use elsewhere
-        LevelParent.setExplosionSoundEnabled(play);
+        ExplosionEffectManager.setExplosionSoundEnabled(play);
     }
 
     // Set the root container of the main interface to remove the blur effect when closing

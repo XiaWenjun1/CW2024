@@ -51,10 +51,6 @@ public abstract class LevelParent extends Observable {
 	private int currentNumberOfEnemies;
 	private final LevelView levelView;
 
-	private static final String EXPLOSION_SOUND_PATH = "/com/example/demo/sounds/explosion.mp3";
-	private static AudioClip explosionSound;
-	private static boolean explosionSoundEnabled = true;
-
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
@@ -78,7 +74,6 @@ public abstract class LevelParent extends Observable {
 
 		initializeTimeline();
 		friendlyUnits.add(user);
-		explosionSound = new AudioClip(getClass().getResource(EXPLOSION_SOUND_PATH).toExternalForm());
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -238,49 +233,13 @@ public abstract class LevelParent extends Observable {
 			actor.destroy();
 
 			if (actor instanceof FighterPlane) {
-				handleExplosionEffect((FighterPlane) actor);
+				ExplosionEffectManager.triggerExplosionEffect(root, (FighterPlane) actor);
 			}
 
 			removeActorFromScene(actor);
 		});
 
 		actors.removeAll(destroyedActors);
-	}
-
-	private void handleExplosionEffect(FighterPlane fighterPlane) {
-		if (LevelParent.isExplosionSoundEnabled()) {
-			explosionSound.play();
-		}
-
-		double actorX = fighterPlane.localToScene(fighterPlane.getBoundsInLocal()).getMinX();
-		double actorY = fighterPlane.localToScene(fighterPlane.getBoundsInLocal()).getMinY();
-
-		ImageView explosionImage = new ImageView(new Image(
-				getClass().getResource("/com/example/demo/images/explosion.png").toExternalForm()));
-		explosionImage.setFitWidth(150);
-		explosionImage.setFitHeight(150);
-		explosionImage.setX(actorX);
-		explosionImage.setY(actorY);
-
-		root.getChildren().add(explosionImage);
-
-		Timeline removeExplosion = new Timeline(new KeyFrame(Duration.seconds(1), e -> root.getChildren().remove(explosionImage)));
-		removeExplosion.setCycleCount(1);
-		removeExplosion.play();
-	}
-
-	public static void setExplosionSoundEnabled(boolean enabled) {
-		explosionSoundEnabled = enabled;
-	}
-
-	public static void playExplosionSound() {
-		if (explosionSoundEnabled) {
-			explosionSound.play();
-		}
-	}
-
-	public static boolean isExplosionSoundEnabled() {
-		return explosionSoundEnabled;
 	}
 
 	private void handleEnemyPenetration() {
