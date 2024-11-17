@@ -39,7 +39,7 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
-	private final List<AmmoBox> ammoBoxes;
+	private final List<ActiveActorDestructible> ammoBoxes;
 	private final Random random = new Random();
 
 	private static final double SPAWN_PROBABILITY = 0.005;  // 每次更新时，生成 AmmoBox 的概率（0 到 1 之间）
@@ -135,10 +135,10 @@ public abstract class LevelParent extends Observable {
 		updateNumberOfEnemies();
 		spawnRandomAmmoBox();
 		handleEnemyPenetration();
-		handleUserProjectileCollisions();
-		handleEnemyProjectileCollisions();
-		handlePlaneCollisions();
-		handleUserPlaneAndAmmoBoxCollisions(user, ammoBoxes);
+		CollisionManager.handleCollisions(friendlyUnits, enemyUnits);
+		CollisionManager.handleUserProjectileCollisions(userProjectiles, enemyUnits);
+		CollisionManager.handleEnemyProjectileCollisions(enemyProjectiles, friendlyUnits);
+		CollisionManager.handleUserPlaneAndAmmoBoxCollisions(user, ammoBoxes);
 		removeAllDestroyedActors();
 		cleanObj();
 		updateKillCount();
@@ -287,50 +287,6 @@ public abstract class LevelParent extends Observable {
 
 	public static boolean isExplosionSoundEnabled() {
 		return explosionSoundEnabled;
-	}
-
-	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits);
-	}
-
-	private void handleUserProjectileCollisions() {
-		handleCollisions(userProjectiles, enemyUnits);
-	}
-
-	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits);
-	}
-
-	private void handleCollisions(List<ActiveActorDestructible> actors1,
-								  List<ActiveActorDestructible> actors2) {
-		for (ActiveActorDestructible actor : actors2) {
-			for (ActiveActorDestructible otherActor : actors1) {
-				if (actor instanceof ActiveActor && otherActor instanceof ActiveActor) {
-					Node actorHitbox = ((ActiveActor) actor).getHitbox();
-					Node otherActorHitbox = ((ActiveActor) otherActor).getHitbox();
-					if (actorHitbox.getBoundsInParent().intersects(otherActorHitbox.getBoundsInParent())) {
-						actor.takeDamage();
-						otherActor.takeDamage();
-					}
-				}
-			}
-		}
-	}
-
-	private void handleUserPlaneAndAmmoBoxCollisions(UserPlane userPlane, List<AmmoBox> ammoBoxes) {
-		Iterator<AmmoBox> iterator = ammoBoxes.iterator();
-		while (iterator.hasNext()) {
-			AmmoBox ammoBox = iterator.next();
-			if (userPlane.checkCollision(ammoBox)) {
-				handleAmmoBoxPickup(userPlane, ammoBox);
-				iterator.remove();
-			}
-		}
-	}
-
-	private void handleAmmoBoxPickup(UserPlane userPlane, AmmoBox ammoBox) {
-		userPlane.upgradeProjectile();
-		ammoBox.destroy();
 	}
 
 	private void handleEnemyPenetration() {
@@ -600,88 +556,30 @@ public abstract class LevelParent extends Observable {
 		root.getChildren().remove(actor.getHitbox());
 	}
 
+	private static final Boundary RIGHT_BOUNDARY = new Boundary(1350, 0, 1, 900);
+	private static final Boundary LEFT_BOUNDARY = new Boundary(-50, 0, 1, 900);
 	public void cleanObj() {
-		Boundary rightBoundary = new Boundary(1400, 0, 1, 900);  // 右边界
-		Boundary leftBoundary = new Boundary(-100, 0, 1, 900);   // 左边界
-
-		Iterator<ActiveActorDestructible> userIterator = userProjectiles.iterator();
-		while (userIterator.hasNext()) {
-			ActiveActorDestructible bullet = userIterator.next();
-			if (checkCollision(bullet.getHitbox(), rightBoundary)) {
-				bullet.destroy();
-				removeActorFromScene(bullet);
-				userIterator.remove();
-			}
-		}
-
-		Iterator<ActiveActorDestructible> enemyIterator = enemyProjectiles.iterator();
-		while (enemyIterator.hasNext()) {
-			ActiveActorDestructible bullet = enemyIterator.next();
-			if (checkCollision(bullet.getHitbox(), leftBoundary)) {
-				bullet.destroy();
-				removeActorFromScene(bullet);
-				enemyIterator.remove();
-			}
-		}
-
-		// 清理弹药箱：检查与边界碰撞
-		Iterator<AmmoBox> ammoBoxIterator = ammoBoxes.iterator();
-		while (ammoBoxIterator.hasNext()) {
-			AmmoBox ammoBox = ammoBoxIterator.next();
-			if (checkCollision(ammoBox.getHitbox(), rightBoundary) || checkCollision(ammoBox.getHitbox(), leftBoundary)) {
-				removeActorFromScene(ammoBox);
-				ammoBoxIterator.remove();
-			}
-		}
-	}
-
-	public boolean checkCollision(Rectangle rect1, Rectangle rect2) {
-		return rect1.getBoundsInParent().intersects(rect2.getBoundsInParent());
+		CollisionManager.cleanObjects(
+				userProjectiles,
+				enemyProjectiles,
+				ammoBoxes,
+				RIGHT_BOUNDARY,
+				LEFT_BOUNDARY,
+				this::removeActorFromScene,
+				CollisionManager::checkCollision
+		);
 	}
 
 	public void cleanUp() {
 		timeline.stop();
 		root.getChildren().clear();
-
 		cleanUpActors();
-
-		if (explosionSound != null) {
-			explosionSound.stop();
-		}
-		removeBlurFromActiveActors();
-
-		if (pauseMenuRoot != null) {
-			pauseMenuRoot.setVisible(false);
-			pauseMenuRoot = null;
-		}
 	}
 
 	private void cleanUpActors() {
-		for (ActiveActorDestructible actor : friendlyUnits) {
-			if (actor instanceof Node) {
-				root.getChildren().remove(actor);
-			}
-		}
-		for (ActiveActorDestructible actor : enemyUnits) {
-			if (actor instanceof Node) {
-				root.getChildren().remove(actor);
-			}
-		}
-		for (ActiveActorDestructible actor : userProjectiles) {
-			if (actor instanceof Node) {
-				root.getChildren().remove(actor);
-			}
-		}
-		for (ActiveActorDestructible actor : enemyProjectiles) {
-			if (actor instanceof Node) {
-				root.getChildren().remove(actor);
-			}
-		}
-
 		friendlyUnits.clear();
 		enemyUnits.clear();
 		userProjectiles.clear();
 		enemyProjectiles.clear();
 	}
-
 }
