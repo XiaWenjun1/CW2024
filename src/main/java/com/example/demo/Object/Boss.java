@@ -22,7 +22,7 @@ public class Boss extends FighterPlane {
 	private static final int IMAGE_WIDTH = 300;
 	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 5;
-	private static final int HEALTH = 40;
+	private static final int HEALTH = 100;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
@@ -80,7 +80,6 @@ public class Boss extends FighterPlane {
 		}
 	}
 
-
 	@Override
 	public void updateActor() {
 		updatePosition();
@@ -93,16 +92,14 @@ public class Boss extends FighterPlane {
 	public List<ActiveActorDestructible> fireProjectiles() {
 		List<ActiveActorDestructible> projectiles = new ArrayList<>();
 
-		// 只有在当前帧需要发射子弹时才执行
 		if (bossFiresInCurrentFrame()) {
-			// 选择攻击模式
 			int attackType = selectAttackType();
 			if (attackType == 1) {
-				// 单发子弹
 				projectiles.add(createStraightProjectile());
 			} else if (attackType == 2) {
-				// 散射子弹
 				projectiles.addAll(createScatterProjectiles());
+			} else if (attackType == 3) {
+				projectiles.addAll(createDirectionalProjectiles());
 			}
 		}
 
@@ -110,19 +107,19 @@ public class Boss extends FighterPlane {
 	}
 
 	private int selectAttackType() {
-		return (int) (Math.random() * 2) + 1;
+		return (int) (Math.random() * 3) + 1;
 	}
 
 	private ActiveActorDestructible createStraightProjectile() {
-		double projectileXPosition = getLayoutX();  // 直接使用飞机的 X 坐标
-		double projectileYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;  // 获取 Y 坐标
+		double projectileXPosition = getLayoutX();
+		double projectileYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 
-		return new BossProjectile(projectileXPosition, projectileYPosition, levelParent);  // 创建 BossProjectile
+		return new BossProjectile(projectileXPosition, projectileYPosition, levelParent);
 	}
 
 	private List<ActiveActorDestructible> createScatterProjectiles() {
 		List<ActiveActorDestructible> projectiles = new ArrayList<>();
-		double[] yOffsets = {-50, 0, 50}; // Y轴的散射偏移量
+		double[] yOffsets = {-50, 0, 50};
 
 		for (double yOffset : yOffsets) {
 			double projectileXPosition = getLayoutX();
@@ -131,11 +128,50 @@ public class Boss extends FighterPlane {
 			BossProjectile projectile = new BossProjectile(projectileXPosition, projectileYPosition, levelParent);
 			projectile.setLayoutY(projectileYPosition);
 
+			double horizontalVelocity = -3;
+			double verticalVelocity = 0;
+
+			projectile.setVelocity(horizontalVelocity, verticalVelocity);
+
 			if (!levelParent.getRoot().getChildren().contains(projectile.getHitbox())) {
 				levelParent.getRoot().getChildren().add(projectile.getHitbox());
 			}
+
 			projectiles.add(projectile);
 		}
+		return projectiles;
+	}
+
+	private List<ActiveActorDestructible> createDirectionalProjectiles() {
+		List<ActiveActorDestructible> projectiles = new ArrayList<>();
+
+		double straightX = getLayoutX();
+		double straightY = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
+
+		double leftUpY = straightY - 50;
+		double leftDownY = straightY + 50;
+
+		BossProjectile straightProjectile = new BossProjectile(straightX, straightY, levelParent);
+		straightProjectile.setLayoutY(straightY);
+		straightProjectile.setVelocity(-3, 0);
+		projectiles.add((ActiveActorDestructible) straightProjectile);
+
+		BossProjectile leftUpProjectile = new BossProjectile(straightX, leftUpY, levelParent);
+		leftUpProjectile.setLayoutY(leftUpY);
+		leftUpProjectile.setVelocity(-3, -1);
+		projectiles.add((ActiveActorDestructible) leftUpProjectile);
+
+		BossProjectile leftDownProjectile = new BossProjectile(straightX, leftDownY, levelParent);
+		leftDownProjectile.setLayoutY(leftDownY);
+		leftDownProjectile.setVelocity(-3, 1);
+		projectiles.add((ActiveActorDestructible) leftDownProjectile);
+
+		for (BossProjectile projectile : List.of(straightProjectile, leftUpProjectile, leftDownProjectile)) {
+			if (!levelParent.getRoot().getChildren().contains(projectile.getHitbox())) {
+				levelParent.getRoot().getChildren().add(projectile.getHitbox());
+			}
+		}
+
 		return projectiles;
 	}
 
@@ -258,7 +294,6 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 	}
 
-	// Getter 方法
 	public ProgressBar getHealthBar() {
 		return healthBar;
 	}

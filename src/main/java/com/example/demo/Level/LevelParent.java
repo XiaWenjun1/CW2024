@@ -178,17 +178,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile() {
-		// 检查游戏是否暂停，如果是，直接返回，不发射子弹
 		if (isPaused) {
 			return;
 		}
 
-		// 发射子弹的正常逻辑
-		List<ActiveActorDestructible> projectiles = user.fireProjectiles(); // 修改为返回列表
+		List<ActiveActorDestructible> projectiles = user.fireProjectiles();
 		if (projectiles != null) {
 			projectiles.forEach(projectile -> {
-				root.getChildren().add(projectile); // 添加到场景
-				userProjectiles.add(projectile);    // 添加到用户子弹列表
+				root.getChildren().add(projectile);
+				userProjectiles.add(projectile);
 			});
 		}
 	}
@@ -196,9 +194,9 @@ public abstract class LevelParent extends Observable {
 	private void generateEnemyFire() {
 		enemyUnits.forEach(enemy -> {
 			if (enemy instanceof FighterPlane) {
-				List<ActiveActorDestructible> projectiles = ((FighterPlane) enemy).fireProjectiles(); // 调用 fireProjectiles()
+				List<ActiveActorDestructible> projectiles = ((FighterPlane) enemy).fireProjectiles();
 				if (projectiles != null) {
-					projectiles.forEach(this::spawnEnemyProjectile); // 添加每个子弹
+					projectiles.forEach(this::spawnEnemyProjectile);
 				}
 			}
 		});
@@ -217,6 +215,11 @@ public abstract class LevelParent extends Observable {
 		userProjectiles.forEach(projectile -> projectile.updateActor());
 		enemyProjectiles.forEach(projectile -> projectile.updateActor());
 		ammoBoxes.forEach(box -> box.updateActor());
+	}
+
+	private void removeActorFromScene(ActiveActorDestructible actor) {
+		root.getChildren().remove(actor);
+		root.getChildren().remove(actor.getHitbox());
 	}
 
 	private void removeAllDestroyedActors() {
@@ -281,23 +284,6 @@ public abstract class LevelParent extends Observable {
 
 	public LevelView getLevelView() { return levelView; }
 
-	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		if (!enemyUnits.contains(enemy)) { // 检查敌人列表中是否已经存在该敌人
-			enemyUnits.add(enemy);
-			if (!getRoot().getChildren().contains(enemy)) { // 确认没有重复添加到场景中
-				getRoot().getChildren().add(enemy);
-			}
-			// 添加 hitbox 到场景中，确保不重复
-			if (enemy instanceof ActiveActor) {
-				Node hitbox = ((ActiveActor) enemy).getHitbox();
-				if (!getRoot().getChildren().contains(hitbox)) {
-					getRoot().getChildren().add(hitbox);
-				}
-			}
-		}
-	}
-
-
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
 	}
@@ -314,38 +300,31 @@ public abstract class LevelParent extends Observable {
 		currentNumberOfEnemies = enemyUnits.size();
 	}
 
-	private void spawnRandomAmmoBox() {
+	protected void addEnemyUnit(ActiveActorDestructible enemy) {
+		enemyUnits.add(enemy);
+		getRoot().getChildren().add(enemy);
+		Node hitbox = ((ActiveActor) enemy).getHitbox();
+		getRoot().getChildren().add(hitbox);
+	}
+
+	protected void spawnRandomAmmoBox() {
 		if (random.nextDouble() < AmmoBox_SPAWN_PROBABILITY) {
 			double randomX = random.nextDouble(screenWidth);
 			double randomY = random.nextDouble(screenWidth);
-
 			AmmoBox ammoBox = new AmmoBox(randomX, randomY, this);
-
 			addAmmoBox(ammoBox);
 		}
 	}
 
 	protected void addAmmoBox(AmmoBox ammoBox) {
-		if (!ammoBoxes.contains(ammoBox)) {
-			ammoBoxes.add(ammoBox);
-			if (!getRoot().getChildren().contains(ammoBox)) {
-				getRoot().getChildren().add(ammoBox);
-			}
-
-			Node hitbox = ammoBox.getHitbox();
-			if (!getRoot().getChildren().contains(hitbox)) {
-				getRoot().getChildren().add(hitbox);
-			}
-		}
+		ammoBoxes.add(ammoBox);
+		getRoot().getChildren().add(ammoBox);
+		Node hitbox = ammoBox.getHitbox();
+		getRoot().getChildren().add(hitbox);
 	}
 
-	private void removeActorFromScene(ActiveActorDestructible actor) {
-		root.getChildren().remove(actor);
-		root.getChildren().remove(actor.getHitbox());
-	}
-
-	private static final Boundary RIGHT_BOUNDARY = new Boundary(1350, 0, 1, 900);
-	private static final Boundary LEFT_BOUNDARY = new Boundary(-50, 0, 1, 900);
+	private static final Boundary RIGHT_BOUNDARY = new Boundary(1350, 0, 1, 1000);
+	private static final Boundary LEFT_BOUNDARY = new Boundary(-50, 0, 1, 1000);
 	public void cleanObj() {
 		CollisionManager.cleanObjects(
 				userProjectiles,
