@@ -43,6 +43,5 @@ public class AmmoBox extends ActiveActorDestructible {
     }
 
     @Override
-    public void takeDamage() {
-    }
+    public void takeDamage() {}
 }
