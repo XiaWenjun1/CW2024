@@ -2,6 +2,7 @@ package com.example.demo.Level;
 
 import com.example.demo.Display.LevelView;
 import com.example.demo.Display.LevelViewLevelTwo;
+import com.example.demo.Display.TargetLevelTwo;
 import com.example.demo.Object.Boss;
 
 public class LevelTwo extends LevelParent {
@@ -10,6 +11,7 @@ public class LevelTwo extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
 	private LevelViewLevelTwo levelView;
+	private TargetLevelTwo targetLevelTwo;
 
 	public LevelTwo(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
@@ -19,6 +21,7 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
+		targetLevelTwo = new TargetLevelTwo(getRoot());
 	}
 
 	@Override
@@ -27,23 +30,23 @@ public class LevelTwo extends LevelParent {
 			loseGame();
 		}
 		else if (boss.isDestroyed()) {
+			targetLevelTwo.hideHint();
 			winGame();
 		}
 	}
 
 	@Override
 	protected void spawnEnemyUnits() {
-		// 如果当前没有敌人并且 Boss 还没有被添加，才添加 Boss
 		if (getCurrentNumberOfEnemies() == 0 && !isBossAdded()) {
-			addEnemyUnit(boss); // 将 Boss 添加到敌人列表
+			addEnemyUnit(boss);
 			if (!getRoot().getChildren().contains(boss)) {
-				getRoot().getChildren().add(boss);  // 确保 Boss 被添加到场景中
+				getRoot().getChildren().add(boss);
 			}
-			setBossAdded(true); // 标记 Boss 已经添加
+			setBossAdded(true);
+			targetLevelTwo.showHint();
 		}
 	}
 
-	// 新增一个方法来标记 Boss 是否已经添加
 	private boolean bossAdded = false;
 
 	private boolean isBossAdded() {

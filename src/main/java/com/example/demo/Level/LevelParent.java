@@ -36,7 +36,7 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> ammoBoxes;
 	private final Random random = new Random();
 
-	private static final double AmmoBox_SPAWN_PROBABILITY = 0.005;
+	private static final double AmmoBox_SPAWN_PROBABILITY = 0.01;
 
 	private boolean isSpacePressed = false;
 

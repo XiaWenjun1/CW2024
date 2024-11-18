@@ -21,6 +21,11 @@ they move at a set speed and disappear upon reaching the screen boundary.
 - **Enemy and Boss Animations**: The enemy and boss characters follow pre-defined paths using `PathTransition`, 
 with the boss having a more complex movement pattern.
 
+### Level
+
+- **LevelOne**: Add ScoreBoard class to show Target Kill and Current Kill(It will update the destroy enemy plane number).
+- **LevelTwo**: Add TargetLevelTwo class to show target hint.
+
 ### Sound Effects and Background Music
 
 - **Button Hover Sound**: Each button plays a sound effect (`btnhover.wav`) on hover.
@@ -32,11 +37,6 @@ with the boss having a more complex movement pattern.
 - **Background Music Control**: The settings screen allows setting the background music via a toggle.
 - **Game Sound Control**: The settings screen allows setting the explosion sound via a toggle.
 - **Close Settings Screen**: Returns to the main screen and removes the blur effect.
-
-### Scene Switching
-
-- **Return to Main Screen and Scene Switching**: The game supports switching between the main and game screens, 
-automatically pausing or restarting animations as needed.
 
 ### ActiveActor
 
@@ -96,4 +96,5 @@ maximum user projectile level is 3, default is 1.
 Reconstruct FighterPlane class fireprojectiles method to make it a list. Add boss one more fire pattern(fire 3 balls one time) and it will change fire pattern automatically.
 Add "CollisionManager, EndGameMenuManager, ExplosionEffectManager and PauseMenuManager" to short LevelParent code.
 - **2024-11-18**: Add vertical velocity for boss projectile and set velocity method. Add one more boss fire pattern. Fire 3 balls with 3 different directions. 
-(Straight, LeftUp and LeftDown).
+(Straight, LeftUp and LeftDown). Add Two classes in display folder(ScoreBoard and TargetLevelTwo). ScoreBoard is used in LevelOne to
+show Target Kill and Current Kill(It will update the destroy enemy plane number). TargetLevelTwo is used in LevelTwo to show target hint.
