@@ -34,7 +34,7 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
-		scoreBoard = new ScoreBoard(10, 690, KILLS_TO_ADVANCE);
+		scoreBoard = new ScoreBoard(10, 730, KILLS_TO_ADVANCE);
 		getRoot().getChildren().add(scoreBoard.getContainer());
 	}
 

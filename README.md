@@ -25,6 +25,9 @@ with the boss having a more complex movement pattern.
 
 - **LevelOne**: Add ScoreBoard class to show Target Kill and Current Kill(It will update the destroy enemy plane number).
 - **LevelTwo**: Add TargetLevelTwo class to show target hint.
+- **LevelThree**: Enemies and bosses exist at the same time. The winning condition is to defeat the boss and kill a certain 
+number of enemy planes, which must be met at the same time. (To reduce the difficulty of the game. 
+When user reach the number of enemy plane killed, no more enemy plane spawn.) Target hint and ScoreBoard will show in left bottom of screen.
 
 ### Sound Effects and Background Music
 
@@ -56,6 +59,8 @@ user projectile will be bigger image(bigger hit box) and faster speed.
 
 - **Sound Playback Delay**: `AudioClip` is used to minimize delay in sound effects.
 - **Path Movement Lag**: Adjusted `PathTransition` duration to optimize smooth movement for enemy and boss characters.
+- **Boss Health Bar still exists when killed in LevelThree**: Add hideHealthBar function in Boss class. Using it in LevelThree
+when boss destroyed.
 
 ## Project Structure
 
@@ -98,3 +103,6 @@ Add "CollisionManager, EndGameMenuManager, ExplosionEffectManager and PauseMenuM
 - **2024-11-18**: Add vertical velocity for boss projectile and set velocity method. Add one more boss fire pattern. Fire 3 balls with 3 different directions. 
 (Straight, LeftUp and LeftDown). Add Two classes in display folder(ScoreBoard and TargetLevelTwo). ScoreBoard is used in LevelOne to
 show Target Kill and Current Kill(It will update the destroy enemy plane number). TargetLevelTwo is used in LevelTwo to show target hint.
+- **2024-11-19**: Add LevelThree. Enemies and bosses exist at the same time. The winning condition is to defeat the boss and kill a certain 
+number of enemy planes, which must be met at the same time. (To reduce the difficulty of the game. When user reach the number of enemy plane killed, no more enemy plane spawn.)
+Boss Health Bar will hide when it got destroyed. Winning condition will show on left bottom of screen.

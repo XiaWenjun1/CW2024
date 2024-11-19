@@ -17,7 +17,7 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0;
-	private static final double BOSS_FIRE_RATE = 0.02;
+	private static final double BOSS_FIRE_RATE = 0.01;
 	private static final double BOSS_SHIELD_PROBABILITY = .001;
 	private static final int IMAGE_WIDTH = 300;
 	private static final int IMAGE_HEIGHT = 300;
@@ -273,10 +273,6 @@ public class Boss extends FighterPlane {
 		return Math.random() < BOSS_FIRE_RATE;
 	}
 
-	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
-	}
-
 	private boolean shieldShouldBeActivated() {
 		return Math.random() < BOSS_SHIELD_PROBABILITY;
 	}
@@ -296,6 +292,12 @@ public class Boss extends FighterPlane {
 
 	public ProgressBar getHealthBar() {
 		return healthBar;
+	}
+
+	public void hideHealthBar() {
+		if (healthBar != null) {
+			healthBar.setVisible(false);
+		}
 	}
 
 	public ImageView getShieldImage() {
