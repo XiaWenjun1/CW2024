@@ -2,10 +2,12 @@ package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Display.LevelView;
+import com.example.demo.Display.ScoreBoard;
 import com.example.demo.Object.EnemyPlane;
 
 public class LevelOne extends LevelParent {
-	
+
+	private ScoreBoard scoreBoard;
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.Level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
@@ -21,14 +23,19 @@ public class LevelOne extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
+		} else {
+			scoreBoard.updateCurrentKills(getUser().getNumberOfKills());
+			if (userHasReachedKillTarget()) {
+				goToNextLevel(NEXT_LEVEL);
+			}
 		}
-		else if (userHasReachedKillTarget())
-			goToNextLevel(NEXT_LEVEL);
 	}
 
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
+		scoreBoard = new ScoreBoard(10, 730, KILLS_TO_ADVANCE);
+		getRoot().getChildren().add(scoreBoard.getContainer());
 	}
 
 	@Override

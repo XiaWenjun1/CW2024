@@ -37,8 +37,17 @@ public class LevelView {
 	
 	public void removeHearts(int heartsRemaining) {
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
-		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
+		int heartsToRemove = currentNumberOfHearts - heartsRemaining;
+		for (int i = 0; i < heartsToRemove; i++) {
 			heartDisplay.removeHeart();
+		}
+	}
+
+	public void addHearts(int heartsRemaining) {
+		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
+		int heartsToAdd = heartsRemaining - currentNumberOfHearts;
+		for (int i = 0; i < heartsToAdd; i++) {
+			heartDisplay.addHeart();
 		}
 	}
 

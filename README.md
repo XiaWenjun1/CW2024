@@ -1,6 +1,5 @@
 ## Improvements
-- **Rename controller and classes**: Rename Main to BattlePlane. Controller to Control start. 
-Remove Destructible interface and move to ActiveActor.
+- **Rename controller and classes**: Rename Controller to Control start. Remove Destructible interface and move to ActiveActor.
 - **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
 handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
 
@@ -21,6 +20,14 @@ they move at a set speed and disappear upon reaching the screen boundary.
 - **Enemy and Boss Animations**: The enemy and boss characters follow pre-defined paths using `PathTransition`, 
 with the boss having a more complex movement pattern.
 
+### Level
+
+- **LevelOne**: Add ScoreBoard class to show Target Kill and Current Kill(It will update the destroy enemy plane number).
+- **LevelTwo**: Add TargetLevelTwo class to show target hint.
+- **LevelThree**: Enemies and bosses exist at the same time. The winning condition is to defeat the boss and kill a certain 
+number of enemy planes, which both conditions must be met. (To reduce the difficulty of the game. 
+When user reach the number of enemy plane killed, no more enemy plane spawn.) Target hint and ScoreBoard will show in left bottom of screen.
+
 ### Sound Effects and Background Music
 
 - **Button Hover Sound**: Each button plays a sound effect (`btnhover.wav`) on hover.
@@ -32,11 +39,6 @@ with the boss having a more complex movement pattern.
 - **Background Music Control**: The settings screen allows setting the background music via a toggle.
 - **Game Sound Control**: The settings screen allows setting the explosion sound via a toggle.
 - **Close Settings Screen**: Returns to the main screen and removes the blur effect.
-
-### Scene Switching
-
-- **Return to Main Screen and Scene Switching**: The game supports switching between the main and game screens, 
-automatically pausing or restarting animations as needed.
 
 ### ActiveActor
 
@@ -51,11 +53,14 @@ Fire 3 balls one time with 3 different directions(Straight, LeftUp and LeftDown)
 - **Ammo Box**: It is an item spawn randomly in game. When collision with user plane, user projectile will update (max 3 level)
 user projectile will be bigger image(bigger hit box) and faster speed.
 - **Boundary**: Collision with user and enemy bullets as well as ammo box to clean image.
+- **Heart**: It is an item spawn randomly in game. When collision with user plane, user will increase 1 health(No maximum).
 
 ## Issues Encountered
 
 - **Sound Playback Delay**: `AudioClip` is used to minimize delay in sound effects.
 - **Path Movement Lag**: Adjusted `PathTransition` duration to optimize smooth movement for enemy and boss characters.
+- **Boss Health Bar still exists when killed in LevelThree**: Add hideHealthBar function in Boss class. Using it in LevelThree
+when boss destroyed.
 
 ## Project Structure
 
@@ -71,29 +76,35 @@ click 'Continue' to resume or click middle mouse again to resume game.
 
 ## Changelog
 
-- **2024-11-06**: Completed animations for plane, bullets, enemies, and boss for main menu. Added sound effects and background music control.
-- **2024-11-07**: Fixed bug preventing repeated level loading. Make the plane can move horizontally. 
-Add hitBox to make hit range more reasonable.
+- **2024-11-06**: Completed **animations** for plane, bullets, enemies, and boss for **main menu**. Added **sound effects** and **background music** control.
+- **2024-11-07**: Fixed bug preventing repeated level loading. Make the plane can **move horizontally**. 
+Add **hitBox** to make hit range more reasonable.
 - **2024-11-08**: Users cannot long press the space button to fire bullets. Each press can fire one bullet. 
-The mouse has been added to move the user plane. When the mouse moves to the user plane, 
+The **mouse** has been added to move the user plane. When the mouse moves to the user plane, 
 it will be displayed as a finger, and elsewhere as a pointer. 
-Users can drag the plane by holding down the left mouse button, and stop when they release it. 
-At the same time, the original movement method is also retained.
-- **2024-11-09**: Remove slider. Now, using toggle (checkbox) to control volume of background sound and game sound. Fix bugs:
-boss cannot move out of the border. And shield image will show when it activated.
-- **2024-11-10**: Add health bar to boss. Reconstruct initialBackground method. Method encapsulation:
+Users can **drag the plane** by holding down the left mouse button, and stop when they release it. 
+At the same time, the **original movement** method is also retained.
+- **2024-11-09**: Using toggle (**checkbox**) to control background sound and game sound. Fix bugs:
+boss cannot move out of the border. And **shield image** will show when it activated.
+- **2024-11-10**: Add **health bar** to boss. Reconstruct initialBackground method. Method encapsulation:
 handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
-- **2024-11-11**: Add fighter plane destroyed sound(explosion sound), and user can use settings to turn off (background and explosion sounds).
-- **2024-11-12**: Add fighter plane destroyed image(explosion image added). Changing to 60 FPS.
-- **2024-11-13**: Add pause menu when game playing. Middle mouse to open pause menu, it will stop timeline and make background blur.
+- **2024-11-11**: Add fighter plane **destroyed sound**(explosion sound), and user can use **settings to turn off** (background and explosion sounds).
+- **2024-11-12**: Add fighter plane **destroyed image**(explosion image added). Changing to 60 FPS.
+- **2024-11-13**: Add **pause menu** when game playing. **Middle mouse** to open pause menu, it will stop timeline and make **background blur**.
 Click middle mouse to continue or click continue button to resume game.
-- **2024-11-14**: Add EndGameMenu. When game win or lose, it will show a game over pane after 2 seconds of win or lose images, with two buttons(Return to Main, Exit)
-when click 'Return to Main', user will return to main page and the settings follow your previous settings. Click 'Exit', exit program.
+- **2024-11-14**: Add **EndGameMenu**. When game win or lose, it will show a game over pane after **2 seconds** of win or lose images, with two buttons(Return to Main, Exit)
+when click 'Return to Main', user will return to main page and the **settings follow your previous settings**. Click 'Exit', exit program.
 - **2024-11-15**: Add folders for better handling class.
-- **2024-11-16**: Add ammo box, spawn randomly in game. When collision with user plane, it will update user projectile(bigger image, hit box and faster speed), 
+- **2024-11-16**: Add **ammo box**, spawn randomly in game. When collision with user plane, it will **update user projectile**(bigger image, hit box and faster speed), 
 maximum user projectile level is 3, default is 1.
-- **2024-11-17**: Add boundaries for collision with user and enemy projectile and object(ammo box) to clean images projectile and object(ammo box).
-Reconstruct FighterPlane class fireprojectiles method to make it a list. Add boss one more fire pattern(fire 3 balls one time) and it will change fire pattern automatically.
-Add "CollisionManager, EndGameMenuManager, ExplosionEffectManager and PauseMenuManager" to short LevelParent code.
-- **2024-11-18**: Add vertical velocity for boss projectile and set velocity method. Add one more boss fire pattern. Fire 3 balls with 3 different directions. 
-(Straight, LeftUp and LeftDown).
+- **2024-11-17**: Add **boundaries** for collision with user and enemy projectile and object(ammo box) to **clean images** projectile and object(ammo box).
+Reconstruct FighterPlane class **fireprojectiles method to make it a list**. Add boss one more **fire pattern(fire 3 balls one time)** and it will **change fire pattern automatically**.
+Add **"CollisionManager, EndGameMenuManager, ExplosionEffectManager and PauseMenuManager"** to short LevelParent code.
+- **2024-11-18**: Add **vertical velocity for boss projectile and set velocity method**. Add one more boss **fire pattern. Fire 3 balls with 3 different directions. 
+(Straight, LeftUp and LeftDown)**. Add Two classes in display folder(**ScoreBoard and TargetLevelTwo**). ScoreBoard is used in LevelOne to
+**show Target Kill and Current Kill**(It will update the destroy enemy plane number). TargetLevelTwo is used in LevelTwo to show **target hint**.
+- **2024-11-19**: Add **LevelThree**. Enemies and bosses exist at the same time. The winning condition is to defeat the boss and kill a certain 
+number of enemy planes, which both conditions must be met. (To reduce the difficulty of the game. When user reach the number of enemy plane killed, no more enemy plane spawn.)
+Boss Health Bar will hide when it got destroyed. Winning condition will show on left bottom of screen. Add object **heart**. It is an item spawn randomly in game. 
+When collision with user plane, user will **increase 1 health(No maximum)**. Add one method in **HeartDisplay class (addHeart)** to show change in display heart. 
+Add one method in **LevelView class(addHearts)** to calculate number to add health. Add **UserInputManager** to handle Key and Mouse inputs to short LevelParent and UserPlane Code.

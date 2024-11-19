@@ -13,16 +13,16 @@ public class EnemyPlane extends FighterPlane {
 	private static final String IMAGE_NAME = "enemyplane.png";
 	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;
-	private static final int HORIZONTAL_VELOCITY = -3;
+	private static final int HORIZONTAL_VELOCITY = -2;
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
 	private static final int INITIAL_HEALTH = 1;
-	private static final double FIRE_RATE = .005;
+	private static final double FIRE_RATE = .0025;
 
 	public EnemyPlane(double initialXPos, double initialYPos, LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
 		this.levelParent = levelParent;
-		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.35);
 	}
 
 	@Override
@@ -34,15 +34,14 @@ public class EnemyPlane extends FighterPlane {
 	public List<ActiveActorDestructible> fireProjectiles() {
 		List<ActiveActorDestructible> projectiles = new ArrayList<>();
 
-		if (Math.random() < FIRE_RATE) { // 确定是否发射子弹
+		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 
-			// 创建单发子弹
 			projectiles.add(new EnemyProjectile(projectileXPosition, projectileYPosition, levelParent));
 		}
 
-		return projectiles; // 即使为空也返回列表，避免返回 null
+		return projectiles;
 	}
 
 	@Override

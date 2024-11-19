@@ -1,0 +1,40 @@
+package com.example.demo.Display;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+
+public class ScoreBoard {
+
+    private static final double WIDTH = 200;
+    private static final double HEIGHT = 50;
+
+    private final Pane container;
+    private final Label killInfoLabel;
+    private int currentKills;
+    private final int targetKills;
+
+    public ScoreBoard(double x, double y, int targetKills) {
+        this.targetKills = targetKills;
+        this.currentKills = 0;
+
+        container = new Pane();
+        container.setLayoutX(x);
+        container.setLayoutY(y);
+        container.setPrefSize(WIDTH, HEIGHT);
+
+        killInfoLabel = new Label(currentKills + "/" + targetKills);
+        killInfoLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: red; -fx-font-weight: bold");
+        killInfoLabel.setLayoutY(0);
+
+        container.getChildren().add(killInfoLabel);
+    }
+
+    public Pane getContainer() {
+        return container;
+    }
+
+    public void updateCurrentKills(int kills) {
+        this.currentKills = kills;
+        killInfoLabel.setText("Target kill:" + currentKills + "/" + targetKills);
+    }
+}

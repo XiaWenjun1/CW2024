@@ -17,12 +17,12 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0;
-	private static final double BOSS_FIRE_RATE = 0.02;
-	private static final double BOSS_SHIELD_PROBABILITY = .0005;
+	private static final double BOSS_FIRE_RATE = 0.01;
+	private static final double BOSS_SHIELD_PROBABILITY = .001;
 	private static final int IMAGE_WIDTH = 300;
 	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 5;
-	private static final int HEALTH = 100;
+	private static final int HEALTH = 50;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
@@ -128,7 +128,7 @@ public class Boss extends FighterPlane {
 			BossProjectile projectile = new BossProjectile(projectileXPosition, projectileYPosition, levelParent);
 			projectile.setLayoutY(projectileYPosition);
 
-			double horizontalVelocity = -3;
+			double horizontalVelocity = -5;
 			double verticalVelocity = 0;
 
 			projectile.setVelocity(horizontalVelocity, verticalVelocity);
@@ -153,17 +153,17 @@ public class Boss extends FighterPlane {
 
 		BossProjectile straightProjectile = new BossProjectile(straightX, straightY, levelParent);
 		straightProjectile.setLayoutY(straightY);
-		straightProjectile.setVelocity(-3, 0);
+		straightProjectile.setVelocity(-4, 0);
 		projectiles.add((ActiveActorDestructible) straightProjectile);
 
 		BossProjectile leftUpProjectile = new BossProjectile(straightX, leftUpY, levelParent);
 		leftUpProjectile.setLayoutY(leftUpY);
-		leftUpProjectile.setVelocity(-3, -1);
+		leftUpProjectile.setVelocity(-4, -1);
 		projectiles.add((ActiveActorDestructible) leftUpProjectile);
 
 		BossProjectile leftDownProjectile = new BossProjectile(straightX, leftDownY, levelParent);
 		leftDownProjectile.setLayoutY(leftDownY);
-		leftDownProjectile.setVelocity(-3, 1);
+		leftDownProjectile.setVelocity(-4, 1);
 		projectiles.add((ActiveActorDestructible) leftDownProjectile);
 
 		for (BossProjectile projectile : List.of(straightProjectile, leftUpProjectile, leftDownProjectile)) {
@@ -273,10 +273,6 @@ public class Boss extends FighterPlane {
 		return Math.random() < BOSS_FIRE_RATE;
 	}
 
-	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
-	}
-
 	private boolean shieldShouldBeActivated() {
 		return Math.random() < BOSS_SHIELD_PROBABILITY;
 	}
@@ -296,6 +292,12 @@ public class Boss extends FighterPlane {
 
 	public ProgressBar getHealthBar() {
 		return healthBar;
+	}
+
+	public void hideHealthBar() {
+		if (healthBar != null) {
+			healthBar.setVisible(false);
+		}
 	}
 
 	public ImageView getShieldImage() {
