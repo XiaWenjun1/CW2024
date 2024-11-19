@@ -23,6 +23,7 @@ public class PauseMenuManager {
     private Scene scene;
     private UserPlane user;
     private Node background;
+    private UserInputManager userInputManager;
     private List<ActiveActorDestructible> friendlyUnits;
     private List<ActiveActorDestructible> enemyUnits;
     private List<ActiveActorDestructible> userProjectiles;
@@ -33,7 +34,8 @@ public class PauseMenuManager {
     public PauseMenuManager(Timeline timeline, Scene scene, UserPlane user, Node background,
                             List<ActiveActorDestructible> friendlyUnits, List<ActiveActorDestructible> enemyUnits,
                             List<ActiveActorDestructible> userProjectiles, List<ActiveActorDestructible> enemyProjectiles,
-                            List<ActiveActorDestructible> ammoBoxes, List<ActiveActorDestructible> hearts) {
+                            List<ActiveActorDestructible> ammoBoxes, List<ActiveActorDestructible> hearts,
+                            UserInputManager userInputManager) {
         this.timeline = timeline;
         this.scene = scene;
         this.user = user;
@@ -44,6 +46,7 @@ public class PauseMenuManager {
         this.enemyProjectiles = enemyProjectiles;
         this.ammoBoxes = ammoBoxes;
         this.hearts = hearts;
+        this.userInputManager = userInputManager;
     }
 
     public void loadPauseMenu() {
@@ -68,7 +71,7 @@ public class PauseMenuManager {
     public void pauseGame() {
         isPaused = true;
         timeline.stop();
-        user.setPaused(true);
+        userInputManager.setPaused(true);
 
         GaussianBlur blur = new GaussianBlur(10);
         background.setEffect(blur);
@@ -80,7 +83,7 @@ public class PauseMenuManager {
     public void continueGame() {
         isPaused = false;
         timeline.play();
-        user.setPaused(false);
+        userInputManager.setPaused(false);
         background.setEffect(null);
         removeBlurFromActiveActors();
         controlPauseMenu.hidePauseMenu();

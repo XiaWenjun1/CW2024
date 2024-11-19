@@ -1,6 +1,5 @@
 ## Improvements
-- **Rename controller and classes**: Rename Main to BattlePlane. Controller to Control start. 
-Remove Destructible interface and move to ActiveActor.
+- **Rename controller and classes**: Rename Controller to Control start. Remove Destructible interface and move to ActiveActor.
 - **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
 handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
 
@@ -108,4 +107,4 @@ Add **"CollisionManager, EndGameMenuManager, ExplosionEffectManager and PauseMen
 number of enemy planes, which both conditions must be met. (To reduce the difficulty of the game. When user reach the number of enemy plane killed, no more enemy plane spawn.)
 Boss Health Bar will hide when it got destroyed. Winning condition will show on left bottom of screen. Add object **heart**. It is an item spawn randomly in game. 
 When collision with user plane, user will **increase 1 health(No maximum)**. Add one method in **HeartDisplay class (addHeart)** to show change in display heart. 
-Add one method in **LevelView class(addHearts)** to calculate number to add health.
+Add one method in **LevelView class(addHearts)** to calculate number to add health. Add **UserInputManager** to handle Key and Mouse inputs to short LevelParent and UserPlane Code.
