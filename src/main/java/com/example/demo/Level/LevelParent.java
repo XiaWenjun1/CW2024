@@ -34,9 +34,11 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 	private final List<ActiveActorDestructible> ammoBoxes;
+	private final List<ActiveActorDestructible> hearts;
 	private final Random random = new Random();
 
 	private static final double AmmoBox_SPAWN_PROBABILITY = 0.01;
+	private static final double Heart_SPAWN_PROBABILITY = 0.01;
 
 	private boolean isSpacePressed = false;
 
@@ -53,6 +55,7 @@ public abstract class LevelParent extends Observable {
 		this.userProjectiles = new ArrayList<>();
 		this.enemyProjectiles = new ArrayList<>();
 		this.ammoBoxes = new ArrayList<>();
+		this.hearts= new ArrayList<>();
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
@@ -61,7 +64,7 @@ public abstract class LevelParent extends Observable {
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
 
-		pauseMenuManager = new PauseMenuManager(timeline, scene, user, background, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles, ammoBoxes);
+		pauseMenuManager = new PauseMenuManager(timeline, scene, user, background, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles, ammoBoxes, hearts);
 		pauseMenuManager.loadPauseMenu();
 
 		this.endGameMenuManager = new EndGameMenuManager(this);
@@ -115,11 +118,13 @@ public abstract class LevelParent extends Observable {
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		spawnRandomAmmoBox();
+		spawnRandomHeart();
 		handleEnemyPenetration();
 		CollisionManager.handleCollisions(friendlyUnits, enemyUnits);
 		CollisionManager.handleUserProjectileCollisions(userProjectiles, enemyUnits);
 		CollisionManager.handleEnemyProjectileCollisions(enemyProjectiles, friendlyUnits);
 		CollisionManager.handleUserPlaneAndAmmoBoxCollisions(user, ammoBoxes);
+		CollisionManager.handleUserPlaneAndHeartCollisions(user, hearts);
 		removeAllDestroyedActors();
 		cleanObj();
 		updateKillCount();
@@ -215,6 +220,7 @@ public abstract class LevelParent extends Observable {
 		userProjectiles.forEach(projectile -> projectile.updateActor());
 		enemyProjectiles.forEach(projectile -> projectile.updateActor());
 		ammoBoxes.forEach(box -> box.updateActor());
+		hearts.forEach(heart -> heart.updateActor());
 	}
 
 	private void removeActorFromScene(ActiveActorDestructible actor) {
@@ -258,6 +264,7 @@ public abstract class LevelParent extends Observable {
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
+		levelView.addHearts(user.getHealth());
 	}
 
 	private void updateKillCount() {
@@ -323,6 +330,22 @@ public abstract class LevelParent extends Observable {
 		getRoot().getChildren().add(hitbox);
 	}
 
+	protected void spawnRandomHeart() {
+		if (random.nextDouble() < Heart_SPAWN_PROBABILITY) {
+			double randomX = random.nextDouble(screenWidth);
+			double randomY = random.nextDouble(screenWidth);
+			Heart heart = new Heart(randomX, randomY, this);
+			addHeart(heart);
+		}
+	}
+
+	protected void addHeart(Heart heart) {
+		hearts.add(heart);
+		getRoot().getChildren().add(heart);
+		Node hitbox = heart.getHitbox();
+		getRoot().getChildren().add(hitbox);
+	}
+
 	private static final Boundary RIGHT_BOUNDARY = new Boundary(1350, 0, 1, 1000);
 	private static final Boundary LEFT_BOUNDARY = new Boundary(-50, 0, 1, 1000);
 	public void cleanObj() {
@@ -330,6 +353,7 @@ public abstract class LevelParent extends Observable {
 				userProjectiles,
 				enemyProjectiles,
 				ammoBoxes,
+				hearts,
 				RIGHT_BOUNDARY,
 				LEFT_BOUNDARY,
 				this::removeActorFromScene,
@@ -348,5 +372,7 @@ public abstract class LevelParent extends Observable {
 		enemyUnits.clear();
 		userProjectiles.clear();
 		enemyProjectiles.clear();
+		ammoBoxes.clear();
+		hearts.clear();
 	}
 }

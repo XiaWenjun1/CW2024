@@ -13,7 +13,7 @@ public class EnemyPlane extends FighterPlane {
 	private static final String IMAGE_NAME = "enemyplane.png";
 	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;
-	private static final int HORIZONTAL_VELOCITY = -3;
+	private static final int HORIZONTAL_VELOCITY = -2;
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
 	private static final int INITIAL_HEALTH = 1;
@@ -22,7 +22,7 @@ public class EnemyPlane extends FighterPlane {
 	public EnemyPlane(double initialXPos, double initialYPos, LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
 		this.levelParent = levelParent;
-		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
+		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.35);
 	}
 
 	@Override

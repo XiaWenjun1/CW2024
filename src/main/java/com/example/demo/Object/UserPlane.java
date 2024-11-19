@@ -176,7 +176,7 @@ public class UserPlane extends FighterPlane {
 	@Override
 	public List<ActiveActorDestructible> fireProjectiles() {
 		if (isPaused) {
-			return new ArrayList<>(); // 返回一个空的列表而不是 null
+			return new ArrayList<>();
 		}
 
 		List<ActiveActorDestructible> projectiles = new ArrayList<>();
@@ -184,7 +184,6 @@ public class UserPlane extends FighterPlane {
 		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 		double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 
-		// 创建 UserProjectile 并添加到列表
 		UserProjectile projectile = new UserProjectile(
 				projectileXPosition,
 				projectileYPosition,
@@ -194,7 +193,7 @@ public class UserPlane extends FighterPlane {
 		);
 		projectile.setPowerLevel(userProjectile.getPowerLevel());
 
-		projectiles.add(projectile); // 添加到列表中
+		projectiles.add(projectile);
 		return projectiles;
 	}
 

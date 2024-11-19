@@ -1,7 +1,6 @@
 package com.example.demo.Object;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-
 import java.util.List;
 
 public abstract class FighterPlane extends ActiveActorDestructible {
@@ -22,6 +21,11 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 			this.destroy();
 		}
 	}
+
+	public void increaseHealth() {
+		health++;
+	}
+
 
 	protected double getProjectileXPosition(double xPositionOffset) {
 		return getLayoutX() + getTranslateX() + xPositionOffset;

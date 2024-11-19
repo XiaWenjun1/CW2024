@@ -54,10 +54,28 @@ public class CollisionManager {
         }
     }
 
+    public static void handleUserPlaneAndHeartCollisions(ActiveActorDestructible userPlane, List<ActiveActorDestructible> hearts) {
+        for (ActiveActorDestructible heart : hearts) {
+            if (userPlane.checkCollision(heart)) {
+                handleHeartPickup(userPlane, heart);
+            }
+        }
+    }
+
+    private static void handleHeartPickup(ActiveActorDestructible userPlane, ActiveActorDestructible heart) {
+        if (!heart.isDestroyed()) {
+            if (userPlane instanceof UserPlane) {
+                ((UserPlane) userPlane).increaseHealth();
+            }
+            heart.destroy();
+        }
+    }
+
     public static void cleanObjects(
             List<ActiveActorDestructible> userProjectiles,
             List<ActiveActorDestructible> enemyProjectiles,
             List<ActiveActorDestructible> ammoBoxes,
+            List<ActiveActorDestructible> hearts,
             Boundary rightBoundary,
             Boundary leftBoundary,
             Consumer<ActiveActorDestructible> removeActorFromScene,
@@ -89,6 +107,15 @@ public class CollisionManager {
             if (checkCollision.test(ammoBox.getHitbox(), rightBoundary) || checkCollision.test(ammoBox.getHitbox(), leftBoundary)) {
                 removeActorFromScene.accept(ammoBox);
                 ammoBoxIterator.remove();
+            }
+        }
+
+        Iterator<ActiveActorDestructible> heartIterator = hearts.iterator();
+        while (heartIterator.hasNext()) {
+            ActiveActorDestructible heart = heartIterator.next();
+            if (checkCollision.test(heart.getHitbox(), rightBoundary) || checkCollision.test(heart.getHitbox(), leftBoundary)) {
+                removeActorFromScene.accept(heart);
+                heartIterator.remove();
             }
         }
     }

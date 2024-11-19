@@ -9,7 +9,7 @@ public class BossProjectile extends Projectile {
 	private static final int IMAGE_WIDTH = 100;
 	private static final int IMAGE_HEIGHT = 100;
 
-	private double horizontalVelocity = -4;
+	private double horizontalVelocity = -7;
 	private double verticalVelocity = 0;
 
 	public BossProjectile(double initialXPos, double initialYPos, LevelParent levelParent) {

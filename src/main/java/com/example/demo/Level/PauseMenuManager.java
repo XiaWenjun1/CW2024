@@ -28,11 +28,12 @@ public class PauseMenuManager {
     private List<ActiveActorDestructible> userProjectiles;
     private List<ActiveActorDestructible> enemyProjectiles;
     private List<ActiveActorDestructible> ammoBoxes;
+    private List<ActiveActorDestructible> hearts;
 
     public PauseMenuManager(Timeline timeline, Scene scene, UserPlane user, Node background,
                             List<ActiveActorDestructible> friendlyUnits, List<ActiveActorDestructible> enemyUnits,
                             List<ActiveActorDestructible> userProjectiles, List<ActiveActorDestructible> enemyProjectiles,
-                            List<ActiveActorDestructible> ammoBoxes) {
+                            List<ActiveActorDestructible> ammoBoxes, List<ActiveActorDestructible> hearts) {
         this.timeline = timeline;
         this.scene = scene;
         this.user = user;
@@ -42,6 +43,7 @@ public class PauseMenuManager {
         this.userProjectiles = userProjectiles;
         this.enemyProjectiles = enemyProjectiles;
         this.ammoBoxes = ammoBoxes;
+        this.hearts = hearts;
     }
 
     public void loadPauseMenu() {
@@ -91,6 +93,7 @@ public class PauseMenuManager {
         allActors.addAll(userProjectiles);
         allActors.addAll(enemyProjectiles);
         allActors.addAll(ammoBoxes);
+        allActors.addAll(hearts);
 
         for (ActiveActorDestructible actor : allActors) {
             if (actor instanceof Node) {
@@ -117,6 +120,7 @@ public class PauseMenuManager {
         allActors.addAll(userProjectiles);
         allActors.addAll(enemyProjectiles);
         allActors.addAll(ammoBoxes);
+        allActors.addAll(hearts);
 
         for (ActiveActorDestructible actor : allActors) {
             if (actor instanceof Node) {

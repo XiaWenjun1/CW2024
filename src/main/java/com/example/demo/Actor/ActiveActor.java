@@ -16,20 +16,17 @@ public abstract class ActiveActor extends ImageView {
 		this.setFitWidth(imageWidth);
 		this.setFitHeight(imageHeight);
 		this.setPreserveRatio(true);
-/*
-		// Initialize the hitbox
-		hitbox = new Rectangle(imageWidth, imageHeight);
-		hitbox.setFill(Color.TRANSPARENT);  // 设置填充为透明
-		hitbox.setStrokeWidth(2);           // 设置边框宽度
-		hitbox.setVisible(true);            // 确保 hitbox 可见
-
- */
+//		// Initialize the hitbox
+//		hitbox = new Rectangle(imageWidth, imageHeight);
+//		hitbox.setFill(Color.TRANSPARENT);
+//		hitbox.setStrokeWidth(2);
+//		hitbox.setVisible(true);
 
 		// Test hitbox
 		hitbox = new Rectangle(imageWidth, imageHeight);
-		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));  // 半透明红色
-		hitbox.setStroke(Color.RED);        // 设置为红色边框用于调试
-		hitbox.setStrokeWidth(2);           // 设置边框宽度，确保能看到
+		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));
+		hitbox.setStroke(Color.RED);
+		hitbox.setStrokeWidth(2);
 
 	}
 

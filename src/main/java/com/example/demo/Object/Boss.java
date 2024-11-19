@@ -128,7 +128,7 @@ public class Boss extends FighterPlane {
 			BossProjectile projectile = new BossProjectile(projectileXPosition, projectileYPosition, levelParent);
 			projectile.setLayoutY(projectileYPosition);
 
-			double horizontalVelocity = -3;
+			double horizontalVelocity = -5;
 			double verticalVelocity = 0;
 
 			projectile.setVelocity(horizontalVelocity, verticalVelocity);
@@ -153,17 +153,17 @@ public class Boss extends FighterPlane {
 
 		BossProjectile straightProjectile = new BossProjectile(straightX, straightY, levelParent);
 		straightProjectile.setLayoutY(straightY);
-		straightProjectile.setVelocity(-3, 0);
+		straightProjectile.setVelocity(-4, 0);
 		projectiles.add((ActiveActorDestructible) straightProjectile);
 
 		BossProjectile leftUpProjectile = new BossProjectile(straightX, leftUpY, levelParent);
 		leftUpProjectile.setLayoutY(leftUpY);
-		leftUpProjectile.setVelocity(-3, -1);
+		leftUpProjectile.setVelocity(-4, -1);
 		projectiles.add((ActiveActorDestructible) leftUpProjectile);
 
 		BossProjectile leftDownProjectile = new BossProjectile(straightX, leftDownY, levelParent);
 		leftDownProjectile.setLayoutY(leftDownY);
-		leftDownProjectile.setVelocity(-3, 1);
+		leftDownProjectile.setVelocity(-4, 1);
 		projectiles.add((ActiveActorDestructible) leftDownProjectile);
 
 		for (BossProjectile projectile : List.of(straightProjectile, leftUpProjectile, leftDownProjectile)) {
