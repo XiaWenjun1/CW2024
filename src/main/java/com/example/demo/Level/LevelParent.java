@@ -29,6 +29,7 @@ public abstract class LevelParent extends Observable {
 	private EndGameMenuManager endGameMenuManager;
 	private UserInputManager userInputManager;
 	private ActiveActorManager activeActorManager;
+	private CleanDestroyedManager cleanDestroyedManager;
 
 	private final Random random = new Random();
 
@@ -57,15 +58,13 @@ public abstract class LevelParent extends Observable {
 		this.userInputManager.setPauseMenuManager(pauseMenuManager);
 		pauseMenuManager.loadPauseMenu();
 		this.endGameMenuManager = new EndGameMenuManager(this);
+		this.cleanDestroyedManager = new CleanDestroyedManager(root, activeActorManager);
 
 		initializeTimeline();
 		activeActorManager.getFriendlyUnits().add(user);
 	}
 
-
 	protected abstract void initializeFriendlyUnits();
-
-	protected abstract void spawnEnemyUnits();
 
 	protected abstract LevelView instantiateLevelView();
 
@@ -82,18 +81,11 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateScene() {
-		activeActorManager.updateActors();
-		generateEnemyFire();
-		updateNumberOfEnemies();
-		spawnEnemyUnits();
+		updateActors();
 		spawnRandomItems();
-		handleEnemyPenetration();
-		handleCollisions();
-		removeAllDestroyedActors();
-		cleanObj();
-		updateKillCount();
-		updateLevelView();
-		checkIfGameOver();
+		handleCollisionsAndPenetration();
+		cleanUpDestroyedActors();
+		updateGameStatus();
 	}
 
 	private void initializeTimeline() {
@@ -111,13 +103,18 @@ public abstract class LevelParent extends Observable {
 		root.getChildren().add(background);
 	}
 
-	private void handleCollisions() {
-		CollisionManager.handleCollisions(activeActorManager.getFriendlyUnits(), activeActorManager.getEnemyUnits());
-		CollisionManager.handleUserProjectileCollisions(activeActorManager.getUserProjectiles(), activeActorManager.getEnemyUnits());
-		CollisionManager.handleEnemyProjectileCollisions(activeActorManager.getEnemyProjectiles(), activeActorManager.getFriendlyUnits());
-		CollisionManager.handleUserPlaneAndAmmoBoxCollisions(user, activeActorManager.getAmmoBoxes());
-		CollisionManager.handleUserPlaneAndHeartCollisions(user, activeActorManager.getHearts());
+	private void updateActors() {
+		activeActorManager.updateActors();
+		updateNumberOfEnemies();
+		spawnEnemyUnits();
+		generateEnemyFire();
 	}
+
+	private void updateNumberOfEnemies() {
+		currentNumberOfEnemies = activeActorManager.getEnemyUnits().size();
+	}
+
+	protected abstract void spawnEnemyUnits();
 
 	private void generateEnemyFire() {
 		activeActorManager.getEnemyUnits().forEach(enemy -> {
@@ -137,36 +134,47 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private void removeActorFromScene(ActiveActorDestructible actor) {
-		root.getChildren().remove(actor);
-		root.getChildren().remove(actor.getHitbox());
+	private void spawnRandomItems() {
+		spawnRandomAmmoBox();
+		spawnRandomHeart();
 	}
 
-	private void removeAllDestroyedActors() {
-		removeDestroyedActors(activeActorManager.getFriendlyUnits());
-		removeDestroyedActors(activeActorManager.getEnemyUnits());
-		removeDestroyedActors(activeActorManager.getUserProjectiles());
-		removeDestroyedActors(activeActorManager.getEnemyProjectiles());
-		removeDestroyedActors(activeActorManager.getAmmoBoxes());
-		removeDestroyedActors(activeActorManager.getHearts());
+	protected void spawnRandomAmmoBox() {
+		if (random.nextDouble() < AmmoBox_SPAWN_PROBABILITY) {
+			double randomX = random.nextDouble(screenWidth);
+			double randomY = random.nextDouble(screenWidth);
+			AmmoBox ammoBox = new AmmoBox(randomX, randomY, this);
+			addAmmoBox(ammoBox);
+		}
 	}
 
-	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		List<ActiveActorDestructible> destroyedActors = actors.stream()
-				.filter(ActiveActorDestructible::isDestroyed)
-				.collect(Collectors.toList());
+	protected void spawnRandomHeart() {
+		if (random.nextDouble() < Heart_SPAWN_PROBABILITY) {
+			double randomX = random.nextDouble(screenWidth);
+			double randomY = random.nextDouble(screenWidth);
+			Heart heart = new Heart(randomX, randomY, this);
+			addHeart(heart);
+		}
+	}
 
-		destroyedActors.forEach(actor -> {
-			actor.destroy();
+	private void addActorToScene(ActiveActorDestructible actor, List<ActiveActorDestructible> actorList) {
+		actorList.add(actor);
+		root.getChildren().add(actor);
+		Node hitbox = actor.getHitbox();
+		root.getChildren().add(hitbox);
+	}
 
-			if (actor instanceof FighterPlane) {
-				ExplosionEffectManager.triggerExplosionEffect(root, (FighterPlane) actor);
-			}
+	protected void addAmmoBox(AmmoBox ammoBox) {
+		addActorToScene(ammoBox, activeActorManager.getAmmoBoxes());
+	}
 
-			removeActorFromScene(actor);
-		});
+	protected void addHeart(Heart heart) {
+		addActorToScene(heart, activeActorManager.getHearts());
+	}
 
-		actors.removeAll(destroyedActors);
+	private void handleCollisionsAndPenetration() {
+		handleEnemyPenetration();
+		handleCollisions();
 	}
 
 	private void handleEnemyPenetration() {
@@ -178,9 +186,44 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private void updateLevelView() {
-		levelView.removeHearts(user.getHealth());
-		levelView.addHearts(user.getHealth());
+	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
+		return Math.abs(enemy.getTranslateX()) > screenWidth;
+	}
+
+	private void handleCollisions() {
+		CollisionManager.handleCollisions(activeActorManager.getFriendlyUnits(), activeActorManager.getEnemyUnits());
+		CollisionManager.handleUserProjectileCollisions(activeActorManager.getUserProjectiles(), activeActorManager.getEnemyUnits());
+		CollisionManager.handleEnemyProjectileCollisions(activeActorManager.getEnemyProjectiles(), activeActorManager.getFriendlyUnits());
+		CollisionManager.handleUserPlaneAndAmmoBoxCollisions(user, activeActorManager.getAmmoBoxes());
+		CollisionManager.handleUserPlaneAndHeartCollisions(user, activeActorManager.getHearts());
+	}
+
+	protected void addEnemyUnit(ActiveActorDestructible enemy) {
+		activeActorManager.getEnemyUnits().add(enemy);
+		getRoot().getChildren().add(enemy);
+		Node hitbox = ((ActiveActor) enemy).getHitbox();
+		getRoot().getChildren().add(hitbox);
+	}
+
+	private void cleanUpDestroyedActors() {
+		cleanDestroyedManager.removeAllDestroyedActors();
+		cleanDestroyedManager.cleanObj();
+	}
+
+	public void cleanUp() {
+		timeline.stop();
+		root.getChildren().clear();
+		cleanUpActors();
+	}
+
+	private void cleanUpActors() {
+		activeActorManager.getAllActors().clear();
+	}
+
+	private void updateGameStatus() {
+		updateKillCount();
+		updateLevelView();
+		checkIfGameOver();
 	}
 
 	private void updateKillCount() {
@@ -189,8 +232,30 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
-		return Math.abs(enemy.getTranslateX()) > screenWidth;
+	private void updateLevelView() {
+		levelView.removeHearts(user.getHealth());
+		levelView.addHearts(user.getHealth());
+	}
+
+	protected abstract void checkIfGameOver();
+
+	public void startGame() {
+		background.requestFocus();
+		timeline.play();
+	}
+
+	public void winGame() {
+		endGameMenuManager.winGame();
+	}
+
+	public void loseGame() {
+		endGameMenuManager.loseGame();
+	}
+
+	public void goToNextLevel(String levelName) {
+		cleanUp();
+		setChanged();
+		notifyObservers(levelName);
 	}
 
 	public UserPlane getUser() {
@@ -217,99 +282,5 @@ public abstract class LevelParent extends Observable {
 
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
-	}
-
-	private void updateNumberOfEnemies() {
-		currentNumberOfEnemies = activeActorManager.getEnemyUnits().size();
-	}
-
-	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		activeActorManager.getEnemyUnits().add(enemy);
-		getRoot().getChildren().add(enemy);
-		Node hitbox = ((ActiveActor) enemy).getHitbox();
-		getRoot().getChildren().add(hitbox);
-	}
-
-	private void spawnRandomItems() {
-		spawnRandomAmmoBox();
-		spawnRandomHeart();
-	}
-
-	protected void spawnRandomAmmoBox() {
-		if (random.nextDouble() < AmmoBox_SPAWN_PROBABILITY) {
-			double randomX = random.nextDouble(screenWidth);
-			double randomY = random.nextDouble(screenWidth);
-			AmmoBox ammoBox = new AmmoBox(randomX, randomY, this);
-			addAmmoBox(ammoBox);
-		}
-	}
-
-	protected void addAmmoBox(AmmoBox ammoBox) {
-		activeActorManager.getAmmoBoxes().add(ammoBox);
-		getRoot().getChildren().add(ammoBox);
-		Node hitbox = ammoBox.getHitbox();
-		getRoot().getChildren().add(hitbox);
-	}
-
-	protected void spawnRandomHeart() {
-		if (random.nextDouble() < Heart_SPAWN_PROBABILITY) {
-			double randomX = random.nextDouble(screenWidth);
-			double randomY = random.nextDouble(screenWidth);
-			Heart heart = new Heart(randomX, randomY, this);
-			addHeart(heart);
-		}
-	}
-
-	protected void addHeart(Heart heart) {
-		activeActorManager.getHearts().add(heart);
-		getRoot().getChildren().add(heart);
-		Node hitbox = heart.getHitbox();
-		getRoot().getChildren().add(hitbox);
-	}
-
-	private static final Boundary RIGHT_BOUNDARY = new Boundary(1350, 0, 1, 1000);
-	private static final Boundary LEFT_BOUNDARY = new Boundary(-50, 0, 1, 1000);
-	public void cleanObj() {
-		CollisionManager.cleanObjects(
-				activeActorManager.getUserProjectiles(),
-				activeActorManager.getEnemyProjectiles(),
-				activeActorManager.getAmmoBoxes(),
-				activeActorManager.getHearts(),
-				RIGHT_BOUNDARY,
-				LEFT_BOUNDARY,
-				this::removeActorFromScene,
-				CollisionManager::checkCollision
-		);
-	}
-
-	public void cleanUp() {
-		timeline.stop();
-		root.getChildren().clear();
-		cleanUpActors();
-	}
-
-	private void cleanUpActors() {
-		activeActorManager.getAllActors().clear();
-	}
-
-	protected abstract void checkIfGameOver();
-
-	public void startGame() {
-		background.requestFocus();
-		timeline.play();
-	}
-
-	public void winGame() {
-		endGameMenuManager.winGame();
-	}
-
-	public void loseGame() {
-		endGameMenuManager.loseGame();
-	}
-
-	public void goToNextLevel(String levelName) {
-		cleanUp();
-		setChanged();
-		notifyObservers(levelName);
 	}
 }

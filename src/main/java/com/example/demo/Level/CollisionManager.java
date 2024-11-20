@@ -2,15 +2,11 @@ package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.Boundary;
 import com.example.demo.Object.UserPlane;
 import javafx.scene.Node;
-import javafx.scene.shape.Rectangle;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Consumer;
+
 
 public class CollisionManager {
 
@@ -71,56 +67,4 @@ public class CollisionManager {
         }
     }
 
-    public static void cleanObjects(
-            List<ActiveActorDestructible> userProjectiles,
-            List<ActiveActorDestructible> enemyProjectiles,
-            List<ActiveActorDestructible> ammoBoxes,
-            List<ActiveActorDestructible> hearts,
-            Boundary rightBoundary,
-            Boundary leftBoundary,
-            Consumer<ActiveActorDestructible> removeActorFromScene,
-            BiPredicate<Rectangle, Rectangle> checkCollision) {
-
-        Iterator<ActiveActorDestructible> userIterator = userProjectiles.iterator();
-        while (userIterator.hasNext()) {
-            ActiveActorDestructible bullet = userIterator.next();
-            if (checkCollision.test(bullet.getHitbox(), rightBoundary)) {
-                bullet.destroy();
-                removeActorFromScene.accept(bullet);
-                userIterator.remove();
-            }
-        }
-
-        Iterator<ActiveActorDestructible> enemyIterator = enemyProjectiles.iterator();
-        while (enemyIterator.hasNext()) {
-            ActiveActorDestructible bullet = enemyIterator.next();
-            if (checkCollision.test(bullet.getHitbox(), leftBoundary)) {
-                bullet.destroy();
-                removeActorFromScene.accept(bullet);
-                enemyIterator.remove();
-            }
-        }
-
-        Iterator<ActiveActorDestructible> ammoBoxIterator = ammoBoxes.iterator();
-        while (ammoBoxIterator.hasNext()) {
-            ActiveActorDestructible ammoBox = ammoBoxIterator.next();
-            if (checkCollision.test(ammoBox.getHitbox(), rightBoundary) || checkCollision.test(ammoBox.getHitbox(), leftBoundary)) {
-                removeActorFromScene.accept(ammoBox);
-                ammoBoxIterator.remove();
-            }
-        }
-
-        Iterator<ActiveActorDestructible> heartIterator = hearts.iterator();
-        while (heartIterator.hasNext()) {
-            ActiveActorDestructible heart = heartIterator.next();
-            if (checkCollision.test(heart.getHitbox(), rightBoundary) || checkCollision.test(heart.getHitbox(), leftBoundary)) {
-                removeActorFromScene.accept(heart);
-                heartIterator.remove();
-            }
-        }
-    }
-
-    public static boolean checkCollision(Rectangle rect1, Rectangle rect2) {
-        return rect1.getBoundsInParent().intersects(rect2.getBoundsInParent());
-    }
 }

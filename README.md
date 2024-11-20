@@ -1,5 +1,5 @@
 ## Improvements
-- **Rename controller and classes**: Rename Controller to Control start. Remove Destructible interface and move to ActiveActor.
+- **Rename controller and classes**: Rename Controller to Control start.
 - **Reconstruct and encapsulation**: Refactored the initialBackground method. Method encapsulation:
 handleKeyPressed and handleKeyReleased are independent methods to facilitate understanding and maintenance of key processing logic.
 
@@ -108,3 +108,5 @@ number of enemy planes, which both conditions must be met. (To reduce the diffic
 Boss Health Bar will hide when it got destroyed. Winning condition will show on left bottom of screen. Add object **heart**. It is an item spawn randomly in game. 
 When collision with user plane, user will **increase 1 health(No maximum)**. Add one method in **HeartDisplay class (addHeart)** to show change in display heart. 
 Add one method in **LevelView class(addHearts)** to calculate number to add health. Add **UserInputManager** to handle Key and Mouse inputs to short LevelParent and UserPlane Code.
+- **2024-11-20**: Add **ActiveActorManager** to handle list of friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles, hearts and ammoBoxes.
+Add **CleanDestroyedManager** to remove destroyed actors, and move boundaries codes into it to short LevelParent codes.
