@@ -1,10 +1,8 @@
 package com.example.demo.Object;
 
 import com.example.demo.Level.LevelParent;
-import com.example.demo.Object.Projectile;
 
 public class EnemyProjectile extends Projectile {
-	private LevelParent levelParent;  // 添加 LevelParent 实例
 	
 	private static final String IMAGE_NAME = "enemyFire.png";
 	private static final int IMAGE_WIDTH = 50;
@@ -13,13 +11,11 @@ public class EnemyProjectile extends Projectile {
 
 	public EnemyProjectile(double initialXPos, double initialYPos, LevelParent levelParent) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos);
-		this.levelParent = levelParent;
 
 		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
 
-		// 将 hitbox 添加到 LevelParent 的 root 中
 		levelParent.getRoot().getChildren().add(getHitbox());
-		getHitbox().toFront();  // 确保 hitbox 在最上层
+		getHitbox().toFront();
 	}
 
 	@Override

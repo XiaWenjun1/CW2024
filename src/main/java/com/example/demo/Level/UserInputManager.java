@@ -131,6 +131,8 @@ public class UserInputManager {
             user.getHitbox().setOnMousePressed(null);
             user.getHitbox().setOnMouseDragged(null);
             user.getHitbox().setOnMouseReleased(null);
+            user.getHitbox().setOnMouseEntered(null);
+            user.getHitbox().setOnMouseExited(null);
         } else {
             bindMouseEvents();
         }

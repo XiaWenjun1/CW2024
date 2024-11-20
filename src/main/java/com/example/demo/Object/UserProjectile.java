@@ -5,8 +5,6 @@ import javafx.scene.image.ImageView;
 
 public class UserProjectile extends Projectile {
 
-	private LevelParent levelParent;
-
 	private int powerLevel = 1;
 
 	private static final String DEFAULT_IMAGE = "userfire.png";
@@ -39,7 +37,6 @@ public class UserProjectile extends Projectile {
 
 	public UserProjectile(double initialXPos, double initialYPos, LevelParent levelParent, int imageWidth, int imageHeight) {
 		super(DEFAULT_IMAGE, imageWidth, imageHeight, initialXPos, initialYPos);
-		this.levelParent = levelParent;
 
 		this.imageView = new ImageView();
 		this.imageView.setPreserveRatio(true);

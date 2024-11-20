@@ -2,7 +2,6 @@ package com.example.demo.Object;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelParent;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;

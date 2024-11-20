@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EnemyPlane extends FighterPlane {
 
-	private LevelParent levelParent;  // 添加 LevelParent 实例
+	private LevelParent levelParent;
 
 	private static final String IMAGE_NAME = "enemyplane.png";
 	private static final int IMAGE_WIDTH = 150;

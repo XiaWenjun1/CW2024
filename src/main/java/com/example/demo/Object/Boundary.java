@@ -12,7 +12,5 @@ public class Boundary extends Rectangle {
         this.setFill(Color.TRANSPARENT);
     }
 
-    public void updatePosition() {
-        // Boundary 是静止的，不需要更新位置
-    }
+    public void updatePosition() {}
 }

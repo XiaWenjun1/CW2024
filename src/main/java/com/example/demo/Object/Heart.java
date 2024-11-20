@@ -5,8 +5,6 @@ import com.example.demo.Level.LevelParent;
 
 public class Heart extends ActiveActorDestructible {
 
-    private LevelParent levelParent;
-
     private static final String IMAGE_NAME = "heart.png";
     private static final int IMAGE_WIDTH = 30;
     private static final int IMAGE_HEIGHT = 30;
@@ -18,7 +16,6 @@ public class Heart extends ActiveActorDestructible {
 
     public Heart(double initialXPos, double initialYPos, LevelParent levelParent) {
         super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos);
-        this.levelParent = levelParent;
         setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT);
         this.setTranslateX(initialXPos);
         this.setTranslateY(initialYPos);
@@ -44,13 +41,6 @@ public class Heart extends ActiveActorDestructible {
     public void updateActor() {
         updatePosition();
         updateHitbox();
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        this.setVisible(false);
-        this.setDisable(true);
     }
 
     @Override

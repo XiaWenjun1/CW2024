@@ -12,4 +12,5 @@ module com.example.demo {
     opens com.example.demo.Actor to javafx.fxml;
     opens com.example.demo.Object to javafx.fxml;
     opens com.example.demo.Display to javafx.fxml;
+    exports com.example.demo.Level;
 }

@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.GaussianBlur;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PauseMenuManager {
@@ -24,28 +23,15 @@ public class PauseMenuManager {
     private UserPlane user;
     private Node background;
     private UserInputManager userInputManager;
-    private List<ActiveActorDestructible> friendlyUnits;
-    private List<ActiveActorDestructible> enemyUnits;
-    private List<ActiveActorDestructible> userProjectiles;
-    private List<ActiveActorDestructible> enemyProjectiles;
-    private List<ActiveActorDestructible> ammoBoxes;
-    private List<ActiveActorDestructible> hearts;
+    private ActiveActorManager activeActorManager;
 
     public PauseMenuManager(Timeline timeline, Scene scene, UserPlane user, Node background,
-                            List<ActiveActorDestructible> friendlyUnits, List<ActiveActorDestructible> enemyUnits,
-                            List<ActiveActorDestructible> userProjectiles, List<ActiveActorDestructible> enemyProjectiles,
-                            List<ActiveActorDestructible> ammoBoxes, List<ActiveActorDestructible> hearts,
-                            UserInputManager userInputManager) {
+                            ActiveActorManager activeActorManager, UserInputManager userInputManager) {
         this.timeline = timeline;
         this.scene = scene;
         this.user = user;
         this.background = background;
-        this.friendlyUnits = friendlyUnits;
-        this.enemyUnits = enemyUnits;
-        this.userProjectiles = userProjectiles;
-        this.enemyProjectiles = enemyProjectiles;
-        this.ammoBoxes = ammoBoxes;
-        this.hearts = hearts;
+        this.activeActorManager = activeActorManager;
         this.userInputManager = userInputManager;
     }
 
@@ -90,13 +76,7 @@ public class PauseMenuManager {
     }
 
     private void applyBlurToActiveActors(double radius) {
-        List<ActiveActorDestructible> allActors = new ArrayList<>();
-        allActors.addAll(friendlyUnits);
-        allActors.addAll(enemyUnits);
-        allActors.addAll(userProjectiles);
-        allActors.addAll(enemyProjectiles);
-        allActors.addAll(ammoBoxes);
-        allActors.addAll(hearts);
+        List<ActiveActorDestructible> allActors = activeActorManager.getAllActors();
 
         for (ActiveActorDestructible actor : allActors) {
             if (actor instanceof Node) {
@@ -117,13 +97,7 @@ public class PauseMenuManager {
     }
 
     private void removeBlurFromActiveActors() {
-        List<ActiveActorDestructible> allActors = new ArrayList<>();
-        allActors.addAll(friendlyUnits);
-        allActors.addAll(enemyUnits);
-        allActors.addAll(userProjectiles);
-        allActors.addAll(enemyProjectiles);
-        allActors.addAll(ammoBoxes);
-        allActors.addAll(hearts);
+        List<ActiveActorDestructible> allActors = activeActorManager.getAllActors();
 
         for (ActiveActorDestructible actor : allActors) {
             if (actor instanceof Node) {
