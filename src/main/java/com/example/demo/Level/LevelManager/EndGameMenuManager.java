@@ -1,5 +1,6 @@
-package com.example.demo.Level;
+package com.example.demo.Level.LevelManager;
 
+import com.example.demo.Level.LevelParent;
 import com.example.demo.controller.Control_EndGameMenu;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;

@@ -13,4 +13,7 @@ module com.example.demo {
     opens com.example.demo.Object to javafx.fxml;
     opens com.example.demo.Display to javafx.fxml;
     exports com.example.demo.Level;
+    exports com.example.demo.Level.LevelManager;
+    opens com.example.demo.Level.LevelManager to javafx.fxml;
+    opens com.example.demo.Object.Object to javafx.fxml;
 }

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.Level.ExplosionEffectManager;
+import com.example.demo.Level.LevelManager.ExplosionEffectManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;

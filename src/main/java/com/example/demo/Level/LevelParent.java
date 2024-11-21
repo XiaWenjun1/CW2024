@@ -1,23 +1,24 @@
 package com.example.demo.Level;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
 import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
+import com.example.demo.Level.LevelManager.*;
 import com.example.demo.Object.*;
 import com.example.demo.Display.LevelView;
+import com.example.demo.Object.Object.AmmoBox;
+import com.example.demo.Object.Object.Heart;
 import javafx.animation.*;
 import javafx.scene.*;
 import javafx.scene.image.*;
 import javafx.util.Duration;
 
 public abstract class LevelParent extends Observable {
-	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 16;
 	private final double screenHeight;
 	private final double screenWidth;
-	private final double enemyMaximumYPosition;
+	private final double enemyMaximumYPosition = 650;
+	private final double enemyMinimumYPosition = 55;
 
 	private final Group root;
 	private final Timeline timeline;
@@ -33,9 +34,6 @@ public abstract class LevelParent extends Observable {
 
 	private final Random random = new Random();
 
-	private static final double AmmoBox_SPAWN_PROBABILITY = 0.01;
-	private static final double Heart_SPAWN_PROBABILITY = 0.01;
-
 	private int currentNumberOfEnemies;
 	private final LevelView levelView;
 
@@ -49,12 +47,11 @@ public abstract class LevelParent extends Observable {
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
-		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
 
 		this.userInputManager = new UserInputManager(user, root, activeActorManager.getUserProjectiles(), null);
-		this.pauseMenuManager = new PauseMenuManager(timeline, scene, user, background, activeActorManager, userInputManager);
+		this.pauseMenuManager = new PauseMenuManager(timeline, scene, userInputManager);
 		this.userInputManager.setPauseMenuManager(pauseMenuManager);
 		pauseMenuManager.loadPauseMenu();
 		this.endGameMenuManager = new EndGameMenuManager(this);
@@ -140,18 +137,18 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected void spawnRandomAmmoBox() {
-		if (random.nextDouble() < AmmoBox_SPAWN_PROBABILITY) {
-			double randomX = random.nextDouble(screenWidth);
-			double randomY = random.nextDouble(screenWidth);
+		if (random.nextDouble() < AmmoBox.getSpawnProbability()) {
+			double randomX = random.nextDouble(AmmoBox.getMaximumXPosition());
+			double randomY = random.nextDouble(AmmoBox.getMaximumYPosition());
 			AmmoBox ammoBox = new AmmoBox(randomX, randomY, this);
 			addAmmoBox(ammoBox);
 		}
 	}
 
 	protected void spawnRandomHeart() {
-		if (random.nextDouble() < Heart_SPAWN_PROBABILITY) {
-			double randomX = random.nextDouble(screenWidth);
-			double randomY = random.nextDouble(screenWidth);
+		if (random.nextDouble() < Heart.getSpawnProbability()) {
+			double randomX = random.nextDouble(Heart.getMaximumXPosition());
+			double randomY = random.nextDouble(Heart.getMaximumYPosition());
 			Heart heart = new Heart(randomX, randomY, this);
 			addHeart(heart);
 		}
@@ -274,6 +271,10 @@ public abstract class LevelParent extends Observable {
 
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
+	}
+
+	protected double getEnemyMinimumYPosition() {
+		return enemyMinimumYPosition;
 	}
 
 	protected double getScreenWidth() {

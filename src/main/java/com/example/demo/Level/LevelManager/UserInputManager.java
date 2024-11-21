@@ -1,4 +1,4 @@
-package com.example.demo.Level;
+package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Object.UserPlane;
@@ -10,11 +10,6 @@ import javafx.scene.input.MouseEvent;
 import java.util.List;
 
 public class UserInputManager {
-    private static final double Y_UPPER_BOUND = 50;
-    private static final double Y_LOWER_BOUND = 700.0;
-    private static final double X_LEFT_BOUND = 0;
-    private static final double X_RIGHT_BOUND = 1200.0;
-
     private final UserPlane user;
     private final Group root;
     private PauseMenuManager pauseMenuManager;
@@ -84,21 +79,10 @@ public class UserInputManager {
             double deltaX = event.getSceneX() - initialMouseX;
             double deltaY = event.getSceneY() - initialMouseY;
 
-            user.setTranslateX(user.getTranslateX() + deltaX);
-            user.setTranslateY(user.getTranslateY() + deltaY);
+            user.moveUserPlane(deltaX, deltaY);
 
             initialMouseX = event.getSceneX();
             initialMouseY = event.getSceneY();
-
-            double newPositionX = user.getLayoutX() + user.getTranslateX();
-            double newPositionY = user.getLayoutY() + user.getTranslateY();
-
-            if (newPositionX < X_LEFT_BOUND || newPositionX > X_RIGHT_BOUND) {
-                user.setTranslateX(user.getTranslateX() - deltaX);
-            }
-            if (newPositionY < Y_UPPER_BOUND || newPositionY > Y_LOWER_BOUND) {
-                user.setTranslateY(user.getTranslateY() - deltaY);
-            }
         }
     }
 

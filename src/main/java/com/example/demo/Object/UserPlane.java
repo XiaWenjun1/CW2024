@@ -10,7 +10,7 @@ public class UserPlane extends FighterPlane {
 	private LevelParent levelParent;
 	private boolean isPaused = false;
 
-	private static final double Y_UPPER_BOUND = 50;
+	private static final double Y_UPPER_BOUND = 55;
 	private static final double Y_LOWER_BOUND = 700.0;
 	private static final double X_LEFT_BOUND = 0;
 	private static final double X_RIGHT_BOUND = 1200.0;
@@ -51,7 +51,10 @@ public class UserPlane extends FighterPlane {
 	public void updatePosition() {
 		this.moveHorizontally(HORIZONTAL_VELOCITY * velocityMultiplierX);
 		this.moveVertically(VERTICAL_VELOCITY * velocityMultiplierY);
+		applyBoundsCheck();
+	}
 
+	private void applyBoundsCheck() {
 		double newPositionX = getLayoutX() + getTranslateX();
 		double newPositionY = getLayoutY() + getTranslateY();
 
@@ -66,6 +69,26 @@ public class UserPlane extends FighterPlane {
 		} else if (newPositionY > Y_LOWER_BOUND) {
 			setTranslateY(Y_LOWER_BOUND - getLayoutY());
 		}
+	}
+
+	public void moveUserPlane(double deltaX, double deltaY) {
+		double newX = getLayoutX() + getTranslateX() + deltaX;
+		double newY = getLayoutY() + getTranslateY() + deltaY;
+
+		if (newX < X_LEFT_BOUND) {
+			deltaX = X_LEFT_BOUND - (getLayoutX() + getTranslateX());
+		} else if (newX > X_RIGHT_BOUND) {
+			deltaX = X_RIGHT_BOUND - (getLayoutX() + getTranslateX());
+		}
+
+		if (newY < Y_UPPER_BOUND) {
+			deltaY = Y_UPPER_BOUND - (getLayoutY() + getTranslateY());
+		} else if (newY > Y_LOWER_BOUND) {
+			deltaY = Y_LOWER_BOUND - (getLayoutY() + getTranslateY());
+		}
+
+		setTranslateX(getTranslateX() + deltaX);
+		setTranslateY(getTranslateY() + deltaY);
 	}
 
 	@Override

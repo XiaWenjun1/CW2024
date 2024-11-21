@@ -1,4 +1,4 @@
-package com.example.demo.Level;
+package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 

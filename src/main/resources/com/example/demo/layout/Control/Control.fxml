@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.demo.controller.Control_Control"
+            stylesheets="@Style.css"
+            fx:id="controlPane">
+
+    <!-- Settings overlay panel -->
+    <Text layoutX="50" layoutY="100" text="Control" styleClass="text-title"/>
+
+    <!-- Close button for settings overlay -->
+    <Button fx:id="closeButton" layoutX="1200" layoutY="50" text="CLOSE" onAction="#closeControl" styleClass="button"/>
+
+    <!-- Plane image -->
+    <ImageView fx:id="planeImageView" layoutX="50" layoutY="170" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Plane Control -->
+    <Text layoutX="250" layoutY="200" text="Motion1:  ⬆ UP  ⬇ DOWN  ⬅ LEFT  ➡ RIGHT                      Motion2:  Mouse Dragging" styleClass="text-control"/>
+
+    <!-- User fire image -->
+    <ImageView fx:id="userfireImageView" layoutX="50" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- User fire Control -->
+    <Text layoutX="250" layoutY="320" text="SPACE" styleClass="text-control"/>
+
+    <!-- Heart image -->
+    <ImageView fx:id="heartImageView" layoutX="75" layoutY="400" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Heart Description -->
+    <Text layoutX="250" layoutY="430" text="Add  One  Health  (No  Maximum  health).  Randomly  Spawn  In  Game" styleClass="text-control"/>
+
+    <!-- Ammo Box image -->
+    <ImageView fx:id="ammoboxImageView" layoutX="50" layoutY="500" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Ammo Box Description -->
+    <Text layoutX="250" layoutY="540" text="Update  Projectile  (Can  Update  2  times).  Randomly  Spawn  In  Game" styleClass="text-control"/>
+
+    <!-- Other Information -->
+    <Text layoutX="50" layoutY="670" text="Other  Information:  Middle  Mouse  Pause  Game.  Click  Continue  Button  Or  Reclick  Middle  Mouse  To  Resume  Game." styleClass="text-control"/>
+</AnchorPane>

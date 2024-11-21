@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 public class TargetLevelTwo {
 
     private static final double HINT_TEXT_X_POSITION = 10;
-    private static final double HINT_TEXT_Y_POSITION = 730;
+    private static final double HINT_TEXT_Y_POSITION = 720;
     private final Group root;
     private final Label hintLabel;
 
@@ -18,7 +18,7 @@ public class TargetLevelTwo {
 
     private Label createHintLabel() {
         Label label = new Label("Target: Defeat the Boss!");
-        label.setStyle("-fx-font-size: 14px; -fx-text-fill: red; -fx-font-weight: bold");
+        label.setStyle("-fx-font-size: 20px; -fx-text-fill: black; -fx-font-weight: bold");
         label.setLayoutX(HINT_TEXT_X_POSITION);
         label.setLayoutY(HINT_TEXT_Y_POSITION);
         label.setVisible(false);

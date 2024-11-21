@@ -7,6 +7,8 @@ public class ScoreBoard {
 
     private static final double WIDTH = 200;
     private static final double HEIGHT = 50;
+    private static final double SCOREBOARD_INITIALX = 10;
+    private static final double SCOREBOARD_INITIALY = 690;
 
     private final Pane container;
     private final Label killInfoLabel;
@@ -23,7 +25,7 @@ public class ScoreBoard {
         container.setPrefSize(WIDTH, HEIGHT);
 
         killInfoLabel = new Label(currentKills + "/" + targetKills);
-        killInfoLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: red; -fx-font-weight: bold");
+        killInfoLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: black; -fx-font-weight: bold");
         killInfoLabel.setLayoutY(0);
 
         container.getChildren().add(killInfoLabel);
@@ -36,5 +38,9 @@ public class ScoreBoard {
     public void updateCurrentKills(int kills) {
         this.currentKills = kills;
         killInfoLabel.setText("Target kill:" + currentKills + "/" + targetKills);
+    }
+
+    public static ScoreBoard createScoreBoard(int targetKills) {
+        return new ScoreBoard(SCOREBOARD_INITIALX, SCOREBOARD_INITIALY, targetKills);
     }
 }

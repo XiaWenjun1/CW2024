@@ -34,6 +34,13 @@ When user reach the number of enemy plane killed, no more enemy plane spawn.) Ta
 - **Background Music**: Background music (`bg.mp3`) loops on the main screen and during gameplay.
 - **Game Sound**: Explosion sound (`explosion.mp3`) when fighter plane destroyed.
 
+### Control Screen
+
+- **Images**: 4 images(UserPlane, UserProjectile, Heart and AmmoBox).
+- **Descriptions**: UserPlane: ↑ ↓ ← → or Mouse Dragging. UserProjectile: Space. Heart: Add one health. AmmoBox: Update user projectile.
+- **Other Information**: Middle Mouse to pause game. Click continue button or reClick middle mouse to resume game.
+- **Close Settings Screen**: Returns to the main screen and removes the blur effect.
+
 ### Settings Screen
 
 - **Background Music Control**: The settings screen allows setting the background music via a toggle.
@@ -73,6 +80,9 @@ when boss destroyed.
 click 'Continue' to resume or click middle mouse again to resume game.
 - **Control_EndGameMenu**: When user win or lose, 2 seconds after win or lose images will show EndGameMenu with 2 buttons(Return to Main, Exit)
 'Return to Main' return to main menu. 'Exit' exit program.
+- **Control_Control**: User Control description. 4 images(UserPlane, UserProjectile, Heart and AmmoBox). UserPlane: ↑ ↓ ← → or Mouse Dragging. 
+UserProjectile: Space. Heart: Add one health. AmmoBox: Update user projectile. 
+Middle Mouse to pause game. Click continue button or reClick middle mouse to resume game.
 
 ## Changelog
 
@@ -110,3 +120,4 @@ When collision with user plane, user will **increase 1 health(No maximum)**. Add
 Add one method in **LevelView class(addHearts)** to calculate number to add health. Add **UserInputManager** to handle Key and Mouse inputs to short LevelParent and UserPlane Code.
 - **2024-11-20**: Add **ActiveActorManager** to handle list of friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles, hearts and ammoBoxes.
 Add **CleanDestroyedManager** to remove destroyed actors, and move boundaries codes into it to short LevelParent codes.
+- **2024-11-21**: Add **Control Descriptions**. In Main Menu, click control to open control screen and show control descriptions.

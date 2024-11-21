@@ -25,13 +25,12 @@ public class LevelThree extends LevelParent {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         boss = new Boss(this);
         currentKills = 0;
-        scoreBoard = new ScoreBoard(10, 710, KILLS_TO_ADVANCE);
     }
 
     @Override
     protected void initializeFriendlyUnits() {
         getRoot().getChildren().add(getUser());
-        scoreBoard = new ScoreBoard(10, 710, KILLS_TO_ADVANCE);
+        scoreBoard = ScoreBoard.createScoreBoard(KILLS_TO_ADVANCE);
         getRoot().getChildren().add(scoreBoard.getContainer());
         targetLevelTwo = new TargetLevelTwo(getRoot());
     }
@@ -55,7 +54,7 @@ public class LevelThree extends LevelParent {
         if (getUser().getNumberOfKills() < KILLS_TO_ADVANCE) {
             for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
                 if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-                    double minY = 50;
+                    double minY = getEnemyMinimumYPosition();
                     double maxY = getEnemyMaximumYPosition();
                     double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
                     ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, LevelThree.this);

@@ -209,4 +209,20 @@ public class Control_Animation {
             bossPathTransition.play();
         }
     }
+
+    public void releaseResources() {
+        clearImageView(backgroundImageView);
+        clearImageView(planeImageView);
+        clearImageView(userfireImageView);
+        clearImageView(enemyImageView);
+        clearImageView(enemyfireImageView);
+        clearImageView(bossImageView);
+        clearImageView(bossfireImageView);
+    }
+
+    private void clearImageView(ImageView imageView) {
+        if (imageView != null) {
+            imageView.setImage(null);
+        }
+    }
 }

@@ -34,7 +34,7 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
-		scoreBoard = new ScoreBoard(10, 730, KILLS_TO_ADVANCE);
+		scoreBoard = ScoreBoard.createScoreBoard(KILLS_TO_ADVANCE);
 		getRoot().getChildren().add(scoreBoard.getContainer());
 	}
 
@@ -43,7 +43,7 @@ public class LevelOne extends LevelParent {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-				double minY = 50;
+				double minY = getEnemyMinimumYPosition();
 				double maxY = getEnemyMaximumYPosition();
 				double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
 				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, LevelOne.this);

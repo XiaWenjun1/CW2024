@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import com.example.demo.Level.LevelParent;
-import com.example.demo.Level.PauseMenuManager;
+import com.example.demo.Level.LevelManager.PauseMenuManager;
 
 public class Control_PauseMenu {
 
