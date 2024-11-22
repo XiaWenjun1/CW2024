@@ -27,7 +27,7 @@
     <ImageView fx:id="userfireImageView" layoutX="50" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
 
     <!-- User fire Control -->
-    <Text layoutX="250" layoutY="320" text="SPACE" styleClass="text-control"/>
+    <Text layoutX="250" layoutY="320" text="SpaceBar  (Each Time You Press The Spacebar, Only One Bullet Will Be Fired. Cannot Long Press.)" styleClass="text-control"/>
 
     <!-- Heart image -->
     <ImageView fx:id="heartImageView" layoutX="75" layoutY="400" pickOnBounds="true" preserveRatio="true"/>

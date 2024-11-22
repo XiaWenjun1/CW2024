@@ -17,9 +17,6 @@ public class Control_EndGameMenu {
     @FXML
     private Button returnToMainButton;
 
-    @FXML
-    private Button exitButton;
-
     private LevelParent levelParent;
 
     public void initialize(LevelParent levelParent) {

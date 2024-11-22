@@ -78,7 +78,7 @@ when boss destroyed.
 - **Control_Setting**: Manages the settings screen, including background music, game sounds and close functionality.
 - **Control_PauseMenu**: When game is playing, user can click middle mouse to open pause menu. Timeline will stop, 
 click 'Continue' to resume or click middle mouse again to resume game.
-- **Control_EndGameMenu**: When user win or lose, 2 seconds after win or lose images will show EndGameMenu with 2 buttons(Return to Main, Exit)
+- **Control_EndGameMenu**: When user win or lose, 1 second after win or lose images will show EndGameMenu with 2 buttons(Return to Main, Exit)
 'Return to Main' return to main menu. 'Exit' exit program.
 - **Control_Control**: User Control description. 4 images(UserPlane, UserProjectile, Heart and AmmoBox). UserPlane: ↑ ↓ ← → or Mouse Dragging. 
 UserProjectile: Space. Heart: Add one health. AmmoBox: Update user projectile. 
@@ -102,7 +102,7 @@ handleKeyPressed and handleKeyReleased are independent methods to facilitate und
 - **2024-11-12**: Add fighter plane **destroyed image**(explosion image added). Changing to 60 FPS.
 - **2024-11-13**: Add **pause menu** when game playing. **Middle mouse** to open pause menu, it will stop timeline and make **background blur**.
 Click middle mouse to continue or click continue button to resume game.
-- **2024-11-14**: Add **EndGameMenu**. When game win or lose, it will show a game over pane after **2 seconds** of win or lose images, with two buttons(Return to Main, Exit)
+- **2024-11-14**: Add **EndGameMenu**. When game win or lose, it will show a game over pane after **1 second** of win or lose images, with two buttons(Return to Main, Exit)
 when click 'Return to Main', user will return to main page and the **settings follow your previous settings**. Click 'Exit', exit program.
 - **2024-11-15**: Add folders for better handling class.
 - **2024-11-16**: Add **ammo box**, spawn randomly in game. When collision with user plane, it will **update user projectile**(bigger image, hit box and faster speed), 
@@ -121,3 +121,5 @@ Add one method in **LevelView class(addHearts)** to calculate number to add heal
 - **2024-11-20**: Add **ActiveActorManager** to handle list of friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles, hearts and ammoBoxes.
 Add **CleanDestroyedManager** to remove destroyed actors, and move boundaries codes into it to short LevelParent codes.
 - **2024-11-21**: Add **Control Descriptions**. In Main Menu, click control to open control screen and show control descriptions.
+- **2024-11-22**: Add **ActorSpawnerManager**(Used for items and enemies spawning, enemy projectiles generating) and 
+**GameStateManager**(Used for Update number of enemies and kill count as well as display user health) to short LevelParent codes.

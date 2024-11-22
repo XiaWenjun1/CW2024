@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyPlane extends FighterPlane {
-
 	private LevelParent levelParent;
-
 	private static final String IMAGE_NAME = "enemyplane.png";
 	private static final int IMAGE_WIDTH = 150;
 	private static final int IMAGE_HEIGHT = 150;

@@ -27,7 +27,7 @@ public class EndGameMenuManager {
             levelParent.cleanUp();
             levelParent.getLevelView().showWinImage();
 
-            PauseTransition delay = new PauseTransition(Duration.seconds(2));
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
             delay.setOnFinished(event -> showEndGameMenu(currentStage, true));
             delay.play();
         });
@@ -40,7 +40,7 @@ public class EndGameMenuManager {
             levelParent.cleanUp();
             levelParent.getLevelView().showGameOverImage();
 
-            PauseTransition delay = new PauseTransition(Duration.seconds(2));
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
             delay.setOnFinished(event -> showEndGameMenu(currentStage, false));
             delay.play();
         });

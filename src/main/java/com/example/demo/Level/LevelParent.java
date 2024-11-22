@@ -1,13 +1,10 @@
 package com.example.demo.Level;
 
 import java.util.*;
-import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelManager.*;
 import com.example.demo.Object.*;
 import com.example.demo.Display.LevelView;
-import com.example.demo.Object.Object.AmmoBox;
-import com.example.demo.Object.Object.Heart;
 import javafx.animation.*;
 import javafx.scene.*;
 import javafx.scene.image.*;
@@ -26,15 +23,13 @@ public abstract class LevelParent extends Observable {
 	private final Scene scene;
 	private final ImageView background;
 
-	private PauseMenuManager pauseMenuManager;
-	private EndGameMenuManager endGameMenuManager;
-	private UserInputManager userInputManager;
-	private ActiveActorManager activeActorManager;
-	private CleanDestroyedManager cleanDestroyedManager;
-
-	private final Random random = new Random();
-
-	private int currentNumberOfEnemies;
+	private final PauseMenuManager pauseMenuManager;
+	private final EndGameMenuManager endGameMenuManager;
+	private final UserInputManager userInputManager;
+	private final ActiveActorManager activeActorManager;
+	private final CleanDestroyedManager cleanDestroyedManager;
+	private final GameStateManager gameStateManager;
+	private final ActorSpawnerManager actorSpawnerManager;
 	private final LevelView levelView;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
@@ -47,15 +42,16 @@ public abstract class LevelParent extends Observable {
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
-		this.levelView = instantiateLevelView();
-		this.currentNumberOfEnemies = 0;
 
+		this.levelView = instantiateLevelView();
 		this.userInputManager = new UserInputManager(user, root, activeActorManager.getUserProjectiles(), null);
 		this.pauseMenuManager = new PauseMenuManager(timeline, scene, userInputManager);
 		this.userInputManager.setPauseMenuManager(pauseMenuManager);
 		pauseMenuManager.loadPauseMenu();
 		this.endGameMenuManager = new EndGameMenuManager(this);
 		this.cleanDestroyedManager = new CleanDestroyedManager(root, activeActorManager);
+		this.gameStateManager = new GameStateManager(user, levelView, activeActorManager);
+		this.actorSpawnerManager = new ActorSpawnerManager(activeActorManager, root, this);
 
 		initializeTimeline();
 		activeActorManager.getFriendlyUnits().add(user);
@@ -69,17 +65,14 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
-
-		scene.setOnMouseClicked(event -> userInputManager.handleMouseMiddleClick(event));
+		scene.setOnMouseClicked(userInputManager::handleMouseMiddleClick);
 		pauseMenuManager.loadPauseMenu();
 		root.getChildren().add(pauseMenuManager.getPauseMenuRoot());
-
 		return scene;
 	}
 
 	private void updateScene() {
-		updateActors();
-		spawnRandomItems();
+		actorSpawnerManager.updateActors();
 		handleCollisionsAndPenetration();
 		cleanUpDestroyedActors();
 		updateGameStatus();
@@ -98,75 +91,6 @@ public abstract class LevelParent extends Observable {
 		background.setOnKeyPressed(userInputManager::handleKeyPressed);
 		background.setOnKeyReleased(userInputManager::handleKeyReleased);
 		root.getChildren().add(background);
-	}
-
-	private void updateActors() {
-		activeActorManager.updateActors();
-		updateNumberOfEnemies();
-		spawnEnemyUnits();
-		generateEnemyFire();
-	}
-
-	private void updateNumberOfEnemies() {
-		currentNumberOfEnemies = activeActorManager.getEnemyUnits().size();
-	}
-
-	protected abstract void spawnEnemyUnits();
-
-	private void generateEnemyFire() {
-		activeActorManager.getEnemyUnits().forEach(enemy -> {
-			if (enemy instanceof FighterPlane) {
-				List<ActiveActorDestructible> projectiles = ((FighterPlane) enemy).fireProjectiles();
-				if (projectiles != null) {
-					projectiles.forEach(this::spawnEnemyProjectile);
-				}
-			}
-		});
-	}
-
-	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
-		if (projectile != null) {
-			root.getChildren().add(projectile);
-			activeActorManager.getEnemyProjectiles().add(projectile);
-		}
-	}
-
-	private void spawnRandomItems() {
-		spawnRandomAmmoBox();
-		spawnRandomHeart();
-	}
-
-	protected void spawnRandomAmmoBox() {
-		if (random.nextDouble() < AmmoBox.getSpawnProbability()) {
-			double randomX = random.nextDouble(AmmoBox.getMaximumXPosition());
-			double randomY = random.nextDouble(AmmoBox.getMaximumYPosition());
-			AmmoBox ammoBox = new AmmoBox(randomX, randomY, this);
-			addAmmoBox(ammoBox);
-		}
-	}
-
-	protected void spawnRandomHeart() {
-		if (random.nextDouble() < Heart.getSpawnProbability()) {
-			double randomX = random.nextDouble(Heart.getMaximumXPosition());
-			double randomY = random.nextDouble(Heart.getMaximumYPosition());
-			Heart heart = new Heart(randomX, randomY, this);
-			addHeart(heart);
-		}
-	}
-
-	private void addActorToScene(ActiveActorDestructible actor, List<ActiveActorDestructible> actorList) {
-		actorList.add(actor);
-		root.getChildren().add(actor);
-		Node hitbox = actor.getHitbox();
-		root.getChildren().add(hitbox);
-	}
-
-	protected void addAmmoBox(AmmoBox ammoBox) {
-		addActorToScene(ammoBox, activeActorManager.getAmmoBoxes());
-	}
-
-	protected void addHeart(Heart heart) {
-		addActorToScene(heart, activeActorManager.getHearts());
 	}
 
 	private void handleCollisionsAndPenetration() {
@@ -195,13 +119,6 @@ public abstract class LevelParent extends Observable {
 		CollisionManager.handleUserPlaneAndHeartCollisions(user, activeActorManager.getHearts());
 	}
 
-	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		activeActorManager.getEnemyUnits().add(enemy);
-		getRoot().getChildren().add(enemy);
-		Node hitbox = ((ActiveActor) enemy).getHitbox();
-		getRoot().getChildren().add(hitbox);
-	}
-
 	private void cleanUpDestroyedActors() {
 		cleanDestroyedManager.removeAllDestroyedActors();
 		cleanDestroyedManager.cleanObj();
@@ -218,20 +135,8 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateGameStatus() {
-		updateKillCount();
-		updateLevelView();
+		gameStateManager.updateStatus();
 		checkIfGameOver();
-	}
-
-	private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies - activeActorManager.getEnemyUnits().size(); i++) {
-			user.incrementKillCount();
-		}
-	}
-
-	private void updateLevelView() {
-		levelView.removeHearts(user.getHealth());
-		levelView.addHearts(user.getHealth());
 	}
 
 	protected abstract void checkIfGameOver();
@@ -254,6 +159,14 @@ public abstract class LevelParent extends Observable {
 		setChanged();
 		notifyObservers(levelName);
 	}
+
+	protected void addEnemyUnit(ActiveActorDestructible enemy) {
+		actorSpawnerManager.addEnemyUnit(enemy);
+	}
+
+	protected abstract void spawnEnemyUnits();
+
+	public void spawnEnemies() { spawnEnemyUnits();}
 
 	public UserPlane getUser() {
 		return user;

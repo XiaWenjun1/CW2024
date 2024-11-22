@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 public abstract class ActiveActor extends ImageView {
 	
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
-	private Rectangle hitbox; // New: hitbox for displaying and calculating collisions
+	private Rectangle hitbox;
 
 	public ActiveActor(String imageName, double imageWidth, int imageHeight, double initialXPos, double initialYPos) {
 		this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
@@ -16,18 +16,19 @@ public abstract class ActiveActor extends ImageView {
 		this.setFitWidth(imageWidth);
 		this.setFitHeight(imageHeight);
 		this.setPreserveRatio(true);
-//		// Initialize the hitbox
-//		hitbox = new Rectangle(imageWidth, imageHeight);
-//		hitbox.setFill(Color.TRANSPARENT);
-//		hitbox.setStrokeWidth(2);
-//		hitbox.setVisible(true);
+		createAndAddHitbox(imageWidth, imageHeight);
+	}
 
-		// Test hitbox
-		hitbox = new Rectangle(imageWidth, imageHeight);
-		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));
-		hitbox.setStroke(Color.RED);
+	private void createAndAddHitbox(double width, double height) {
+		hitbox = new Rectangle(width, height);
+		hitbox.setFill(Color.TRANSPARENT);
 		hitbox.setStrokeWidth(2);
+		hitbox.setVisible(true);
 
+//		hitbox = new Rectangle(width, height);
+//		hitbox.setFill(Color.RED.deriveColor(1.0, 1.0, 1.0, 0.3));
+//		hitbox.setStroke(Color.RED);
+//		hitbox.setStrokeWidth(2);
 	}
 
 	public abstract void updatePosition();
