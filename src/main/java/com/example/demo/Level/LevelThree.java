@@ -5,12 +5,13 @@ import com.example.demo.Display.LevelView;
 import com.example.demo.Display.LevelViewLevelTwo;
 import com.example.demo.Display.ScoreBoard;
 import com.example.demo.Display.TargetLevelTwo;
-import com.example.demo.Object.Boss;
-import com.example.demo.Object.EnemyPlane;
+import com.example.demo.Object.Boss.Boss;
+import com.example.demo.Object.EnemyPlane.EnemyPlane;
 
 public class LevelThree extends LevelParent {
 
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
+    private static final String NEXT_LEVEL = "com.example.demo.Level.LevelFour";
     private static final int PLAYER_INITIAL_HEALTH = 5;
     private static final int TOTAL_ENEMIES = 5;
     private static final int KILLS_TO_ADVANCE = 50;
@@ -41,7 +42,7 @@ public class LevelThree extends LevelParent {
             scoreBoard.updateCurrentKills(getUser().getNumberOfKills());
             if (userHasReachedKillTarget() && boss.isDestroyed()) {
                 targetLevelTwo.hideHint();
-                winGame();
+                goToNextLevel(NEXT_LEVEL);
             }
         }
     }

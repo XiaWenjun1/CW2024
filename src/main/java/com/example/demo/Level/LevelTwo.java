@@ -3,7 +3,7 @@ package com.example.demo.Level;
 import com.example.demo.Display.LevelView;
 import com.example.demo.Display.LevelViewLevelTwo;
 import com.example.demo.Display.TargetLevelTwo;
-import com.example.demo.Object.Boss;
+import com.example.demo.Object.Boss.Boss;
 
 public class LevelTwo extends LevelParent {
 

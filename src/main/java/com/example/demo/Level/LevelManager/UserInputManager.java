@@ -1,7 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.UserPlane;
+import com.example.demo.Object.UserPlane.UserPlane;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;

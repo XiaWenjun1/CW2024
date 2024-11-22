@@ -1,7 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Display.LevelView;
-import com.example.demo.Object.UserPlane;
+import com.example.demo.Object.UserPlane.UserPlane;
 
 public class GameStateManager {
     private final UserPlane user;

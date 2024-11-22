@@ -1,8 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.Boss;
-import com.example.demo.Object.UserPlane;
+import com.example.demo.Object.Boss.Boss;
 import com.example.demo.controller.Control_PauseMenu;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.GaussianBlur;
-
-import java.util.List;
 
 public class PauseMenuManager {
 

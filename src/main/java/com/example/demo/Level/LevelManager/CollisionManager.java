@@ -2,7 +2,7 @@ package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.UserPlane;
+import com.example.demo.Object.UserPlane.UserPlane;
 import javafx.scene.Node;
 
 import java.util.List;

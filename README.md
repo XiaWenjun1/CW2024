@@ -27,6 +27,7 @@ with the boss having a more complex movement pattern.
 - **LevelThree**: Enemies and bosses exist at the same time. The winning condition is to defeat the boss and kill a certain 
 number of enemy planes, which both conditions must be met. (To reduce the difficulty of the game. 
 When user reach the number of enemy plane killed, no more enemy plane spawn.) Target hint and ScoreBoard will show in left bottom of screen.
+- **LevelFour**: 2 Bosses. User should destroy both of them to win the game.
 
 ### Sound Effects and Background Music
 
@@ -123,3 +124,4 @@ Add **CleanDestroyedManager** to remove destroyed actors, and move boundaries co
 - **2024-11-21**: Add **Control Descriptions**. In Main Menu, click control to open control screen and show control descriptions.
 - **2024-11-22**: Add **ActorSpawnerManager**(Used for items and enemies spawning, enemy projectiles generating) and 
 **GameStateManager**(Used for Update number of enemies and kill count as well as display user health) to short LevelParent codes.
+Add folders in object folder. Add **BossFirePattern** class to short Boss class codes. Add **LevelFour** 2 bosses. User should destroy both of them to win the game.
