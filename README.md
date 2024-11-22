@@ -125,3 +125,4 @@ Add **CleanDestroyedManager** to remove destroyed actors, and move boundaries co
 - **2024-11-22**: Add **ActorSpawnerManager**(Used for items and enemies spawning, enemy projectiles generating) and 
 **GameStateManager**(Used for Update number of enemies and kill count as well as display user health) to short LevelParent codes.
 Add folders in object folder. Add **BossFirePattern** class to short Boss class codes. Add **LevelFour** 2 bosses. User should destroy both of them to win the game.
+Remove observable(out of date). Added **StringProperty currentLevelName**, **setCurrentLevelName** method and **currentLevelNameProperty** method.

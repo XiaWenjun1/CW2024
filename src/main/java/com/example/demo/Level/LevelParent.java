@@ -1,16 +1,17 @@
 package com.example.demo.Level;
 
-import java.util.*;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelManager.*;
 import com.example.demo.Display.LevelView;
 import com.example.demo.Object.UserPlane.UserPlane;
 import javafx.animation.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.*;
 import javafx.scene.image.*;
 import javafx.util.Duration;
 
-public abstract class LevelParent extends Observable {
+public abstract class LevelParent {
 	private static final int MILLISECOND_DELAY = 16;
 	private final double screenHeight;
 	private final double screenWidth;
@@ -31,6 +32,8 @@ public abstract class LevelParent extends Observable {
 	private final GameStateManager gameStateManager;
 	private final ActorSpawnerManager actorSpawnerManager;
 	private final LevelView levelView;
+
+	private final StringProperty currentLevelName = new SimpleStringProperty();
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
@@ -156,8 +159,7 @@ public abstract class LevelParent extends Observable {
 
 	public void goToNextLevel(String levelName) {
 		cleanUp();
-		setChanged();
-		notifyObservers(levelName);
+		setCurrentLevelName(levelName);
 	}
 
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
@@ -196,5 +198,13 @@ public abstract class LevelParent extends Observable {
 
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
+	}
+
+	public void setCurrentLevelName(String levelName) {
+		this.currentLevelName.set(levelName);
+	}
+
+	public StringProperty currentLevelNameProperty() {
+		return currentLevelName;
 	}
 }
