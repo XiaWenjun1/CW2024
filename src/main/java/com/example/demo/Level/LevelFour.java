@@ -1,7 +1,6 @@
 package com.example.demo.Level;
 
 import com.example.demo.Display.LevelView;
-import com.example.demo.Display.LevelViewLevelTwo;
 import com.example.demo.Display.TargetLevelTwo;
 import com.example.demo.Object.Boss.Boss;
 
@@ -11,7 +10,6 @@ public class LevelFour extends LevelParent {
     private static final int PLAYER_INITIAL_HEALTH = 5;
     private final Boss boss1;
     private final Boss boss2;
-    private LevelViewLevelTwo levelView;
     private TargetLevelTwo targetLevelTwo;
 
     public LevelFour(double screenHeight, double screenWidth) {
@@ -56,7 +54,6 @@ public class LevelFour extends LevelParent {
             }
             targetLevelTwo.showHint();
         }
-        checkBossDeathAndHideHealthBar();
     }
 
     private boolean boss1Added = false;
@@ -78,17 +75,8 @@ public class LevelFour extends LevelParent {
         this.boss2Added = added;
     }
 
-    private void checkBossDeathAndHideHealthBar() {
-        if (boss1.isDestroyed()) {
-            boss1.hideHealthBar();
-        } else if (boss2.isDestroyed()) {
-            boss2.hideHealthBar();
-        }
-    }
-
     @Override
     protected LevelView instantiateLevelView() {
-        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
-        return levelView;
+        return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
     }
 }

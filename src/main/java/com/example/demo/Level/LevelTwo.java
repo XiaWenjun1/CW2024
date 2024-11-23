@@ -1,7 +1,6 @@
 package com.example.demo.Level;
 
 import com.example.demo.Display.LevelView;
-import com.example.demo.Display.LevelViewLevelTwo;
 import com.example.demo.Display.TargetLevelTwo;
 import com.example.demo.Object.Boss.Boss;
 
@@ -11,7 +10,6 @@ public class LevelTwo extends LevelParent {
 	private static final String NEXT_LEVEL = "com.example.demo.Level.LevelThree";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
-	private LevelViewLevelTwo levelView;
 	private TargetLevelTwo targetLevelTwo;
 
 	public LevelTwo(double screenHeight, double screenWidth) {
@@ -60,7 +58,6 @@ public class LevelTwo extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
-		return levelView;
+		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 }

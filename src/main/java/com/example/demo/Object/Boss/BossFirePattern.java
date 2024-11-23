@@ -29,24 +29,6 @@ public class BossFirePattern {
     }
 
     /**
-     * Retrieves the current X position of the boss.
-     *
-     * @return The boss's current X position.
-     */
-    private double getBossXPosition() {
-        return boss.getLayoutX() + boss.getTranslateX();
-    }
-
-    /**
-     * Retrieves the current Y position of the boss.
-     *
-     * @return The boss's current Y position.
-     */
-    private double getBossYPosition() {
-        return boss.getLayoutY() + boss.getTranslateY();
-    }
-
-    /**
      * Randomly selects an attack type for the boss.
      *
      * @return An integer representing the attack type:
@@ -62,8 +44,8 @@ public class BossFirePattern {
      * @return A list containing a single straight projectile.
      */
     public List<ActiveActorDestructible> createStraightProjectile() {
-        double projectileYPosition = getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
-        ActiveActorDestructible projectile = new BossProjectile(getBossXPosition(), projectileYPosition, levelParent);
+        double projectileYPosition = boss.getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
+        ActiveActorDestructible projectile = new BossProjectile(boss.getBossXPosition(), projectileYPosition, levelParent);
 
         return List.of(projectile);
     }
@@ -78,8 +60,8 @@ public class BossFirePattern {
         double[] yOffsets = {-50, 0, 50};
 
         for (double yOffset : yOffsets) {
-            double projectileYPosition = getBossYPosition() + yOffset;
-            BossProjectile projectile = new BossProjectile(getBossXPosition(), projectileYPosition, levelParent);
+            double projectileYPosition = boss.getBossYPosition() + yOffset;
+            BossProjectile projectile = new BossProjectile(boss.getBossXPosition(), projectileYPosition, levelParent);
             projectile.setVelocity(-5, 0);
 
             if (!levelParent.getRoot().getChildren().contains(projectile.getHitbox())) {
@@ -99,19 +81,19 @@ public class BossFirePattern {
     public List<ActiveActorDestructible> createDirectionalProjectiles() {
         List<ActiveActorDestructible> projectiles = new ArrayList<>();
 
-        double straightY = getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
+        double straightY = boss.getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
         double leftUpY = straightY - 50;
         double leftDownY = straightY + 50;
 
-        BossProjectile straightProjectile = new BossProjectile(getBossXPosition(), straightY, levelParent);
+        BossProjectile straightProjectile = new BossProjectile(boss.getBossXPosition(), straightY, levelParent);
         straightProjectile.setVelocity(-4, 0);
         projectiles.add(straightProjectile);
 
-        BossProjectile leftUpProjectile = new BossProjectile(getBossXPosition(), leftUpY, levelParent);
+        BossProjectile leftUpProjectile = new BossProjectile(boss.getBossXPosition(), leftUpY, levelParent);
         leftUpProjectile.setVelocity(-4, -1);
         projectiles.add(leftUpProjectile);
 
-        BossProjectile leftDownProjectile = new BossProjectile(getBossXPosition(), leftDownY, levelParent);
+        BossProjectile leftDownProjectile = new BossProjectile(boss.getBossXPosition(), leftDownY, levelParent);
         leftDownProjectile.setVelocity(-4, 1);
         projectiles.add(leftDownProjectile);
 

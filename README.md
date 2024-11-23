@@ -126,3 +126,5 @@ Add **CleanDestroyedManager** to remove destroyed actors, and move boundaries co
 **GameStateManager**(Used for Update number of enemies and kill count as well as display user health) to short LevelParent codes.
 Add folders in object folder. Add **BossFirePattern** class to short Boss class codes. Add **LevelFour** 2 bosses. User should destroy both of them to win the game.
 Remove observable(out of date). Added **StringProperty currentLevelName**, **setCurrentLevelName** method and **currentLevelNameProperty** method.
+- **2024-11-23**: Remove **ShieldImage** and **LevelViewLevelTwo** classes. Add **BossShield**: Handle shield image and logic. 
+Add **BossHealthBar**: Handle boss health bar. Add **BossMovePattern**: Handle boss move pattern.

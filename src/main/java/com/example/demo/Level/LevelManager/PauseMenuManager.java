@@ -1,7 +1,6 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.Boss.Boss;
 import com.example.demo.controller.Control_PauseMenu;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
@@ -97,19 +96,7 @@ public class PauseMenuManager {
      * @param radius The radius of the blur effect.
      */
     private void setBlurEffect(Node node, double radius) {
-        if (node instanceof ActiveActorDestructible) {
-            ((ActiveActorDestructible) node).setEffect(new GaussianBlur(radius));
-        } else if (node instanceof Boss) {
-            Boss boss = (Boss) node;
-            if (boss.getHealthBar() != null) {
-                boss.getHealthBar().setEffect(new GaussianBlur(radius));
-            }
-            if (boss.getShieldImage() != null) {
-                boss.getShieldImage().setEffect(new GaussianBlur(radius));
-            }
-        } else {
-            node.setEffect(new GaussianBlur(radius));
-        }
+        node.setEffect(new GaussianBlur(radius)); // Apply blur to all nodes
     }
 
     /**
@@ -117,19 +104,7 @@ public class PauseMenuManager {
      * @param node The node to remove the effect from.
      */
     private void removeBlurEffect(Node node) {
-        if (node instanceof ActiveActorDestructible) {
-            ((ActiveActorDestructible) node).setEffect(null);
-        } else if (node instanceof Boss) {
-            Boss boss = (Boss) node;
-            if (boss.getHealthBar() != null) {
-                boss.getHealthBar().setEffect(null);
-            }
-            if (boss.getShieldImage() != null) {
-                boss.getShieldImage().setEffect(null);
-            }
-        } else {
-            node.setEffect(null);
-        }
+        node.setEffect(null); // Remove blur from all nodes
     }
 
     public Parent getPauseMenuRoot() {

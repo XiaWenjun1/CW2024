@@ -3,11 +3,7 @@ package com.example.demo.Object.Boss;
 import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelParent;
-import com.example.demo.Display.ShieldImage;
 import com.example.demo.Object.FighterPlane;
-import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.image.ImageView;
 
 import java.util.*;
 
@@ -22,28 +18,17 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 1000.0; // Initial X position of the boss
 	private static final double INITIAL_Y_POSITION = 400.0; // Initial Y position of the boss
 	private static final double BOSS_FIRE_RATE = 0.015; // Probability of firing a projectile in each frame
-	private static final double BOSS_SHIELD_PROBABILITY = 0.001; // Probability of activating the shield
 	private static final int IMAGE_WIDTH = 300; // Width of the boss image
 	private static final int IMAGE_HEIGHT = 300; // Height of the boss image
-	private static final int VERTICAL_VELOCITY = 5; // Vertical velocity for the boss movement
-	private static final int HEALTH = 50; // Initial health of the boss
-	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10; // Maximum frames moving in the same direction
+	private static final int HEALTH = 30; // Initial health of the boss
 	private static final int Y_UPPER_BOUND = 55; // Upper bound for Y position
 	private static final int Y_LOWER_BOUND = 700; // Lower bound for Y position
-	private static final int MAX_FRAMES_WITH_SHIELD = 500; // Maximum frames with the shield active
-	private static final int MOVE_FREQUENCY_PER_CYCLE = 5; // Frequency of movement changes in a cycle
-	private static final int ZERO = 0; // Constant for zero movement
 
 	private final LevelParent levelParent; // The level parent object managing the game scene
-	private final List<Integer> movePattern = new ArrayList<>(); // List defining the movement pattern
-	private final ShieldImage shieldImage; // Shield image displayed when the boss is shielded
-	private final ProgressBar healthBar; // Progress bar displaying the boss's health
+	private final BossMovePattern movePattern; // The boss's movement pattern manager
+	private final BossShield bossShield; // The boss's shield
+	private final BossHealthBar bossHealthBar; // The boss's health bar
 	private final BossFirePattern firePattern; // The boss's fire pattern manager
-
-	private boolean isShielded; // Whether the boss is currently shielded
-	private int consecutiveMovesInSameDirection; // Counter for consecutive moves in the same direction
-	private int indexOfCurrentMove; // Index for the current move in the move pattern
-	private int framesWithShieldActivated; // Counter for frames the shield has been activated
 
 	/**
 	 * Constructs a Boss object with the specified levelParent.
@@ -56,50 +41,9 @@ public class Boss extends FighterPlane {
 		this.firePattern = new BossFirePattern(levelParent, this);
 		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.2);
 
-		initializeMovePattern();
-		shieldImage = initializeShieldImage();
-		healthBar = initializeHealthBar();
-	}
-
-	/**
-	 * Initializes the movement pattern for the boss.
-	 * The pattern contains alternating vertical movements with some stationary moves.
-	 */
-	private void initializeMovePattern() {
-		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
-			movePattern.add(VERTICAL_VELOCITY);
-			movePattern.add(-VERTICAL_VELOCITY);
-			movePattern.add(ZERO);
-		}
-		Collections.shuffle(movePattern);
-	}
-
-	/**
-	 * Initializes the shield image for the boss.
-	 *
-	 * @return The ShieldImage object for the boss.
-	 */
-	private ShieldImage initializeShieldImage() {
-		ShieldImage shield = new ShieldImage(INITIAL_X_POSITION, INITIAL_Y_POSITION);
-		if (levelParent != null && levelParent.getRoot() != null) {
-			levelParent.getRoot().getChildren().add(shield);
-		}
-		return shield;
-	}
-
-	/**
-	 * Initializes the health bar for the boss.
-	 *
-	 * @return The ProgressBar object for the boss's health.
-	 */
-	private ProgressBar initializeHealthBar() {
-		ProgressBar healthBar = createHealthBar();
-		Platform.runLater(() -> {
-			if (levelParent != null && levelParent.getRoot() != null) {
-				levelParent.getRoot().getChildren().add(healthBar);
-			}
-		});
-		return healthBar;
+		this.movePattern = new BossMovePattern(); // Initialize movement pattern
+		this.bossHealthBar = BossHealthBar.initialize(this, levelParent); // Initialize health bar
+		this.bossShield = BossShield.initialize(this, levelParent); // Initialize shield
 	}
 
 	/**
@@ -107,10 +51,10 @@ public class Boss extends FighterPlane {
 	 */
 	@Override
 	public void updateActor() {
-		updatePosition();
-		updateShield();
-		updateHealthBar();
-		updateHitbox();
+		updatePosition(); // Update position based on movement pattern
+		bossShield.update(); // Update shield status
+		bossHealthBar.update(); // Update health bar
+		updateHitbox(); // Update hitbox for collision detection
 	}
 
 	/**
@@ -120,43 +64,11 @@ public class Boss extends FighterPlane {
 	@Override
 	public void updatePosition() {
 		double initialTranslateY = getTranslateY();
-		moveVertically(getNextMove());
+		moveVertically(movePattern.getNextMove()); // Move the boss vertically
 		double currentPositionY = getLayoutY() + getTranslateY();
 		if (currentPositionY < Y_UPPER_BOUND || currentPositionY > Y_LOWER_BOUND) {
-			setTranslateY(initialTranslateY);
+			setTranslateY(initialTranslateY); // Ensure the boss stays within the vertical bounds
 		}
-	}
-
-	/**
-	 * Updates the boss's shield state, showing or hiding the shield as needed.
-	 */
-	private void updateShield() {
-		double currentPosition = getLayoutY() + getTranslateY();
-		shieldImage.setLayoutX(getLayoutX());
-		shieldImage.setLayoutY(currentPosition);
-
-		if (isShielded) {
-			framesWithShieldActivated++;
-			shieldImage.showShield();
-		} else if (shieldShouldBeActivated()) {
-			activateShield();
-		}
-
-		if (shieldExhausted()) {
-			deactivateShield();
-		}
-
-		shieldImage.toFront();
-	}
-
-	/**
-	 * Updates the health bar to reflect the current health percentage of the boss.
-	 */
-	private void updateHealthBar() {
-		double currentPositionY = getLayoutY() + getTranslateY();
-		healthBar.setLayoutX(getLayoutX());
-		healthBar.setLayoutY(currentPositionY + 60);
-		healthBar.setProgress(Math.max(0, (double) getHealth() / HEALTH));
 	}
 
 	/**
@@ -172,9 +84,9 @@ public class Boss extends FighterPlane {
 
 		int attackType = firePattern.selectAttackType();
 		return switch (attackType) {
-			case 1 -> firePattern.createStraightProjectile();
-			case 2 -> firePattern.createScatterProjectiles();
-			case 3 -> firePattern.createDirectionalProjectiles();
+			case 1 -> firePattern.createStraightProjectile(); // Fire straight projectiles
+			case 2 -> firePattern.createScatterProjectiles(); // Fire scatter projectiles
+			case 3 -> firePattern.createDirectionalProjectiles(); // Fire directional projectiles
 			default -> new ArrayList<>();
 		};
 	}
@@ -184,101 +96,22 @@ public class Boss extends FighterPlane {
 	 */
 	@Override
 	public void takeDamage() {
-		if (!isShielded) {
-			super.takeDamage();
+		if (!bossShield.isShielded()) {
+			super.takeDamage(); // Call parent class takeDamage if the shield is not active
 		}
-
-		double healthPercentage = Math.max(0, (double) getHealth() / HEALTH);
-		healthBar.setProgress(healthPercentage);
 
 		if (getHealth() <= 0) {
-			die();
+			die(); // Trigger boss death if health reaches 0 or below
 		}
 	}
 
 	/**
-	 * Creates the health bar for the boss.
-	 *
-	 * @return A ProgressBar object for the boss's health.
-	 */
-	private ProgressBar createHealthBar() {
-		ProgressBar bar = new ProgressBar(1.0);
-		bar.setPrefWidth(IMAGE_WIDTH);
-		bar.setPrefHeight(10);
-		bar.setStyle("-fx-accent: red; -fx-background-color: lightgray;");
-		return bar;
-	}
-
-	/**
-	 * Determines if the boss fires a projectile in the current frame.
+	 * Determines if the boss fires a projectile in the current frame based on the fire rate.
 	 *
 	 * @return True if the boss fires a projectile, false otherwise.
 	 */
 	private boolean bossFiresInCurrentFrame() {
-		return Math.random() < BOSS_FIRE_RATE;
-	}
-
-	/**
-	 * Determines if the shield should be activated.
-	 *
-	 * @return True if the shield should be activated, false otherwise.
-	 */
-	private boolean shieldShouldBeActivated() {
-		return Math.random() < BOSS_SHIELD_PROBABILITY;
-	}
-
-	/**
-	 * Determines if the shield has been activated for too long.
-	 *
-	 * @return True if the shield is exhausted, false otherwise.
-	 */
-	private boolean shieldExhausted() {
-		return framesWithShieldActivated >= MAX_FRAMES_WITH_SHIELD;
-	}
-
-	/**
-	 * Activates the boss's shield.
-	 */
-	private void activateShield() {
-		isShielded = true;
-		shieldImage.showShield();
-	}
-
-	/**
-	 * Deactivates the boss's shield.
-	 */
-	private void deactivateShield() {
-		isShielded = false;
-		framesWithShieldActivated = 0;
-		shieldImage.hideShield();
-	}
-
-	/**
-	 * Hides the health bar for the boss.
-	 */
-	public void hideHealthBar() {
-		if (healthBar != null) {
-			healthBar.setVisible(false);
-		}
-	}
-
-	/**
-	 * Gets the next move in the movement pattern for the boss.
-	 *
-	 * @return The next move for the boss in the pattern.
-	 */
-	private int getNextMove() {
-		int currentMove = movePattern.get(indexOfCurrentMove);
-		consecutiveMovesInSameDirection++;
-		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
-			Collections.shuffle(movePattern);
-			consecutiveMovesInSameDirection = 0;
-			indexOfCurrentMove++;
-		}
-		if (indexOfCurrentMove == movePattern.size()) {
-			indexOfCurrentMove = 0;
-		}
-		return currentMove;
+		return Math.random() < BOSS_FIRE_RATE; // Randomly decide whether to fire based on the fire rate
 	}
 
 	/**
@@ -288,31 +121,50 @@ public class Boss extends FighterPlane {
 	 * @return True if there is a collision, false otherwise.
 	 */
 	public boolean checkCollision(ActiveActor otherActor) {
-		return getHitbox().getBoundsInParent().intersects(otherActor.getHitbox().getBoundsInParent());
+		return getHitbox().getBoundsInParent().intersects(otherActor.getHitbox().getBoundsInParent()); // Check if hitboxes overlap
 	}
 
 	/**
-	 * Gets the health bar of the boss.
+	 * Gets the X position of the boss, considering any translations applied.
 	 *
-	 * @return The health bar of the boss.
+	 * @return The X position of the boss.
 	 */
-	public ProgressBar getHealthBar() {
-		return healthBar;
+	public double getBossXPosition() {
+		return getLayoutX() + getTranslateX(); // Get the X position with translation applied
 	}
 
 	/**
-	 * Gets the shield image of the boss.
+	 * Gets the Y position of the boss, considering any translations applied.
 	 *
-	 * @return The shield image of the boss.
+	 * @return The Y position of the boss.
 	 */
-	public ImageView getShieldImage() {
-		return shieldImage;
+	public double getBossYPosition() {
+		return getLayoutY() + getTranslateY(); // Get the Y position with translation applied
 	}
 
 	/**
-	 * Executes the death behavior of the boss.
+	 * Gets the width of the boss.
+	 *
+	 * @return The width of the boss image.
+	 */
+	public double getBossWidth() {
+		return IMAGE_WIDTH;
+	}
+
+	/**
+	 * Gets the maximum health of the boss.
+	 *
+	 * @return The maximum health of the boss.
+	 */
+	public int getMAXHealth() {
+		return HEALTH;
+	}
+
+	/**
+	 * Executes the death behavior of the boss, hiding the health bar and printing a message.
 	 */
 	private void die() {
 		System.out.println("Boss is dead!");
+		bossHealthBar.hide(); // Hide the health bar when the boss dies
 	}
 }

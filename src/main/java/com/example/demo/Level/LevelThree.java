@@ -2,7 +2,6 @@ package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Display.LevelView;
-import com.example.demo.Display.LevelViewLevelTwo;
 import com.example.demo.Display.ScoreBoard;
 import com.example.demo.Display.TargetLevelTwo;
 import com.example.demo.Object.Boss.Boss;
@@ -17,7 +16,6 @@ public class LevelThree extends LevelParent {
     private static final int KILLS_TO_ADVANCE = 50;
     private static final double ENEMY_SPAWN_PROBABILITY = .20;
     private final Boss boss;
-    private LevelViewLevelTwo levelView;
     private ScoreBoard scoreBoard;
     private TargetLevelTwo targetLevelTwo;
 
@@ -70,14 +68,6 @@ public class LevelThree extends LevelParent {
             setBossAdded(true);
             targetLevelTwo.showHint();
         }
-
-        checkBossDeathAndHideHealthBar();
-    }
-
-    private void checkBossDeathAndHideHealthBar() {
-        if (boss.isDestroyed()) {
-            boss.hideHealthBar();
-        }
     }
 
     private boolean bossAdded = false;
@@ -96,7 +86,6 @@ public class LevelThree extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
-        return levelView;
+        return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
     }
 }
