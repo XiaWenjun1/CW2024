@@ -1,7 +1,6 @@
 package com.example.demo.Object.UserPlane;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Level.LevelParent;
 import com.example.demo.Object.FighterPlane;
 
 import java.util.ArrayList;
@@ -14,14 +13,13 @@ import java.util.List;
  */
 public class UserPlane extends FighterPlane {
 
-	private final LevelParent levelParent;
 	private final UserProjectile userProjectile;
 	private boolean isPaused = false;
 	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = 55;
 	private static final double Y_LOWER_BOUND = 700.0;
 	private static final double X_LEFT_BOUND = 0;
-	private static final double X_RIGHT_BOUND = 1200.0;
+	private static final double X_RIGHT_BOUND = 700.0;
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_WIDTH = 150;
@@ -38,23 +36,19 @@ public class UserPlane extends FighterPlane {
 	 * Constructor to initialize the UserPlane with its starting position, health, and related parameters.
 	 *
 	 * @param initialHealth The initial health of the plane.
-	 * @param levelParent The parent level containing the plane.
 	 */
-	public UserPlane(int initialHealth, LevelParent levelParent) {
+	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
-		this.levelParent = levelParent;
 		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
-		userProjectile = new UserProjectile(INITIAL_X_POSITION, INITIAL_Y_POSITION, levelParent, 50, 50);
+		userProjectile = new UserProjectile(INITIAL_X_POSITION, INITIAL_Y_POSITION, 50, 50);
 		updateProjectileSize();
-		levelParent.getRoot().getChildren().add(getHitbox());
-		getHitbox().toFront();
 	}
 
 	/**
 	 * Upgrades the projectile's power level if it's below the maximum level.
 	 */
 	public void upgradeProjectile() {
-		if (userProjectile.getPowerLevel() < 3) {
+		if (userProjectile.getPowerLevel() < 5) {
 			userProjectile.setPowerLevel(userProjectile.getPowerLevel() + 1);
 		}
 	}
@@ -124,7 +118,6 @@ public class UserPlane extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 		updateHitbox();
-		getHitbox().toFront();
 	}
 
 	/**
@@ -146,7 +139,6 @@ public class UserPlane extends FighterPlane {
 		UserProjectile projectile = new UserProjectile(
 				projectileXPosition,
 				projectileYPosition,
-				levelParent,
 				(int) userProjectile.getWidth(),
 				(int) userProjectile.getHeight()
 		);

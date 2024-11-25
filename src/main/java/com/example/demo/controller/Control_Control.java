@@ -30,7 +30,7 @@ public class Control_Control {
 
     private void loadImages() {
         planeImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userplane.png")));
-        userfireImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userfire.png")));
+        userfireImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userfire_level1.png")));
         heartImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/heart.png")));
         ammoboxImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/ammobox.png")));
     }

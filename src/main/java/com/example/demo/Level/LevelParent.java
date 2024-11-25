@@ -17,6 +17,8 @@ public abstract class LevelParent {
 	private final double screenWidth;
 	private final double enemyMaximumYPosition = 650;
 	private final double enemyMinimumYPosition = 55;
+	private int currentNumberOfEnemies;
+	private int previousNumberOfEnemies;
 
 	private final Group root;
 	private final Timeline timeline;
@@ -29,9 +31,9 @@ public abstract class LevelParent {
 	private final UserInputManager userInputManager;
 	private final ActiveActorManager activeActorManager;
 	private final CleanDestroyedManager cleanDestroyedManager;
-	private final GameStateManager gameStateManager;
 	private final ActorSpawnerManager actorSpawnerManager;
 	private final LevelView levelView;
+
 
 	private final StringProperty currentLevelName = new SimpleStringProperty();
 
@@ -39,8 +41,10 @@ public abstract class LevelParent {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.user = new UserPlane(playerInitialHealth, this);
+		this.user = new UserPlane(playerInitialHealth);
 		this.activeActorManager = new ActiveActorManager();
+		this.currentNumberOfEnemies = 0;
+		this.previousNumberOfEnemies = 0;
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
@@ -53,8 +57,7 @@ public abstract class LevelParent {
 		pauseMenuManager.loadPauseMenu();
 		this.endGameMenuManager = new EndGameMenuManager(this);
 		this.cleanDestroyedManager = new CleanDestroyedManager(root, activeActorManager);
-		this.gameStateManager = new GameStateManager(user, levelView, activeActorManager);
-		this.actorSpawnerManager = new ActorSpawnerManager(activeActorManager, root, this);
+		this.actorSpawnerManager = new ActorSpawnerManager(activeActorManager, user, root);
 
 		initializeTimeline();
 		activeActorManager.getFriendlyUnits().add(user);
@@ -76,6 +79,7 @@ public abstract class LevelParent {
 
 	private void updateScene() {
 		actorSpawnerManager.updateActors();
+		spawnEnemyUnits();
 		handleCollisionsAndPenetration();
 		cleanUpDestroyedActors();
 		updateGameStatus();
@@ -138,8 +142,31 @@ public abstract class LevelParent {
 	}
 
 	private void updateGameStatus() {
-		gameStateManager.updateStatus();
+		updateStatus();
 		checkIfGameOver();
+	}
+
+	public void updateStatus() {
+		updateNumberOfEnemies();
+		updateKillCount();
+		updateLevelView();
+	}
+
+	public void updateLevelView() {
+		levelView.removeHearts(user.getHealth());
+		levelView.addHearts(user.getHealth());
+	}
+
+	private void updateNumberOfEnemies() {
+		previousNumberOfEnemies = currentNumberOfEnemies;
+		currentNumberOfEnemies = activeActorManager.getEnemyUnits().size();
+	}
+
+	private void updateKillCount() {
+		int defeatedEnemies = previousNumberOfEnemies - currentNumberOfEnemies;
+		for (int i = 0; i < defeatedEnemies; i++) {
+			user.incrementKillCount();
+		}
 	}
 
 	protected abstract void checkIfGameOver();
@@ -167,8 +194,6 @@ public abstract class LevelParent {
 	}
 
 	protected abstract void spawnEnemyUnits();
-
-	public void spawnEnemies() { spawnEnemyUnits();}
 
 	public UserPlane getUser() {
 		return user;
@@ -207,4 +232,5 @@ public abstract class LevelParent {
 	public StringProperty currentLevelNameProperty() {
 		return currentLevelName;
 	}
+
 }

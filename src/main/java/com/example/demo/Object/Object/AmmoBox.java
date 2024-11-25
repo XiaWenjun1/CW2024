@@ -14,7 +14,7 @@ public class AmmoBox extends ActiveActorDestructible {
     private static final int IMAGE_WIDTH = 40;
     private static final int IMAGE_HEIGHT = 40;
     private static final int HORIZONTAL_VELOCITY = -6;
-    private static final double SPAWN_PROBABILITY = 0.005;
+    private static final double SPAWN_PROBABILITY = 0.01;
     private static final double MaximumXPosition = 1350;
     private static final double MaximumYPosition = 700;
 

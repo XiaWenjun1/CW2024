@@ -2,12 +2,12 @@ package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Display.LevelView;
-import com.example.demo.Display.ScoreBoard;
+import com.example.demo.Display.LevelViewLevelOne;
 import com.example.demo.Object.EnemyPlane.EnemyPlane;
 
 public class LevelOne extends LevelParent {
 
-	private ScoreBoard scoreBoard;
+	private LevelViewLevelOne levelView;
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.Level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
@@ -24,7 +24,6 @@ public class LevelOne extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else {
-			scoreBoard.updateCurrentKills(getUser().getNumberOfKills());
 			if (userHasReachedKillTarget()) {
 				goToNextLevel(NEXT_LEVEL);
 			}
@@ -34,8 +33,6 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
-		scoreBoard = ScoreBoard.createScoreBoard(KILLS_TO_ADVANCE);
-		getRoot().getChildren().add(scoreBoard.getContainer());
 	}
 
 	@Override
@@ -46,20 +43,26 @@ public class LevelOne extends LevelParent {
 				double minY = getEnemyMinimumYPosition();
 				double maxY = getEnemyMaximumYPosition();
 				double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
-				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, LevelOne.this);
+				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
 			}
 		}
 	}
 
+	@Override
+	public void updateLevelView() {
+		super.updateLevelView();
+		// Pass the correct currentKills and targetKills to update the scoreboard
+		levelView.updateKills(getUser().getNumberOfKills(), KILLS_TO_ADVANCE);
+	}
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+		levelView = new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, 0, KILLS_TO_ADVANCE);
+		return levelView;
 	}
 
 	private boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
-
 }

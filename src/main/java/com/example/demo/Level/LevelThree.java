@@ -1,9 +1,7 @@
 package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Display.LevelView;
-import com.example.demo.Display.ScoreBoard;
-import com.example.demo.Display.TargetLevelTwo;
+import com.example.demo.Display.*;
 import com.example.demo.Object.Boss.Boss;
 import com.example.demo.Object.EnemyPlane.EnemyPlane;
 
@@ -12,24 +10,21 @@ public class LevelThree extends LevelParent {
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
     private static final String NEXT_LEVEL = "com.example.demo.Level.LevelFour";
     private static final int PLAYER_INITIAL_HEALTH = 5;
+    private static final int BOSS_HEALTH = 20;
     private static final int TOTAL_ENEMIES = 5;
-    private static final int KILLS_TO_ADVANCE = 50;
+    private static final int KILLS_TO_ADVANCE = 30;
     private static final double ENEMY_SPAWN_PROBABILITY = .20;
     private final Boss boss;
-    private ScoreBoard scoreBoard;
-    private TargetLevelTwo targetLevelTwo;
+    private LevelViewLevelThree levelView;
 
     public LevelThree(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-        boss = new Boss(this);
+        boss = new Boss(BOSS_HEALTH);
     }
 
     @Override
     protected void initializeFriendlyUnits() {
         getRoot().getChildren().add(getUser());
-        scoreBoard = ScoreBoard.createScoreBoard(KILLS_TO_ADVANCE);
-        getRoot().getChildren().add(scoreBoard.getContainer());
-        targetLevelTwo = new TargetLevelTwo(getRoot());
     }
 
     @Override
@@ -37,9 +32,7 @@ public class LevelThree extends LevelParent {
         if (userIsDestroyed()) {
             loseGame();
         } else {
-            scoreBoard.updateCurrentKills(getUser().getNumberOfKills());
             if (userHasReachedKillTarget() && boss.isDestroyed()) {
-                targetLevelTwo.hideHint();
                 goToNextLevel(NEXT_LEVEL);
             }
         }
@@ -54,7 +47,7 @@ public class LevelThree extends LevelParent {
                     double minY = getEnemyMinimumYPosition();
                     double maxY = getEnemyMaximumYPosition();
                     double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
-                    ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, LevelThree.this);
+                    ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
                     addEnemyUnit(newEnemy);
                 }
             }
@@ -66,7 +59,25 @@ public class LevelThree extends LevelParent {
                 getRoot().getChildren().add(boss);
             }
             setBossAdded(true);
-            targetLevelTwo.showHint();
+        }
+    }
+
+    @Override
+    public void updateLevelView() {
+        super.updateLevelView();
+        levelView.updateKills(getUser().getNumberOfKills(), KILLS_TO_ADVANCE);
+
+        if (!boss.isDestroyed()) {
+            levelView.updateBossHealth(boss.getHealth());
+            levelView.updateBossHealthPosition(boss);
+            levelView.updateShieldPosition(boss);
+            if (boss.getShielded()) {
+                levelView.showShield();
+            } else {
+                levelView.hideShield();
+            }
+        } else {
+            levelView.hideHealthBar();
         }
     }
 
@@ -86,6 +97,7 @@ public class LevelThree extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+        levelView = new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH, BOSS_HEALTH, 0, KILLS_TO_ADVANCE);
+        return levelView;
     }
 }

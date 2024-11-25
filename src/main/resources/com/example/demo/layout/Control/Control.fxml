@@ -39,7 +39,7 @@
     <ImageView fx:id="ammoboxImageView" layoutX="50" layoutY="500" pickOnBounds="true" preserveRatio="true"/>
 
     <!-- Ammo Box Description -->
-    <Text layoutX="250" layoutY="540" text="Update  Projectile  (Can  Update  2  times).  Randomly  Spawn  In  Game" styleClass="text-control"/>
+    <Text layoutX="250" layoutY="540" text="Update  Projectile  (Can  Update  4  times).  Randomly  Spawn  In  Game" styleClass="text-control"/>
 
     <!-- Other Information -->
     <Text layoutX="50" layoutY="670" text="Other  Information:  Middle  Mouse  Pause  Game.  Click  Continue  Button  Or  Reclick  Middle  Mouse  To  Resume  Game." styleClass="text-control"/>

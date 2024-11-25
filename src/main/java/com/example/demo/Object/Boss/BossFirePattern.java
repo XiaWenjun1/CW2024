@@ -1,7 +1,6 @@
 package com.example.demo.Object.Boss;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Level.LevelParent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,19 +12,32 @@ import java.util.List;
 public class BossFirePattern {
 
     private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0; // Vertical offset for projectile spawn
-
-    private final LevelParent levelParent; // The level parent managing the game scene
     private final Boss boss; // The boss object that fires projectiles
 
     /**
      * Constructs a BossFirePattern object that controls the firing patterns of the boss.
-     *
-     * @param levelParent The level parent that manages the game scene and root elements.
      * @param boss The boss object that will fire projectiles.
      */
-    public BossFirePattern(LevelParent levelParent, Boss boss) {
-        this.levelParent = levelParent;
+    public BossFirePattern(Boss boss) {
         this.boss = boss;
+    }
+
+    /**
+     * Retrieves the current X position of the boss.
+     *
+     * @return The boss's current X position.
+     */
+    private double getBossXPosition() {
+        return boss.getLayoutX() + boss.getTranslateX();
+    }
+
+    /**
+     * Retrieves the current Y position of the boss.
+     *
+     * @return The boss's current Y position.
+     */
+    private double getBossYPosition() {
+        return boss.getLayoutY() + boss.getTranslateY();
     }
 
     /**
@@ -35,7 +47,7 @@ public class BossFirePattern {
      *         1 for straight, 2 for scatter, 3 for directional.
      */
     public int selectAttackType() {
-        return (int) (Math.random() * 3) + 1;
+        return (int) (Math.random() * 4) + 1;
     }
 
     /**
@@ -44,10 +56,24 @@ public class BossFirePattern {
      * @return A list containing a single straight projectile.
      */
     public List<ActiveActorDestructible> createStraightProjectile() {
-        double projectileYPosition = boss.getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
-        ActiveActorDestructible projectile = new BossProjectile(boss.getBossXPosition(), projectileYPosition, levelParent);
+        double projectileYPosition = getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
+        ActiveActorDestructible projectile = new BossProjectile(getBossXPosition(), projectileYPosition);
 
         return List.of(projectile);
+    }
+
+    public List<ActiveActorDestructible> createTwoProjectiles() {
+        List<ActiveActorDestructible> projectiles = new ArrayList<>();
+        double[] yOffsets = {-50, 50};
+
+        for (double yOffset : yOffsets) {
+            double projectileYPosition = getBossYPosition() + yOffset;
+            BossProjectile projectile = new BossProjectile(getBossXPosition(), projectileYPosition);
+            projectile.setVelocity(-4, 0);
+
+            projectiles.add(projectile);
+        }
+        return projectiles;
     }
 
     /**
@@ -60,13 +86,9 @@ public class BossFirePattern {
         double[] yOffsets = {-50, 0, 50};
 
         for (double yOffset : yOffsets) {
-            double projectileYPosition = boss.getBossYPosition() + yOffset;
-            BossProjectile projectile = new BossProjectile(boss.getBossXPosition(), projectileYPosition, levelParent);
-            projectile.setVelocity(-5, 0);
-
-            if (!levelParent.getRoot().getChildren().contains(projectile.getHitbox())) {
-                levelParent.getRoot().getChildren().add(projectile.getHitbox());
-            }
+            double projectileYPosition = getBossYPosition() + yOffset;
+            BossProjectile projectile = new BossProjectile(getBossXPosition(), projectileYPosition);
+            projectile.setVelocity(-3, 0);
 
             projectiles.add(projectile);
         }
@@ -81,27 +103,21 @@ public class BossFirePattern {
     public List<ActiveActorDestructible> createDirectionalProjectiles() {
         List<ActiveActorDestructible> projectiles = new ArrayList<>();
 
-        double straightY = boss.getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
+        double straightY = getBossYPosition() + PROJECTILE_Y_POSITION_OFFSET;
         double leftUpY = straightY - 50;
         double leftDownY = straightY + 50;
 
-        BossProjectile straightProjectile = new BossProjectile(boss.getBossXPosition(), straightY, levelParent);
-        straightProjectile.setVelocity(-4, 0);
+        BossProjectile straightProjectile = new BossProjectile(getBossXPosition(), straightY);
+        straightProjectile.setVelocity(-2, 0);
         projectiles.add(straightProjectile);
 
-        BossProjectile leftUpProjectile = new BossProjectile(boss.getBossXPosition(), leftUpY, levelParent);
-        leftUpProjectile.setVelocity(-4, -1);
+        BossProjectile leftUpProjectile = new BossProjectile(getBossXPosition(), leftUpY);
+        leftUpProjectile.setVelocity(-2, -1);
         projectiles.add(leftUpProjectile);
 
-        BossProjectile leftDownProjectile = new BossProjectile(boss.getBossXPosition(), leftDownY, levelParent);
-        leftDownProjectile.setVelocity(-4, 1);
+        BossProjectile leftDownProjectile = new BossProjectile(getBossXPosition(), leftDownY);
+        leftDownProjectile.setVelocity(-2, 1);
         projectiles.add(leftDownProjectile);
-
-        for (BossProjectile projectile : List.of(straightProjectile, leftUpProjectile, leftDownProjectile)) {
-            if (!levelParent.getRoot().getChildren().contains(projectile.getHitbox())) {
-                levelParent.getRoot().getChildren().add(projectile.getHitbox());
-            }
-        }
 
         return projectiles;
     }

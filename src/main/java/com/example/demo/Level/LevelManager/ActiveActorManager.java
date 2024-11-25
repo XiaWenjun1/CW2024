@@ -58,9 +58,7 @@ public class ActiveActorManager {
         return enemyProjectiles;
     }
 
-    public List<ActiveActorDestructible> getAmmoBoxes() {
-        return ammoBoxes;
-    }
+    public List<ActiveActorDestructible> getAmmoBoxes() { return ammoBoxes; }
 
     public List<ActiveActorDestructible> getHearts() {
         return hearts;

@@ -22,14 +22,10 @@ public class BossProjectile extends Projectile {
 	 *
 	 * @param initialXPos The initial X position of the boss projectile.
 	 * @param initialYPos The initial Y position of the boss projectile.
-	 * @param levelParent The level parent that holds the projectile.
 	 */
-	public BossProjectile(double initialXPos, double initialYPos, LevelParent levelParent) {
+	public BossProjectile(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, initialXPos, initialYPos);
-
 		setHitboxSize(IMAGE_WIDTH * 0.5, IMAGE_HEIGHT * 0.3);
-		levelParent.getRoot().getChildren().add(getHitbox());
-		getHitbox().toFront();
 	}
 
 	/**

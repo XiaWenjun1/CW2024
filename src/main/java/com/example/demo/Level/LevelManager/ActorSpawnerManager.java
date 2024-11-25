@@ -1,11 +1,10 @@
 package com.example.demo.Level.LevelManager;
 
-import com.example.demo.Actor.ActiveActor;
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Level.LevelParent;
 import com.example.demo.Object.FighterPlane;
 import com.example.demo.Object.Object.AmmoBox;
 import com.example.demo.Object.Object.Heart;
+import com.example.demo.Object.UserPlane.UserPlane;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
@@ -14,26 +13,32 @@ import java.util.Random;
 
 public class ActorSpawnerManager {
     private final ActiveActorManager activeActorManager;
+    private final UserPlane user;
     private final Group root;
     private final Random random;
-    private final LevelParent levelParent;
 
-    public ActorSpawnerManager(ActiveActorManager activeActorManager, Group root, LevelParent levelParent) {
+    public ActorSpawnerManager(ActiveActorManager activeActorManager, UserPlane user, Group root) {
         this.activeActorManager = activeActorManager;
+        this.user = user;
         this.root = root;
-        this.levelParent = levelParent;
         this.random = new Random();
     }
 
     public void updateActors() {
         activeActorManager.updateActors();
-        spawnEnemyUnits();
         generateEnemyFire();
         spawnRandomItems();
+        addUserPlaneHitbox();
     }
 
-    public void spawnEnemyUnits() {
-        levelParent.spawnEnemies();
+    private void addUserPlaneHitbox() {
+        if (user != null && user.getHitbox() != null) {
+            Node userHitbox = user.getHitbox();
+            if (!root.getChildren().contains(userHitbox)) {
+                root.getChildren().add(userHitbox);
+                userHitbox.toFront();
+            }
+        }
     }
 
     public void generateEnemyFire() {

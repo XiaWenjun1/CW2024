@@ -45,7 +45,7 @@ public class Control_Animation {
     private void loadImages() {
         backgroundImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/start.jpg")));
         planeImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userplane.png")));
-        userfireImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userfire.png")));
+        userfireImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userfire_level1.png")));
         enemyImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/enemyplane.png")));
         enemyfireImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/enemyFire.png")));
         bossImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/bossplane.png")));
