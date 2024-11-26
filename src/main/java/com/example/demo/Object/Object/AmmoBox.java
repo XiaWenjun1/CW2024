@@ -16,7 +16,7 @@ public class AmmoBox extends ActiveActorDestructible {
     private static final int HORIZONTAL_VELOCITY = -6;
     private static final double SPAWN_PROBABILITY = 0.01;
     private static final double MaximumXPosition = 1350;
-    private static final double MaximumYPosition = 700;
+    private static final double MaximumYPosition = 600;
 
     /**
      * Constructs a new AmmoBox object with the specified initial position.

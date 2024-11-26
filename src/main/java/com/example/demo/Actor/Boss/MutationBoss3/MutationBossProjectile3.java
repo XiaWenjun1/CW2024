@@ -1,0 +1,23 @@
+package com.example.demo.Actor.Boss.MutationBoss3;
+
+import com.example.demo.Actor.Boss.ParentBoss.BossProjectile;
+
+/**
+ * The {@code MutationBossProjectile3} class represents a specialized projectile fired by the {@code MutationBoss3}.
+ * It extends the {@code BossProjectile} class and customizes the appearance of the projectile.
+ */
+public class MutationBossProjectile3 extends BossProjectile {
+
+    private static final String NEW_IMAGE_NAME = "mutationBossProjectile3.png"; // Image for the mutated boss projectile
+
+    /**
+     * Constructs a {@code MutationBossProjectile3} with the specified initial position.
+     *
+     * @param initialXPos The initial X position of the projectile.
+     * @param initialYPos The initial Y position of the projectile.
+     */
+    public MutationBossProjectile3(double initialXPos, double initialYPos) {
+        super(initialXPos, initialYPos); // Calls the constructor of the superclass (BossProjectile)
+        setImage(NEW_IMAGE_NAME); // Sets the image for the mutated boss projectile
+    }
+}

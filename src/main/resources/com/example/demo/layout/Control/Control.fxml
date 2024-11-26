@@ -23,11 +23,35 @@
     <!-- Plane Control -->
     <Text layoutX="250" layoutY="200" text="Motion1:  ⬆ UP  ⬇ DOWN  ⬅ LEFT  ➡ RIGHT                      Motion2:  Mouse Dragging" styleClass="text-control"/>
 
-    <!-- User fire image -->
-    <ImageView fx:id="userfireImageView" layoutX="50" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+    <!-- User fire1 image -->
+    <ImageView fx:id="userfire1ImageView" layoutX="50" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
 
     <!-- User fire Control -->
-    <Text layoutX="250" layoutY="320" text="SpaceBar  (Each Time You Press The Spacebar, Only One Bullet Will Be Fired. Cannot Long Press.)" styleClass="text-control"/>
+    <Text layoutX="250" layoutY="320" text="SpaceBar" styleClass="text-control"/>
+
+    <!-- User fire2 image -->
+    <ImageView fx:id="userfire2ImageView" layoutX="500" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Tier2 -->
+    <Text layoutX="500" layoutY="270" text="Tier2:" styleClass="text-control"/>
+
+    <!-- User fire3 image -->
+    <ImageView fx:id="userfire3ImageView" layoutX="700" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Tier3 -->
+    <Text layoutX="700" layoutY="270" text="Tier3:" styleClass="text-control"/>
+
+    <!-- User fire4 image -->
+    <ImageView fx:id="userfire4ImageView" layoutX="900" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Tier4 -->
+    <Text layoutX="900" layoutY="270" text="Tier4:" styleClass="text-control"/>
+
+    <!-- User fire5 image -->
+    <ImageView fx:id="userfire5ImageView" layoutX="1100" layoutY="300" pickOnBounds="true" preserveRatio="true"/>
+
+    <!-- Tier5 -->
+    <Text layoutX="1100" layoutY="270" text="Tier5:" styleClass="text-control"/>
 
     <!-- Heart image -->
     <ImageView fx:id="heartImageView" layoutX="75" layoutY="400" pickOnBounds="true" preserveRatio="true"/>

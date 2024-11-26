@@ -1,12 +1,13 @@
-package com.example.demo.Object.Boss;
+package com.example.demo.Actor.Boss.ParentBoss;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.FighterPlane;
+import com.example.demo.Actor.Boss.BossFirePattern;
+import com.example.demo.Actor.FighterPlane;
 
 import java.util.*;
 
 /**
- * The Boss class represents a boss enemy in the game, extending the FighterPlane class.
+ * The {@code Boss} class represents a boss enemy in the game, extending the {@code FighterPlane} class.
  * It manages the boss's health, movement patterns, projectile firing, and shield mechanics.
  * The boss can move vertically, fire projectiles in different patterns, and activate a shield randomly.
  */
@@ -22,7 +23,7 @@ public class Boss extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 5; // Vertical velocity for the boss movement
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10; // Maximum frames moving in the same direction
 	private static final int Y_UPPER_BOUND = 60; // Upper bound for Y position
-	private static final int Y_LOWER_BOUND = 600; // Lower bound for Y position
+	private static final int Y_LOWER_BOUND = 650; // Lower bound for Y position
 	private static final int MAX_FRAMES_WITH_SHIELD = 200; // Maximum frames with the shield active
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5; // Frequency of movement changes in a cycle
 	private static final int ZERO = 0; // Constant for zero movement
@@ -36,7 +37,9 @@ public class Boss extends FighterPlane {
 	private int framesWithShieldActivated; // Counter for frames the shield has been activated
 
 	/**
-	 * Constructs a Boss object with the specified levelParent.
+	 * Constructs a {@code Boss} object with the specified initial health.
+	 *
+	 * @param initialHealth The initial health of the boss.
 	 */
 	public Boss(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_WIDTH, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
@@ -85,6 +88,9 @@ public class Boss extends FighterPlane {
 		}
 	}
 
+	/**
+	 * Updates the shield status, activating or deactivating it based on probabilities and usage time.
+	 */
 	private void updateShield() {
 		if (isShielded) framesWithShieldActivated++;
 		else if (shieldShouldBeActivated()) activateShield();
@@ -161,6 +167,11 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 	}
 
+	/**
+	 * Gets whether the boss is currently shielded.
+	 *
+	 * @return True if the boss is shielded, false otherwise.
+	 */
 	public boolean getShielded() {
 		return isShielded;
 	}

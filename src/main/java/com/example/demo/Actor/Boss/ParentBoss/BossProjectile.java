@@ -1,7 +1,6 @@
-package com.example.demo.Object.Boss;
+package com.example.demo.Actor.Boss.ParentBoss;
 
-import com.example.demo.Level.LevelParent;
-import com.example.demo.Object.Projectile;
+import com.example.demo.Actor.Projectile;
 
 /**
  * The BossProjectile class represents a projectile fired by a boss in the game.

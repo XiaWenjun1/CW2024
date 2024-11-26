@@ -1,13 +1,13 @@
-package com.example.demo.Object.UserPlane;
+package com.example.demo.Actor.UserPlane;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.FighterPlane;
+import com.example.demo.Actor.FighterPlane;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The UserPlane class represents the player's controlled plane.
+ * The {@code UserPlane} class represents the player's controlled plane.
  * It extends {@link FighterPlane} and provides functionality for moving the plane,
  * firing projectiles, upgrading projectiles, and handling the plane's interactions in the game.
  */
@@ -17,15 +17,15 @@ public class UserPlane extends FighterPlane {
 	private boolean isPaused = false;
 	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = 55;
-	private static final double Y_LOWER_BOUND = 700.0;
+	private static final double Y_LOWER_BOUND = 720.0;
 	private static final double X_LEFT_BOUND = 0;
 	private static final double X_RIGHT_BOUND = 700.0;
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
-	private static final int IMAGE_WIDTH = 150;
-	private static final int IMAGE_HEIGHT = 150;
-	private static final int VERTICAL_VELOCITY = 8;
-	private static final int HORIZONTAL_VELOCITY = 8;
+	private static final int IMAGE_WIDTH = 125;
+	private static final int IMAGE_HEIGHT = 125;
+	private static final int VERTICAL_VELOCITY = 6;
+	private static final int HORIZONTAL_VELOCITY = 6;
 	private static final int PROJECTILE_X_POSITION_OFFSET = 150;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 	private int velocityMultiplierY = 0;
@@ -33,7 +33,7 @@ public class UserPlane extends FighterPlane {
 	private int numberOfKills;
 
 	/**
-	 * Constructor to initialize the UserPlane with its starting position, health, and related parameters.
+	 * Constructor to initialize the {@code UserPlane} with its starting position, health, and related parameters.
 	 *
 	 * @param initialHealth The initial health of the plane.
 	 */

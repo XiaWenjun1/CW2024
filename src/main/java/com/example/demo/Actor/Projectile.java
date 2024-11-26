@@ -1,6 +1,4 @@
-package com.example.demo.Object;
-
-import com.example.demo.Actor.ActiveActorDestructible;
+package com.example.demo.Actor;
 
 /**
  * The Projectile class represents a projectile in the game.

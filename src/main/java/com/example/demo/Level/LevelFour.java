@@ -1,10 +1,16 @@
 package com.example.demo.Level;
 
-import com.example.demo.Display.*;
-import com.example.demo.Object.Boss.MutationBoss1;
-import com.example.demo.Object.Boss.MutationBoss2;
-import com.example.demo.Object.Boss.MutationBoss3;
+import com.example.demo.Level.LevelView.LevelView;
+import com.example.demo.Level.LevelView.LevelViewLevelFour;
+import com.example.demo.Actor.Boss.MutationBoss1.MutationBoss1;
+import com.example.demo.Actor.Boss.MutationBoss2.MutationBoss2;
+import com.example.demo.Actor.Boss.MutationBoss3.MutationBoss3;
 
+/**
+ * Represents the fourth level of the game.
+ * This class manages the game logic, including spawning bosses in sequence,
+ * checking if the game is over, and updating the boss health status.
+ */
 public class LevelFour extends LevelParent {
 
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background4.jpg";
@@ -21,6 +27,12 @@ public class LevelFour extends LevelParent {
     private boolean boss2Added = false;
     private boolean boss3Added = false;
 
+    /**
+     * Constructs a LevelFour instance with the specified screen dimensions and initializes the bosses.
+     *
+     * @param screenHeight the height of the game screen.
+     * @param screenWidth the width of the game screen.
+     */
     public LevelFour(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         boss1 = new MutationBoss1(BOSS1_HEALTH);
@@ -28,11 +40,18 @@ public class LevelFour extends LevelParent {
         boss3 = new MutationBoss3(BOSS3_HEALTH);
     }
 
+    /**
+     * Initializes the friendly units in the level. This method adds the user (player) plane to the root node.
+     */
     @Override
     protected void initializeFriendlyUnits() {
         getRoot().getChildren().add(getUser());
     }
 
+    /**
+     * Checks if the game is over. The game ends if the player is destroyed or if the final boss (boss3) is destroyed.
+     * If the player is destroyed, the game will trigger a loss. If the final boss is destroyed, the game will be won.
+     */
     @Override
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
@@ -42,6 +61,11 @@ public class LevelFour extends LevelParent {
         }
     }
 
+    /**
+     * Spawns enemy units (bosses) in the current level. This method adds bosses in sequence:
+     * first boss1, then boss2, and finally boss3. Bosses are added based on their destruction state.
+     * Bosses are added only once and are removed when destroyed.
+     */
     @Override
     protected void spawnEnemyUnits() {
         if (getCurrentNumberOfEnemies() == 0) {
@@ -60,11 +84,15 @@ public class LevelFour extends LevelParent {
         }
     }
 
+    /**
+     * Updates the level view, such as updating the health and shield status of bosses.
+     * This method ensures that the boss health bars and shield indicators are displayed and updated accordingly.
+     */
     @Override
     public void updateLevelView() {
         super.updateLevelView();
 
-        // 更新 boss1 的血条
+        // Update boss1 health bar
         if (boss1.isDestroyed()) {
             levelView.hideBossHealthBar(boss1);
         } else {
@@ -79,11 +107,11 @@ public class LevelFour extends LevelParent {
             }
         }
 
-        // 更新 boss2 的血条（仅当 boss2 已添加）
+        // Update boss2 health bar (only if boss2 has been added)
         if (boss2Added) {
             if (boss2.isDestroyed()) {
                 levelView.hideBossHealthBar(boss2);
-                boss2Added = false;  // 标记 boss2 已摧毁
+                boss2Added = false;  // Mark boss2 as destroyed
             } else {
                 levelView.updateShieldPosition(boss2);
                 levelView.updateBossHealth(boss2.getHealth(), boss2);
@@ -97,11 +125,11 @@ public class LevelFour extends LevelParent {
             }
         }
 
-        // 更新 boss3 的血条（仅当 boss3 已添加）
+        // Update boss3 health bar (only if boss3 has been added)
         if (boss3Added) {
             if (boss3.isDestroyed()) {
                 levelView.hideBossHealthBar(boss3);
-                boss3Added = false;  // 标记 boss3 已摧毁
+                boss3Added = false;  // Mark boss3 as destroyed
             } else {
                 levelView.updateShieldPosition(boss3);
                 levelView.updateBossHealth(boss3.getHealth(), boss3);
@@ -116,9 +144,15 @@ public class LevelFour extends LevelParent {
         }
     }
 
+    /**
+     * Instantiates the LevelView for this level. It creates an instance of LevelViewLevelFour
+     * and sets it up with the current player's health and other relevant data.
+     *
+     * @return the instantiated LevelView for this level.
+     */
     @Override
     protected LevelView instantiateLevelView() {
-        levelView = new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH, BOSS1_HEALTH);
+        levelView = new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH);
         return levelView;
     }
 }

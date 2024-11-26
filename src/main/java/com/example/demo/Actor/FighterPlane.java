@@ -1,6 +1,5 @@
-package com.example.demo.Object;
+package com.example.demo.Actor;
 
-import com.example.demo.Actor.ActiveActorDestructible;
 import java.util.List;
 
 /**

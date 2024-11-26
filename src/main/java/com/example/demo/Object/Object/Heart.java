@@ -16,7 +16,7 @@ public class Heart extends ActiveActorDestructible {
     private static final int HORIZONTAL_VELOCITY = -3;
     private static final double SPAWN_PROBABILITY = 0.005;
     private static final double MaximumXPosition = 1350;
-    private static final double MaximumYPosition = 700;
+    private static final double MaximumYPosition = 600;
     private static final double VERTICAL_AMPLITUDE = 50;
     private static final double VERTICAL_VELOCITY = 0.05;
 

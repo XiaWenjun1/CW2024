@@ -1,7 +1,6 @@
-package com.example.demo.Object.UserPlane;
+package com.example.demo.Actor.UserPlane;
 
-import com.example.demo.Level.LevelParent;
-import com.example.demo.Object.Projectile;
+import com.example.demo.Actor.Projectile;
 import javafx.scene.image.ImageView;
 
 /**
@@ -14,12 +13,13 @@ public class UserProjectile extends Projectile {
 	private ImageView imageView;
 	private int horizontalVelocity;
 
+	// Array of properties for projectiles at different power levels
 	private static final ProjectileProperties[] PROPERTIES = {
 			new ProjectileProperties(50, 50, 6, 50, 10),       // Power Level 1
 			new ProjectileProperties(75, 75, 10, 55, 14),      // Power Level 2
-			new ProjectileProperties(100, 100, 14, 60, 18),
-			new ProjectileProperties(125, 125, 18, 65, 22),
-			new ProjectileProperties(150, 155, 22, 70, 26),
+			new ProjectileProperties(100, 100, 14, 60, 18),    // Power Level 3
+			new ProjectileProperties(125, 125, 18, 65, 22),    // Power Level 4
+			new ProjectileProperties(150, 155, 22, 70, 26)     // Power Level 5
 	};
 
 	/**
@@ -68,7 +68,7 @@ public class UserProjectile extends Projectile {
 	}
 
 	/**
-	 * Sets a new power level for the projectile. The power level must be between 1 and 3.
+	 * Sets a new power level for the projectile. The power level must be between 1 and 5.
 	 *
 	 * @param newPowerLevel the new power level to set
 	 */
@@ -90,21 +90,23 @@ public class UserProjectile extends Projectile {
 		setVelocity(properties.velocity);
 		setHitboxSize(properties.hitboxWidth, properties.hitboxHeight);
 		setImageSize(properties.imageWidth, properties.imageHeight);
+
+		// Set the image based on the power level
 		switch (powerLevel) {
 			case 1:
-				changeImage("userfire_level1.png"); // Power Level 1 的图片
+				setImage("userfire_level1.png");
 				break;
 			case 2:
-				changeImage("userfire_level2.png"); // Power Level 2 的图片
+				setImage("userfire_level2.png");
 				break;
 			case 3:
-				changeImage("userfire_level3.png"); // Power Level 3 的图片
+				setImage("userfire_level3.png");
 				break;
 			case 4:
-				changeImage("userfire_level4.png"); // Power Level 3 的图片
+				setImage("userfire_level4.png");
 				break;
 			case 5:
-				changeImage("userfire_level5.png"); // Power Level 3 的图片
+				setImage("userfire_level5.png");
 				break;
 			default:
 				System.out.println("Invalid power level: " + powerLevel);

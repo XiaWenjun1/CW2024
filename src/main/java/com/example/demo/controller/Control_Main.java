@@ -11,6 +11,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The Control_Main class handles the main user interface of the game, including the
+ * buttons for starting the game, opening settings, and viewing control information.
+ * It also manages background music, animations, and loading of different UI elements.
+ */
 public class Control_Main {
     private Control_Animation controlAnimation; // Animation controller
     private Control_Setting settingsController;
@@ -23,11 +28,12 @@ public class Control_Main {
     @FXML private AnchorPane animationController; // AnchorPane for the animation controller
 
     private AnchorPane settingsPane; // Settings pane
-    private AnchorPane controlPane;
+    private AnchorPane controlPane; // Control pane
     private final BoxBlur blurEffect = new BoxBlur(10, 10, 3); // Blur effect
 
     /**
      * Initialization method called automatically by JavaFX.
+     * Sets up background music, button actions, and loads animations.
      */
     public void initialize() {
         initBackgroundMusic();
@@ -36,7 +42,7 @@ public class Control_Main {
     }
 
     /**
-     * Initialize and play background music if needed.
+     * Initializes and plays background music if needed.
      */
     private void initBackgroundMusic() {
         if (AudioManager.getBackgroundMusic() == null) {
@@ -49,7 +55,7 @@ public class Control_Main {
     }
 
     /**
-     * Set up button actions and hover sounds.
+     * Sets up actions for buttons (start, control, settings) and adds hover sound effects.
      */
     private void setupButtonActions() {
         setupHoverSounds(startButton, controlButton, settingsButton);
@@ -60,7 +66,8 @@ public class Control_Main {
     }
 
     /**
-     * Load animation into the animation controller.
+     * Loads animation into the animation controller pane.
+     * If animation is already loaded, it starts the animations.
      */
     private void loadAnimation() {
         if (controlAnimation != null) {
@@ -82,7 +89,7 @@ public class Control_Main {
     }
 
     /**
-     * Opens the settings pane, applying a blur effect to the background.
+     * Opens the settings pane and applies a blur effect to the background.
      */
     private void openSettings() {
         if (settingsPane == null) {
@@ -93,6 +100,9 @@ public class Control_Main {
         addSettingsPaneToRoot();
     }
 
+    /**
+     * Opens the control pane and applies a blur effect to the background.
+     */
     private void openControl() {
         if (controlPane == null) {
             loadControlPane();
@@ -103,7 +113,7 @@ public class Control_Main {
     }
 
     /**
-     * Releases all resources and clears the UI before starting the game.
+     * Starts the game, releasing any resources and clearing UI components.
      */
     private void startGame() {
         releaseResources();
@@ -117,7 +127,7 @@ public class Control_Main {
     }
 
     /**
-     * Releases all resources and clears the UI components.
+     * Releases resources and clears UI components before starting the game.
      */
     private void releaseResources() {
         stopAndReleaseAnimation();
@@ -129,7 +139,7 @@ public class Control_Main {
     }
 
     /**
-     * Stops the animation and releases associated resources.
+     * Stops and releases resources associated with the animation.
      */
     private void stopAndReleaseAnimation() {
         if (controlAnimation != null) {
@@ -149,6 +159,9 @@ public class Control_Main {
         }
     }
 
+    /**
+     * Clears the control pane from the root container and releases its resources.
+     */
     private void clearControlPane() {
         if (controlPane != null) {
             controlController.releaseResources();
@@ -165,7 +178,7 @@ public class Control_Main {
     }
 
     /**
-     * Hides the current window.
+     * Hides the current window (used when starting the game).
      */
     private void hideCurrentWindow() {
         if (rootPane.getScene() != null && rootPane.getScene().getWindow() != null) {
@@ -175,6 +188,8 @@ public class Control_Main {
 
     /**
      * Adds hover sounds to the specified buttons.
+     *
+     * @param buttons The buttons to which hover sounds should be added.
      */
     private void setupHoverSounds(Button... buttons) {
         for (Button button : buttons) {
@@ -209,6 +224,9 @@ public class Control_Main {
         }
     }
 
+    /**
+     * Loads the control pane if it hasn't been loaded yet.
+     */
     private void loadControlPane() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/Control/Control.fxml"));
@@ -231,6 +249,9 @@ public class Control_Main {
         }
     }
 
+    /**
+     * Adds the control pane to the root container if not already present.
+     */
     private void addControlPaneToRoot() {
         if (!rootPane.getChildren().contains(controlPane)) {
             rootPane.getChildren().add(controlPane);

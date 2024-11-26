@@ -1,13 +1,18 @@
-package com.example.demo.Object.Boss;
+package com.example.demo.Actor.Boss;
 
 import com.example.demo.Actor.ActiveActorDestructible;
+import com.example.demo.Actor.Boss.MutationBoss1.MutationBossProjectile1;
+import com.example.demo.Actor.Boss.MutationBoss2.MutationBossProjectile2;
+import com.example.demo.Actor.Boss.MutationBoss3.MutationBossProjectile3;
+import com.example.demo.Actor.Boss.ParentBoss.Boss;
+import com.example.demo.Actor.Boss.ParentBoss.BossProjectile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The BossFirePattern class represents the firing patterns for the boss in the game.
- * It handles the generation of projectiles for different attack types, such as straight, scatter, and directional.
+ * The {@code BossFirePattern} class controls the firing patterns of the boss in the game.
+ * It handles the creation of projectiles for different attack types, such as straight, scatter, and directional shots.
  */
 public class BossFirePattern {
 
@@ -15,7 +20,8 @@ public class BossFirePattern {
     private final Boss boss; // The boss object that fires projectiles
 
     /**
-     * Constructs a BossFirePattern object that controls the firing patterns of the boss.
+     * Constructs a {@code BossFirePattern} object that controls the firing patterns of the boss.
+     *
      * @param boss The boss object that will fire projectiles.
      */
     public BossFirePattern(Boss boss) {
@@ -42,9 +48,12 @@ public class BossFirePattern {
 
     /**
      * Randomly selects an attack type for the boss.
+     * The attack types are:
+     * - 1 for straight shot
+     * - 2 for scatter shot
+     * - 3 for directional shot
      *
-     * @return An integer representing the attack type:
-     *         1 for straight, 2 for scatter, 3 for directional.
+     * @return An integer representing the attack type (1, 2, or 3).
      */
     public int selectAttackType() {
         return (int) (Math.random() * 4) + 1;
@@ -62,13 +71,18 @@ public class BossFirePattern {
         return List.of(projectile);
     }
 
+    /**
+     * Creates two projectiles fired by the boss at slightly different vertical positions.
+     *
+     * @return A list containing two projectiles.
+     */
     public List<ActiveActorDestructible> createTwoProjectiles() {
         List<ActiveActorDestructible> projectiles = new ArrayList<>();
         double[] yOffsets = {-50, 50};
 
         for (double yOffset : yOffsets) {
             double projectileYPosition = getBossYPosition() + yOffset;
-            BossProjectile projectile = new BossProjectile(getBossXPosition(), projectileYPosition);
+            BossProjectile projectile = new MutationBossProjectile1(getBossXPosition(), projectileYPosition);
             projectile.setVelocity(-4, 0);
 
             projectiles.add(projectile);
@@ -77,7 +91,7 @@ public class BossFirePattern {
     }
 
     /**
-     * Creates a scatter shot of projectiles fired by the boss.
+     * Creates a scatter shot of projectiles fired by the boss, spread out vertically.
      *
      * @return A list of projectiles spread out vertically.
      */
@@ -87,7 +101,7 @@ public class BossFirePattern {
 
         for (double yOffset : yOffsets) {
             double projectileYPosition = getBossYPosition() + yOffset;
-            BossProjectile projectile = new BossProjectile(getBossXPosition(), projectileYPosition);
+            BossProjectile projectile = new MutationBossProjectile2(getBossXPosition(), projectileYPosition);
             projectile.setVelocity(-3, 0);
 
             projectiles.add(projectile);
@@ -96,9 +110,9 @@ public class BossFirePattern {
     }
 
     /**
-     * Creates a directional shot of projectiles fired by the boss in multiple directions.
+     * Creates a directional shot of projectiles fired by the boss in multiple directions: straight, up-left, and down-left.
      *
-     * @return A list of projectiles fired straight, up-left, and down-left.
+     * @return A list of projectiles fired in three directions.
      */
     public List<ActiveActorDestructible> createDirectionalProjectiles() {
         List<ActiveActorDestructible> projectiles = new ArrayList<>();
@@ -107,16 +121,16 @@ public class BossFirePattern {
         double leftUpY = straightY - 50;
         double leftDownY = straightY + 50;
 
-        BossProjectile straightProjectile = new BossProjectile(getBossXPosition(), straightY);
-        straightProjectile.setVelocity(-2, 0);
+        BossProjectile straightProjectile = new MutationBossProjectile3(getBossXPosition(), straightY);
+        straightProjectile.setVelocity(-4, 0);
         projectiles.add(straightProjectile);
 
-        BossProjectile leftUpProjectile = new BossProjectile(getBossXPosition(), leftUpY);
-        leftUpProjectile.setVelocity(-2, -1);
+        BossProjectile leftUpProjectile = new MutationBossProjectile3(getBossXPosition(), leftUpY);
+        leftUpProjectile.setVelocity(-2.5, -2);
         projectiles.add(leftUpProjectile);
 
-        BossProjectile leftDownProjectile = new BossProjectile(getBossXPosition(), leftDownY);
-        leftDownProjectile.setVelocity(-2, 1);
+        BossProjectile leftDownProjectile = new MutationBossProjectile3(getBossXPosition(), leftDownY);
+        leftDownProjectile.setVelocity(-2.5, 2);
         projectiles.add(leftDownProjectile);
 
         return projectiles;
