@@ -17,10 +17,17 @@ import java.io.IOException;
  * It provides functionality to return to the main menu or exit the game.
  */
 public class Control_EndGameMenu {
-
+    /**
+     * The button to return to the main menu.
+     * This button is used to navigate back to the main menu from the current screen.
+     */
     @FXML
     private Button returnToMainButton; // Button to return to the main menu
 
+    /**
+     * The current level parent to clean up when returning to the main menu.
+     * This object manages the state and resources for the current level.
+     */
     private LevelParent levelParent; // The current level parent to clean up when returning to the main menu
 
     /**

@@ -13,16 +13,30 @@ import java.util.Random;
 
 /**
  * Manages the spawning of various actors (such as enemies, projectiles, ammo boxes, and hearts) in the game.
- * It also updates the state of active actors and manages user plane hitbox.
+ * It also updates the state of active actors and ensures the user's plane hitbox is correctly added to the scene.
+ * The class interacts with the ActiveActorManager to manage and update actors, spawn projectiles, and spawn collectible items.
  */
 public class ActorSpawnerManager {
+    /**
+     * The ActiveActorManager that manages all active actors (enemies, projectiles, items, etc.) in the game.
+     */
     private final ActiveActorManager activeActorManager;
+    /**
+     * The UserPlane representing the player's plane in the game.
+     */
     private final UserPlane user;
+    /**
+     * The root Group node where all actors are added to the scene.
+     */
     private final Group root;
+    /**
+     * The Random instance used to generate random numbers for random spawning and positioning of objects.
+     */
     private final Random random;
 
     /**
      * Constructs an instance of ActorSpawnerManager.
+     * Initializes the manager with the provided ActiveActorManager, UserPlane, and the root Group for the scene.
      *
      * @param activeActorManager the ActiveActorManager that manages all active actors in the game
      * @param user the UserPlane representing the player's plane
@@ -36,8 +50,9 @@ public class ActorSpawnerManager {
     }
 
     /**
-     * Updates the state of all actors, generates enemy fire, spawns random items (ammo boxes and hearts),
-     * and ensures the user's plane hitbox is present in the scene.
+     * Updates the state of all actors in the game.
+     * This method generates enemy fire, spawns random items (ammo boxes and hearts), and ensures that the user's plane hitbox
+     * is present in the scene.
      */
     public void updateActors() {
         activeActorManager.updateActors();
@@ -47,7 +62,8 @@ public class ActorSpawnerManager {
     }
 
     /**
-     * Ensures the user's plane hitbox is added to the scene, if not already present.
+     * Ensures the user's plane hitbox is added to the scene, if it is not already present.
+     * This method checks if the hitbox is null and if it is not added to the root, then it adds the hitbox to the root.
      */
     private void addUserPlaneHitbox() {
         if (user != null && user.getHitbox() != null) {
@@ -60,7 +76,8 @@ public class ActorSpawnerManager {
     }
 
     /**
-     * Generates enemy fire by iterating through enemy units (such as fighter planes) and spawning projectiles.
+     * Generates enemy fire by iterating through all enemy units (such as fighter planes) and spawning projectiles for them.
+     * This method adds each generated projectile to the scene.
      */
     public void generateEnemyFire() {
         activeActorManager.getEnemyUnits().forEach(enemy -> {
@@ -75,6 +92,7 @@ public class ActorSpawnerManager {
 
     /**
      * Spawns an enemy projectile and adds it to the scene.
+     * This method also adds the projectile to the list of enemy projectiles managed by ActiveActorManager.
      *
      * @param projectile the enemy projectile to spawn
      */
@@ -86,7 +104,8 @@ public class ActorSpawnerManager {
     }
 
     /**
-     * Spawns random items in the game, such as ammo boxes and hearts.
+     * Spawns random items (ammo boxes and hearts) in the game.
+     * The items are spawned based on their respective spawn probabilities.
      */
     public void spawnRandomItems() {
         spawnRandomAmmoBox();
@@ -94,7 +113,8 @@ public class ActorSpawnerManager {
     }
 
     /**
-     * Spawns a random ammo box based on its spawn probability and adds it to the scene.
+     * Spawns a random ammo box based on its spawn probability.
+     * If an ammo box is spawned, it is added to the scene and the list of ammo boxes managed by ActiveActorManager.
      */
     private void spawnRandomAmmoBox() {
         if (random.nextDouble() < AmmoBox.getSpawnProbability()) {
@@ -106,7 +126,8 @@ public class ActorSpawnerManager {
     }
 
     /**
-     * Spawns a random heart based on its spawn probability and adds it to the scene.
+     * Spawns a random heart based on its spawn probability.
+     * If a heart is spawned, it is added to the scene and the list of hearts managed by ActiveActorManager.
      */
     private void spawnRandomHeart() {
         if (random.nextDouble() < Heart.getSpawnProbability()) {
@@ -119,6 +140,7 @@ public class ActorSpawnerManager {
 
     /**
      * Adds an actor to both the scene and the corresponding actor list in ActiveActorManager.
+     * This method ensures that the actor is added to the scene and to the appropriate list (e.g., ammo boxes, hearts).
      *
      * @param actor the actor to add to the scene
      * @param actorList the list of actors to add the actor to

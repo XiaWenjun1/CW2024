@@ -13,11 +13,28 @@ import javafx.scene.Node;
  * and handling the close functionality for the settings window.
  */
 public class Control_Setting {
-
+    /**
+     * A checkbox to toggle the background music on or off.
+     * This allows the user to enable or disable the background music during gameplay.
+     */
     @FXML private CheckBox bgToggle; // Used to switch background music
+
+    /**
+     * A checkbox to toggle the explosion sound effect on or off.
+     * This allows the user to enable or disable the explosion sound effect during gameplay.
+     */
     @FXML private CheckBox gsToggle;  // Switch to control the explosion sound effect
+
+    /**
+     * The button that allows the user to close the application.
+     * This button exits the game or closes the current view.
+     */
     @FXML private Button closeButton; // Close button
 
+    /**
+     * The root container of the main user interface.
+     * This container holds all UI components for the main screen.
+     */
     private Pane mainRoot; // The root container of the main interface
 
     /**

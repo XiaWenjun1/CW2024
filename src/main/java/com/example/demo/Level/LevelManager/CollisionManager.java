@@ -7,12 +7,16 @@ import java.util.List;
 
 /**
  * Manages the collision detection and handling for various actors in the game.
- * This includes collisions between projectiles, enemy units, user plane, and collectible items.
+ * This includes collisions between projectiles, enemy units, the user plane, and collectible items.
+ * The class provides methods for detecting and handling collisions between different entities
+ * such as projectiles, enemy units, and the user plane, and also manages the consequences of these collisions
+ * (e.g., taking damage, upgrading projectiles, or picking up items).
  */
 public class CollisionManager {
 
     /**
      * Handles collisions between two lists of actors, applying damage to both colliding actors.
+     * If two actors collide, both will take damage.
      *
      * @param actors1 the first list of actors to check for collisions
      * @param actors2 the second list of actors to check for collisions
@@ -32,6 +36,7 @@ public class CollisionManager {
     /**
      * Handles collisions between user projectiles and enemy units.
      * This method calls the handleCollisions method with the user projectiles and enemy units lists.
+     * Both colliding projectiles and enemy units will take damage.
      *
      * @param userProjectiles the list of projectiles fired by the user
      * @param enemyUnits the list of enemy units
@@ -43,6 +48,7 @@ public class CollisionManager {
     /**
      * Handles collisions between enemy projectiles and friendly units.
      * This method calls the handleCollisions method with the enemy projectiles and friendly units lists.
+     * Both colliding projectiles and friendly units will take damage.
      *
      * @param enemyProjectiles the list of projectiles fired by enemies
      * @param friendlyUnits the list of friendly units
@@ -113,6 +119,7 @@ public class CollisionManager {
 
     /**
      * Checks if two actors are colliding by comparing their bounds in the parent scene.
+     * The collision is determined based on whether the bounding boxes of the two actors intersect.
      *
      * @param actor1 the first actor to check
      * @param actor2 the second actor to check

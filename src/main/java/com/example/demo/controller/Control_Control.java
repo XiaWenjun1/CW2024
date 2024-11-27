@@ -13,19 +13,55 @@ import javafx.scene.layout.Pane;
  * It also manages the closing of the control panel and cleaning up resources.
  */
 public class Control_Control {
-
+    /**
+     * The button used to close the application or exit the current view.
+     */
     @FXML
     private Button closeButton; // Close button
 
+    /**
+     * The image of the user's plane displayed in the game.
+     */
     @FXML private ImageView planeImageView; // Aircraft image
+
+    /**
+     * The image representing the first bullet fired by the user.
+     */
     @FXML private ImageView userfire1ImageView; // User bullet
+
+    /**
+     * The image representing the second bullet fired by the user.
+     */
     @FXML private ImageView userfire2ImageView; // User bullet
+
+    /**
+     * The image representing the third bullet fired by the user.
+     */
     @FXML private ImageView userfire3ImageView; // User bullet
+
+    /**
+     * The image representing the fourth bullet fired by the user.
+     */
     @FXML private ImageView userfire4ImageView; // User bullet
+
+    /**
+     * The image representing the fifth bullet fired by the user.
+     */
     @FXML private ImageView userfire5ImageView; // User bullet
+
+    /**
+     * The image representing a heart in the game, likely used for health or score purposes.
+     */
     @FXML private ImageView heartImageView; // Heart
+
+    /**
+     * The image representing an ammo box, which may be collected for power-ups or replenishment in the game.
+     */
     @FXML private ImageView ammoboxImageView; // Ammo box
 
+    /**
+     * The root container of the main user interface. It holds all the UI components for the main screen.
+     */
     private Pane mainRoot; // The root container of the main interface
 
     /**

@@ -15,11 +15,17 @@ import javafx.util.Duration;
  */
 public class ExplosionEffectManager {
 
+    /** Path to the explosion sound file. */
     private static final String EXPLOSION_SOUND_PATH = "/com/example/demo/sounds/explosion.mp3";
+
+    /** Path to the explosion image file. */
     private static final String EXPLOSION_IMAGE_PATH = "/com/example/demo/images/explosion.png";
 
+    /** The explosion sound effect. */
     private static AudioClip explosionSound = new AudioClip(
             ExplosionEffectManager.class.getResource(EXPLOSION_SOUND_PATH).toExternalForm());
+
+    /** Flag indicating whether the explosion sound is enabled. */
     private static boolean explosionSoundEnabled = true;
 
     /**

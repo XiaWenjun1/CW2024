@@ -13,23 +13,94 @@ import java.util.List;
  */
 public class UserPlane extends FighterPlane {
 
+	/**
+	 * The user's projectile object, which is used to manage and fire projectiles.
+	 */
 	private final UserProjectile userProjectile;
+
+	/**
+	 * Flag to determine if the game is paused. If true, certain actions like firing projectiles are disabled.
+	 */
 	private boolean isPaused = false;
+
+	/**
+	 * The image name for the user plane.
+	 */
 	private static final String IMAGE_NAME = "userplane.png";
+
+	/**
+	 * The upper bound (Y-coordinate) for the plane's movement. The plane cannot move above this Y position.
+	 */
 	private static final double Y_UPPER_BOUND = 55;
+
+	/**
+	 * The lower bound (Y-coordinate) for the plane's movement. The plane cannot move below this Y position.
+	 */
 	private static final double Y_LOWER_BOUND = 720.0;
+
+	/**
+	 * The leftmost bound (X-coordinate) for the plane's movement. The plane cannot move beyond this X position.
+	 */
 	private static final double X_LEFT_BOUND = 0;
+
+	/**
+	 * The rightmost bound (X-coordinate) for the plane's movement. The plane cannot move beyond this X position.
+	 */
 	private static final double X_RIGHT_BOUND = 700.0;
+
+	/**
+	 * The initial X position of the user plane when it is created.
+	 */
 	private static final double INITIAL_X_POSITION = 5.0;
+
+	/**
+	 * The initial Y position of the user plane when it is created.
+	 */
 	private static final double INITIAL_Y_POSITION = 300.0;
+
+	/**
+	 * The width of the user plane's image.
+	 */
 	private static final int IMAGE_WIDTH = 125;
+
+	/**
+	 * The height of the user plane's image.
+	 */
 	private static final int IMAGE_HEIGHT = 125;
+
+	/**
+	 * The vertical speed (velocity) of the user plane.
+	 */
 	private static final int VERTICAL_VELOCITY = 6;
+
+	/**
+	 * The horizontal speed (velocity) of the user plane.
+	 */
 	private static final int HORIZONTAL_VELOCITY = 6;
+
+	/**
+	 * The X offset for the projectile's starting position relative to the plane.
+	 */
 	private static final int PROJECTILE_X_POSITION_OFFSET = 150;
+
+	/**
+	 * The Y offset for the projectile's starting position relative to the plane.
+	 */
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
+
+	/**
+	 * A multiplier for the vertical velocity, used to control the movement speed.
+	 */
 	private int velocityMultiplierY = 0;
+
+	/**
+	 * A multiplier for the horizontal velocity, used to control the movement speed.
+	 */
 	private int velocityMultiplierX = 0;
+
+	/**
+	 * The total number of kills the user has made.
+	 */
 	private int numberOfKills;
 
 	/**

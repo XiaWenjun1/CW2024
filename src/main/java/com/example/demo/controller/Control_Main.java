@@ -17,18 +17,75 @@ import java.io.IOException;
  * It also manages background music, animations, and loading of different UI elements.
  */
 public class Control_Main {
+    /**
+     * The controller responsible for managing animations in the game.
+     * This object handles the animations for various elements such as the plane, bullets, and enemies.
+     */
     private Control_Animation controlAnimation; // Animation controller
+
+    /**
+     * The controller responsible for managing the settings in the game.
+     * This object handles user interactions with the game settings.
+     */
     private Control_Setting settingsController;
+
+    /**
+     * The controller responsible for managing user controls in the game.
+     * This object handles user interactions related to controls and input configurations.
+     */
     private Control_Control controlController;
 
-    @FXML private StackPane rootPane; // Main interface root container
-    @FXML private Button startButton;
-    @FXML private Button controlButton;
-    @FXML private Button settingsButton;
-    @FXML private AnchorPane animationController; // AnchorPane for the animation controller
+    /**
+     * The main root container of the user interface.
+     * This container holds all UI components for the main menu and other views.
+     */
+    @FXML
+    private StackPane rootPane; // Main interface root container
 
+    /**
+     * The button to start the game.
+     * This button initiates the game when clicked by the user.
+     */
+    @FXML
+    private Button startButton;
+
+    /**
+     * The button to open the control settings menu.
+     * This button allows the user to configure the game controls.
+     */
+    @FXML
+    private Button controlButton;
+
+    /**
+     * The button to open the settings menu.
+     * This button allows the user to configure general game settings.
+     */
+    @FXML
+    private Button settingsButton;
+
+    /**
+     * The AnchorPane that holds the animation controller.
+     * This pane is responsible for displaying animations of the game.
+     */
+    @FXML
+    private AnchorPane animationController; // AnchorPane for the animation controller
+
+    /**
+     * The settings pane for configuring game settings.
+     * This pane contains UI elements related to adjusting the game settings.
+     */
     private AnchorPane settingsPane; // Settings pane
+
+    /**
+     * The control pane for managing user input controls.
+     * This pane contains UI elements related to configuring the game controls.
+     */
     private AnchorPane controlPane; // Control pane
+
+    /**
+     * The blur effect used for the settings or control panels when active.
+     * This effect adds a blur to the background when the user is in the settings or control menus.
+     */
     private final BoxBlur blurEffect = new BoxBlur(10, 10, 3); // Blur effect
 
     /**

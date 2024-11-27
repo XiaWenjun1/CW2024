@@ -14,11 +14,22 @@ import javafx.scene.effect.GaussianBlur;
  */
 public class PauseMenuManager {
 
+    /** The root node of the pause menu layout. */
     private Parent pauseMenuRoot;
+
+    /** The controller for the pause menu, responsible for handling UI interactions. */
     private Control_PauseMenu controlPauseMenu;
+
+    /** Flag indicating whether the game is currently paused. */
     private boolean isPaused = false;
+
+    /** The timeline controlling the game's animation. */
     private Timeline timeline;
+
+    /** The current scene of the game. */
     private Scene scene;
+
+    /** The user input manager to handle input when the game is paused or resumed. */
     private UserInputManager userInputManager;
 
     /**

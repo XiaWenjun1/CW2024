@@ -8,6 +8,10 @@ import com.example.demo.Actor.Boss.ParentBoss.BossProjectile;
  */
 public class MutationBossProjectile3 extends BossProjectile {
 
+    /**
+     * The image file name for the mutated boss projectile.
+     * This is the customized image for the MutationBossProjectile3.
+     */
     private static final String NEW_IMAGE_NAME = "mutationBossProjectile3.png"; // Image for the mutated boss projectile
 
     /**

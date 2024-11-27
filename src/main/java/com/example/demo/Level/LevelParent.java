@@ -16,28 +16,85 @@ import javafx.util.Duration;
  * initializing friendly and enemy units, handling collisions, and updating the game status.
  */
 public abstract class LevelParent {
+	/**
+	 * Constant for game loop delay in milliseconds. This value controls the time interval between each game loop cycle.
+	 */
 	private static final int MILLISECOND_DELAY = 16;
+	/**
+	 * The height of the screen in pixels.
+	 */
 	private final double screenHeight;
+	/**
+	 * The width of the screen in pixels.
+	 */
 	private final double screenWidth;
+	/**
+	 * The maximum Y position for enemy units to spawn on the screen.
+	 */
 	private final double enemyMaximumYPosition = 650;
+	/**
+	 * The minimum Y position for enemy units to spawn on the screen.
+	 */
 	private final double enemyMinimumYPosition = 55;
+	/**
+	 * The current number of enemy units in the level.
+	 */
 	private int currentNumberOfEnemies;
+	/**
+	 * The previous number of enemy units in the level, used to calculate kill counts.
+	 */
 	private int previousNumberOfEnemies;
-
+	/**
+	 * The root node of the scene, containing all visual elements of the level.
+	 */
 	private final Group root;
+	/**
+	 * The timeline for the game loop, which controls the update rate and timing of the game.
+	 */
 	private final Timeline timeline;
+	/**
+	 * The user's plane (player's character), which is controlled by the player during the game.
+	 */
 	private final UserPlane user;
+	/**
+	 * The scene that represents the level in the game, containing all visual and interactive elements.
+	 */
 	private final Scene scene;
+	/**
+	 * The background image for the level, displayed in the game scene.
+	 */
 	private final ImageView background;
-
+	/**
+	 * Manager for handling pause menu operations, such as displaying and hiding the pause menu.
+	 */
 	private final PauseMenuManager pauseMenuManager;
+	/**
+	 * Manager for handling end game menu operations, such as displaying the win or loss screen.
+	 */
 	private final EndGameMenuManager endGameMenuManager;
+	/**
+	 * Manager for processing user input, including key presses, mouse clicks, and pause actions.
+	 */
 	private final UserInputManager userInputManager;
+	/**
+	 * Manager for handling the active actors in the game, including both friendly and enemy units.
+	 */
 	private final ActiveActorManager activeActorManager;
+	/**
+	 * Manager for cleaning up destroyed actors and objects from the game scene.
+	 */
 	private final CleanDestroyedManager cleanDestroyedManager;
+	/**
+	 * Manager for spawning and controlling the behavior of enemy units within the level.
+	 */
 	private final ActorSpawnerManager actorSpawnerManager;
+	/**
+	 * View that handles the display of the level's UI elements, such as health and score.
+	 */
 	private final LevelView levelView;
-
+	/**
+	 * The name of the current level, represented as a {@link StringProperty} for easy data binding in the UI.
+	 */
 	private final StringProperty currentLevelName = new SimpleStringProperty();
 
 	/**

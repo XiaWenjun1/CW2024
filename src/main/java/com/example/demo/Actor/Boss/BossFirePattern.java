@@ -15,9 +15,17 @@ import java.util.List;
  * It handles the creation of projectiles for different attack types, such as straight, scatter, and directional shots.
  */
 public class BossFirePattern {
+    /**
+     * The vertical offset for the spawn position of projectiles.
+     * Determines where the projectiles are fired relative to the boss's Y position.
+     */
+    private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0;
 
-    private static final double PROJECTILE_Y_POSITION_OFFSET = 30.0; // Vertical offset for projectile spawn
-    private final Boss boss; // The boss object that fires projectiles
+    /**
+     * The boss object that fires projectiles.
+     * This object is used to retrieve the current position of the boss for projectile creation.
+     */
+    private final Boss boss;
 
     /**
      * Constructs a {@code BossFirePattern} object that controls the firing patterns of the boss.

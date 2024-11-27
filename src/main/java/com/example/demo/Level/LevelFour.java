@@ -8,27 +8,73 @@ import com.example.demo.Actor.Boss.MutationBoss3.MutationBoss3;
 
 /**
  * Represents the fourth level of the game.
- * This class manages the game logic, including spawning bosses in sequence,
+ * <p>
+ * This class manages the game logic for the fourth level, including spawning bosses in sequence,
  * checking if the game is over, and updating the boss health status.
+ * </p>
  */
 public class LevelFour extends LevelParent {
 
+    /**
+     * The background image used for the fourth level.
+     */
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background4.jpg";
+
+    /**
+     * The initial health of the player in this level.
+     */
     private static final int PLAYER_INITIAL_HEALTH = 5;
+
+    /**
+     * The health value for the first boss in the level.
+     */
     private static final int BOSS1_HEALTH = 25;
+
+    /**
+     * The health value for the second boss in the level.
+     */
     private static final int BOSS2_HEALTH = 35;
+
+    /**
+     * The health value for the third boss in the level.
+     */
     private static final int BOSS3_HEALTH = 45;
 
+    /**
+     * The first boss of the level.
+     */
     private MutationBoss1 boss1;
+
+    /**
+     * The second boss of the level.
+     */
     private MutationBoss2 boss2;
+
+    /**
+     * The third boss of the level.
+     */
     private MutationBoss3 boss3;
+
+    /**
+     * The level view object that handles displaying information about the level, such as health bars for the bosses.
+     */
     private LevelViewLevelFour levelView;
 
+    /**
+     * A flag indicating whether the second boss has been added to the level.
+     */
     private boolean boss2Added = false;
+
+    /**
+     * A flag indicating whether the third boss has been added to the level.
+     */
     private boolean boss3Added = false;
 
     /**
      * Constructs a LevelFour instance with the specified screen dimensions and initializes the bosses.
+     * <p>
+     * The constructor creates the three bosses with their specified health values and passes them to the superclass.
+     * </p>
      *
      * @param screenHeight the height of the game screen.
      * @param screenWidth the width of the game screen.
@@ -42,6 +88,9 @@ public class LevelFour extends LevelParent {
 
     /**
      * Initializes the friendly units in the level. This method adds the user (player) plane to the root node.
+     * <p>
+     * It ensures that the player's plane is visible on the screen.
+     * </p>
      */
     @Override
     protected void initializeFriendlyUnits() {
@@ -50,7 +99,9 @@ public class LevelFour extends LevelParent {
 
     /**
      * Checks if the game is over. The game ends if the player is destroyed or if the final boss (boss3) is destroyed.
+     * <p>
      * If the player is destroyed, the game will trigger a loss. If the final boss is destroyed, the game will be won.
+     * </p>
      */
     @Override
     protected void checkIfGameOver() {
@@ -63,8 +114,10 @@ public class LevelFour extends LevelParent {
 
     /**
      * Spawns enemy units (bosses) in the current level. This method adds bosses in sequence:
-     * first boss1, then boss2, and finally boss3. Bosses are added based on their destruction state.
-     * Bosses are added only once and are removed when destroyed.
+     * first boss1, then boss2, and finally boss3.
+     * <p>
+     * Bosses are added only once and are removed when destroyed. The bosses are added based on their destruction state.
+     * </p>
      */
     @Override
     protected void spawnEnemyUnits() {
@@ -86,7 +139,9 @@ public class LevelFour extends LevelParent {
 
     /**
      * Updates the level view, such as updating the health and shield status of bosses.
+     * <p>
      * This method ensures that the boss health bars and shield indicators are displayed and updated accordingly.
+     * </p>
      */
     @Override
     public void updateLevelView() {

@@ -20,17 +20,40 @@ import java.util.Set;
  * such as movement, shooting, and pausing the game.
  */
 public class UserInputManager {
+    /** The game loop that continuously updates user movement and actions. */
     private AnimationTimer gameLoop;
+
+    /** The user plane controlled by the player. */
     private final UserPlane user;
+
+    /** The root group in which projectiles will be added. */
     private final Group root;
+
+    /** The manager that handles pausing the game and showing the pause menu. */
     private PauseMenuManager pauseMenuManager;
+
+    /** A list to keep track of the user's projectiles. */
     private final List<ActiveActorDestructible> userProjectiles;
+
+    /** A set to store active keys that are being pressed. */
     private final Set<KeyCode> activeKeys = new HashSet<>();
+
+    /** The initial X coordinate of the mouse when drag starts. */
     private double initialMouseX;
+
+    /** The initial Y coordinate of the mouse when drag starts. */
     private double initialMouseY;
+
+    /** Flag indicating whether the game is paused or not. */
     private boolean isPaused = false;
+
+    /** Flag indicating whether the user is currently dragging the plane with the mouse. */
     private boolean isDragging = false;
+
+    /** Flag indicating whether the user is on cooldown after firing a projectile. */
     private boolean isOnCooldown = false;
+
+    /** The cooldown duration (in milliseconds) for firing projectiles. */
     private static final int BULLET_COOLDOWN_MS = 200;
 
     /**

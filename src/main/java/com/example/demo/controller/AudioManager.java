@@ -9,9 +9,27 @@ import javafx.scene.media.MediaPlayer;
  * Provides methods for initializing, playing, pausing, and managing background music and hover sounds.
  */
 public class AudioManager {
-    private static MediaPlayer backgroundMusic; // The MediaPlayer for background music
-    private static AudioClip hoverSound; // The AudioClip for hover sound effects
-    private static boolean backgroundMusicEnabled = true; // Flag to track if background music is enabled
+
+    // The MediaPlayer for background music
+    /**
+     * A MediaPlayer instance for playing the background music of the game.
+     * This player is used to control the background music playback.
+     */
+    private static MediaPlayer backgroundMusic;
+
+    // The AudioClip for hover sound effects
+    /**
+     * An AudioClip instance for playing sound effects when buttons are hovered.
+     * This clip is used to manage hover sound effects during user interactions.
+     */
+    private static AudioClip hoverSound;
+
+    // Flag to track if background music is enabled
+    /**
+     * A flag that indicates whether the background music is enabled.
+     * This value controls whether the background music will be played or paused.
+     */
+    private static boolean backgroundMusicEnabled = true;
 
     /**
      * Initializes the background music player if not already initialized.
@@ -19,6 +37,7 @@ public class AudioManager {
      */
     public static void initBackgroundMusic() {
         if (backgroundMusic == null) {
+            // Load the background music from resources
             Media media = new Media(AudioManager.class.getResource("/com/example/demo/sounds/bg.mp3").toExternalForm());
             backgroundMusic = new MediaPlayer(media);
             backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE); // Loop indefinitely
@@ -58,12 +77,14 @@ public class AudioManager {
      */
     public static void initHoverSound() {
         if (hoverSound == null) {
+            // Load the hover sound from resources
             hoverSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/btnhover.wav").toExternalForm());
         }
     }
 
     /**
      * Plays the hover sound effect.
+     * This sound is played when the user hovers over buttons or interactive elements.
      */
     public static void playHoverSound() {
         if (hoverSound == null) {

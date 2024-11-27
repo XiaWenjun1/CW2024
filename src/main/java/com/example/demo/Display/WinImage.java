@@ -10,14 +10,28 @@ import javafx.scene.image.ImageView;
 public class WinImage extends ImageView {
 
 	// The file path for the "You Win" image
+	/**
+	 * The path to the "You Win" image file.
+	 * This is used to load the image resource for display when the player wins.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/youwin.png";
 
 	// The dimensions for the "You Win" image
+	/**
+	 * The height of the "You Win" image.
+	 * This defines how tall the image will be displayed on the screen.
+	 */
 	private static final int HEIGHT = 500;
+
+	/**
+	 * The width of the "You Win" image.
+	 * This defines how wide the image will be displayed on the screen.
+	 */
 	private static final int WIDTH = 600;
 
 	/**
 	 * Constructor to initialize the WinImage at a specific position on the screen.
+	 * The image is initially invisible and is positioned at the specified coordinates.
 	 *
 	 * @param xPosition The x-coordinate of the top-left corner of the image on the screen.
 	 * @param yPosition The y-coordinate of the top-left corner of the image on the screen.
@@ -40,7 +54,7 @@ public class WinImage extends ImageView {
 
 	/**
 	 * Makes the "You Win" image visible on the screen.
-	 * This method is called to display the image when the player wins.
+	 * This method is called to display the image when the player wins the game.
 	 */
 	public void showWinImage() {
 		// Set the image to be visible

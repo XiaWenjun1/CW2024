@@ -15,14 +15,36 @@ import com.example.demo.Level.LevelParent;
  * It handles level loading using reflection, so levels can be dynamically loaded based on class names.
  */
 public class Control_Start {
-
+    /**
+     * The class name for the first level.
+     * This constant stores the fully qualified class name for the first level of the game.
+     */
     private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.Level.LevelOne"; // The class name for the first level
+
+    /**
+     * The width of the level window.
+     * This constant defines the width of the window for the game level.
+     */
     private static final double LEVEL_WIDTH = 1300; // Width of the level window
+
+    /**
+     * The height of the level window.
+     * This constant defines the height of the window for the game level.
+     */
     private static final double LEVEL_HEIGHT = 750; // Height of the level window
+
+    /**
+     * The main stage for the application.
+     * This variable holds the primary stage (window) of the JavaFX application.
+     */
     private final Stage stage; // The main stage for the application
 
-    // Variable to store the current active level
-    private LevelParent currentLevel = null;
+    /**
+     * The current active level.
+     * This variable stores the instance of the current active level in the game.
+     * It is used to manage transitions and interactions with the active level.
+     */
+    private LevelParent currentLevel = null; // Variable to store the current active level
 
     /**
      * Constructor for Control_Start, initializing the stage.

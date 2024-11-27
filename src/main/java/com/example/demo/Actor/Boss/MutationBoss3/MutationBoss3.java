@@ -12,12 +12,32 @@ import java.util.List;
  * It extends the {@code Boss} class and overrides its behavior, such as fire patterns and image settings.
  */
 public class MutationBoss3 extends Boss {
-
+    /**
+     * The image file name for the mutated version of the boss.
+     * This is used to customize the appearance of the MutationBoss3 in the game.
+     */
     private static final String MUTATION_BOSS_IMAGE_NAME = "mutation3.png"; // Image name for the mutated boss
+
+    /**
+     * The width of the mutated boss image.
+     */
     private static final int IMAGE_WIDTH = 250; // Width of the mutated boss image
+
+    /**
+     * The height of the mutated boss image.
+     */
     private static final int IMAGE_HEIGHT = 250; // Height of the mutated boss image
+
+    /**
+     * The probability of the mutated boss firing a projectile in each frame.
+     * This is used to determine the firing rate.
+     */
     private static final double BOSS_FIRE_RATE = 0.025; // Probability of firing a projectile in each frame
 
+    /**
+     * The boss's fire pattern manager.
+     * It is responsible for handling the different types of projectiles the boss can fire.
+     */
     private final BossFirePattern firePattern; // The boss's fire pattern manager
 
     /**

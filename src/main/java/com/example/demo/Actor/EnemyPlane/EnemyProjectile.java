@@ -8,10 +8,24 @@ import com.example.demo.Actor.Projectile;
  */
 public class EnemyProjectile extends Projectile {
 
-	// Constants for the enemy projectile's properties
+	/**
+	 * The image name of the enemy projectile, used to load its sprite.
+	 */
 	private static final String IMAGE_NAME = "enemyFire.png";
+
+	/**
+	 * The width of the enemy projectile's image.
+	 */
 	private static final int IMAGE_WIDTH = 50;
+
+	/**
+	 * The height of the enemy projectile's image.
+	 */
 	private static final int IMAGE_HEIGHT = 50;
+
+	/**
+	 * The horizontal velocity at which the enemy projectile moves, representing its speed.
+	 */
 	private static final int HORIZONTAL_VELOCITY = -5;
 
 	/**

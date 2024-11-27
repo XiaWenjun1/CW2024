@@ -18,6 +18,7 @@ import java.io.IOException;
  */
 public class EndGameMenuManager {
 
+    /** The parent level that contains the game and view. */
     private LevelParent levelParent;
 
     /**
@@ -37,6 +38,7 @@ public class EndGameMenuManager {
         Stage currentStage = getCurrentStage();
 
         Platform.runLater(() -> {
+            // Clean up the current game and show the win image
             levelParent.cleanUp();
             levelParent.getLevelView().showWinImage();
 
@@ -55,6 +57,7 @@ public class EndGameMenuManager {
         Stage currentStage = getCurrentStage();
 
         Platform.runLater(() -> {
+            // Clean up the current game and show the game over image
             levelParent.cleanUp();
             levelParent.getLevelView().showGameOverImage();
 

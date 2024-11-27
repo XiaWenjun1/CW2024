@@ -14,11 +14,34 @@ import java.util.List;
  */
 public class MutationBoss1 extends Boss {
 
+    /**
+     * The image file name for the mutated boss 1.
+     * This is used to customize the appearance of the mutated boss in the game.
+     */
     private static final String MUTATION_BOSS_IMAGE_NAME = "mutation1.png"; // Image name for the mutated boss 1
+
+    /**
+     * The width of the mutated boss image.
+     * This value is used to set the size of the boss image when rendered on the screen.
+     */
     private static final int IMAGE_WIDTH = 250; // Width of the boss image
+
+    /**
+     * The height of the mutated boss image.
+     * This value is used to set the size of the boss image when rendered on the screen.
+     */
     private static final int IMAGE_HEIGHT = 250; // Height of the boss image
+
+    /**
+     * The fire rate of the mutated boss.
+     * This value represents the probability of the boss firing a projectile during each frame update.
+     */
     private static final double BOSS_FIRE_RATE = 0.05; // Probability of firing a projectile in each frame
 
+    /**
+     * The fire pattern manager for the mutated boss.
+     * This object is responsible for defining and selecting the type of projectiles the boss fires.
+     */
     private final BossFirePattern firePattern; // The boss's fire pattern manager
 
     /**

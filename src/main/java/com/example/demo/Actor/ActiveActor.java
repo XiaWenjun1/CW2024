@@ -9,8 +9,11 @@ import javafx.scene.image.ImageView;
  * It provides basic functionality for movement and updating images for subclasses.
  */
 public abstract class ActiveActor extends ImageView {
-
-	// Constant for the image location path
+	/**
+	 * Constant for the image location path.
+	 * This path is used to locate image files within the application resources.
+	 * All game images should be placed in this directory.
+	 */
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
 
 	/**

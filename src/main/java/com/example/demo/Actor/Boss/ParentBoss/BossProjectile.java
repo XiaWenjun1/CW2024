@@ -7,14 +7,32 @@ import com.example.demo.Actor.Projectile;
  * It extends {@link Projectile} and moves horizontally and vertically at adjustable velocities.
  */
 public class BossProjectile extends Projectile {
-
-	// Constants for the boss projectile's properties
+	/**
+	 * The image file name for the boss projectile.
+	 */
 	private static final String IMAGE_NAME = "fireball.png";
+
+	/**
+	 * The width of the boss projectile image.
+	 */
 	private static final int IMAGE_WIDTH = 100;
+
+	/**
+	 * The height of the boss projectile image.
+	 */
 	private static final int IMAGE_HEIGHT = 100;
 
-	private double horizontalVelocity = -7; // Default horizontal velocity
-	private double verticalVelocity = 0; // Default vertical velocity
+	/**
+	 * The horizontal velocity of the boss projectile.
+	 * The default value is -7, which moves the projectile to the left.
+	 */
+	private double horizontalVelocity = -7;
+
+	/**
+	 * The vertical velocity of the boss projectile.
+	 * The default value is 0, which means no vertical movement.
+	 */
+	private double verticalVelocity = 0;
 
 	/**
 	 * Constructs a BossProjectile object with the specified initial position and level.

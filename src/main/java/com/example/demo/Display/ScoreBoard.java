@@ -6,22 +6,43 @@ import javafx.scene.layout.HBox;
 /**
  * A class representing a ScoreBoard that displays the player's current kills and target kills.
  * The ScoreBoard is modeled using an HBox and contains a label to show kill statistics.
+ * It is used to display the player's progress in terms of kills during gameplay.
  */
 public class ScoreBoard extends HBox {
 
-    // Width and height constants for the ScoreBoard
+    /**
+     * Width constant for the ScoreBoard.
+     */
     private static final int WIDTH = 200;
+
+    /**
+     * Height constant for the ScoreBoard.
+     */
     private static final int HEIGHT = 50;
 
-    // Initial position constants for the ScoreBoard
+    /**
+     * Initial x-coordinate position for the ScoreBoard on the screen.
+     */
     private static final double INITIAL_X_POSITION = 10;
+
+    /**
+     * Initial y-coordinate position for the ScoreBoard on the screen.
+     */
     private static final double INITIAL_Y_POSITION = 690;
 
-    // Label to display the current and target kill information
+    /**
+     * Label to display the current and target kill information.
+     */
     private final Label killInfoLabel;
 
-    // Current number of kills and the target number of kills to reach
+    /**
+     * The current number of kills.
+     */
     private int currentKills;
+
+    /**
+     * The target number of kills required to reach the next stage or level.
+     */
     private int targetKills;
 
     /**

@@ -13,30 +13,106 @@ import javafx.util.Duration;
 
 /**
  * Controller class responsible for handling animations and interactions of the plane, bullets, enemies, and boss in the game.
+ * It manages the movement and firing of the plane, bullets, and enemies, as well as their animations.
  */
 public class Control_Animation {
-    private double planeSpeed = 5; // Aircraft speed
-    private double planeXPosition; // Aircraft X coordinate
-    private double bulletSpeed = 10; // Bullet speed
-    private boolean bulletVisible = false; // User bullet visibility
-    private boolean enemyBulletVisible = false; // Enemy bullet visibility
-    private boolean bossBulletVisible = false; // Boss bullet visibility
+    /**
+     * The speed at which the plane moves across the screen.
+     */
+    private double planeSpeed = 5;
 
-    @FXML private ImageView backgroundImageView; // Background
-    @FXML private ImageView planeImageView; // Aircraft image
-    @FXML private ImageView userfireImageView; // User bullet
-    @FXML private ImageView enemyImageView; // Enemy
-    @FXML private ImageView enemyfireImageView; // Enemy bullet
-    @FXML private ImageView bossImageView; // Boss
-    @FXML private ImageView bossfireImageView; // Boss bullet
+    /**
+     * The current X position of the plane.
+     */
+    private double planeXPosition;
 
-    // Animation instances
+    /**
+     * The speed at which bullets move across the screen.
+     */
+    private double bulletSpeed = 10;
+
+    /**
+     * A flag indicating whether the user's bullet is visible on the screen.
+     */
+    private boolean bulletVisible = false;
+
+    /**
+     * A flag indicating whether the enemy's bullet is visible on the screen.
+     */
+    private boolean enemyBulletVisible = false;
+
+    /**
+     * A flag indicating whether the boss's bullet is visible on the screen.
+     */
+    private boolean bossBulletVisible = false;
+
+    /**
+     * ImageView for the background of the game.
+     */
+    @FXML private ImageView backgroundImageView;
+    /**
+     * ImageView for the user's plane.
+     */
+    @FXML private ImageView planeImageView;
+
+    /**
+     * ImageView for the user's bullet.
+     */
+    @FXML private ImageView userfireImageView;
+
+    /**
+     * ImageView for the enemy plane.
+     */
+    @FXML private ImageView enemyImageView;
+
+    /**
+     * ImageView for the enemy's bullet.
+     */
+    @FXML private ImageView enemyfireImageView;
+
+    /**
+     * ImageView for the boss plane.
+     */
+    @FXML private ImageView bossImageView;
+
+    /**
+     * ImageView for the boss's bullet.
+     */
+    @FXML private ImageView bossfireImageView;
+
+    /**
+     * Timeline for animating the plane's movement.
+     */
     private Timeline planeTimeline;
+
+    /**
+     * Timeline for firing the user's bullet.
+     */
     private Timeline bulletTimeline;
+
+    /**
+     * Timeline for moving the user's bullet.
+     */
     private Timeline bulletMovementTimeline;
+
+    /**
+     * Timeline for firing the enemy's bullet.
+     */
     private Timeline enemyBulletTimeline;
+
+    /**
+     * Timeline for firing the boss's bullet.
+     */
     private Timeline bossBulletTimeline;
+
+    /**
+     * PathTransition for animating the enemy's movement.
+     */
     private PathTransition enemyPathTransition;
+
+    /**
+     * PathTransition for animating the boss's movement.
+     */
     private PathTransition bossPathTransition;
 
     /**

@@ -11,11 +11,35 @@ import java.util.List;
  * within these categories.
  */
 public class ActiveActorManager {
+
+    /**
+     * The list of friendly units (e.g., player-controlled planes).
+     */
     private final List<ActiveActorDestructible> friendlyUnits;
+
+    /**
+     * The list of enemy units (e.g., enemy-controlled planes).
+     */
     private final List<ActiveActorDestructible> enemyUnits;
+
+    /**
+     * The list of user projectiles (e.g., bullets fired by the player).
+     */
     private final List<ActiveActorDestructible> userProjectiles;
+
+    /**
+     * The list of enemy projectiles (e.g., bullets fired by the enemies).
+     */
     private final List<ActiveActorDestructible> enemyProjectiles;
+
+    /**
+     * The list of ammo boxes (e.g., power-ups that replenish ammo).
+     */
     private final List<ActiveActorDestructible> ammoBoxes;
+
+    /**
+     * The list of hearts (e.g., health power-ups).
+     */
     private final List<ActiveActorDestructible> hearts;
 
     /**

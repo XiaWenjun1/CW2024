@@ -11,15 +11,30 @@ import com.example.demo.Level.LevelManager.PauseMenuManager;
  * It allows for showing and hiding the pause menu, as well as resuming the game.
  */
 public class Control_PauseMenu {
-
+    /**
+     * Manages the functionality of the pause menu in the game.
+     * This object handles the logic for pausing, resuming, and closing the game.
+     */
     private PauseMenuManager pauseMenuManager; // Manages the pause menu functionality
 
+    /**
+     * The AnchorPane that contains the pause menu.
+     * This pane holds the UI elements for the pause menu.
+     */
     @FXML
     private AnchorPane pauseMenuPane; // The pause menu pane
 
+    /**
+     * The button that allows the player to continue the game after it has been paused.
+     * This button resumes the game and hides the pause menu.
+     */
     @FXML
     private Button continueButton; // The button to continue the game
 
+    /**
+     * The root container of the main user interface.
+     * This container holds all UI components for the main screen.
+     */
     private Pane mainRoot; // The root container of the main interface
 
     /**

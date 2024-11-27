@@ -9,11 +9,25 @@ import javafx.scene.image.ImageView;
  */
 public class UserProjectile extends Projectile {
 
+	/**
+	 * The current power level of the projectile, ranging from 1 to 5.
+	 */
 	private int powerLevel = 1;
+
+	/**
+	 * The {@link ImageView} object used to display the projectile's image.
+	 */
 	private ImageView imageView;
+
+	/**
+	 * The horizontal velocity of the projectile, used to control its movement speed.
+	 */
 	private int horizontalVelocity;
 
-	// Array of properties for projectiles at different power levels
+	/**
+	 * An array of properties for projectiles at different power levels,
+	 * with each entry containing the projectile's size, velocity, and hitbox size for that power level.
+	 */
 	private static final ProjectileProperties[] PROPERTIES = {
 			new ProjectileProperties(50, 50, 6, 50, 10),       // Power Level 1
 			new ProjectileProperties(75, 75, 10, 55, 14),      // Power Level 2

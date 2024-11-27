@@ -13,14 +13,45 @@ import java.util.List;
  */
 public class EnemyPlane extends FighterPlane {
 
-	// Constants for the enemy plane's properties
+	/**
+	 * The image name of the enemy plane, used to load its sprite.
+	 */
 	private static final String IMAGE_NAME = "enemyplane.png";
+
+	/**
+	 * The width of the enemy plane's image.
+	 */
 	private static final int IMAGE_WIDTH = 150;
+
+	/**
+	 * The height of the enemy plane's image.
+	 */
 	private static final int IMAGE_HEIGHT = 150;
+
+	/**
+	 * The horizontal velocity at which the enemy plane moves, representing its speed.
+	 */
 	private static final int HORIZONTAL_VELOCITY = -2;
+
+	/**
+	 * The X-axis offset used to determine the projectile's position when fired by the enemy plane.
+	 */
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
+
+	/**
+	 * The Y-axis offset used to determine the projectile's position when fired by the enemy plane.
+	 */
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
+
+	/**
+	 * The initial health of the enemy plane, which starts at 1.
+	 */
 	private static final int INITIAL_HEALTH = 1;
+
+	/**
+	 * The fire rate of the enemy plane, which determines how often it fires projectiles.
+	 * A value between 0 and 1, where smaller values mean less frequent firing.
+	 */
 	private static final double FIRE_RATE = .0025;
 
 	/**

@@ -9,7 +9,11 @@ import java.util.List;
  */
 public abstract class FighterPlane extends ActiveActorDestructible {
 
-	private int health;
+	/**
+	 * The health of the player or entity.
+	 * This variable stores the current health value. It is used to track the player's or enemy's health in the game.
+	 */
+	private int health; // The health of the player or entity
 
 	/**
 	 * Constructs a new FighterPlane object with the specified image, position, and health.

@@ -11,23 +11,41 @@ import javafx.scene.layout.HBox;
  */
 public class HeartDisplay {
 
-	// Path to the heart image file
+	/**
+	 * The path to the heart image file.
+	 * This image is used to represent a life in the game.
+	 */
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/heart.png";
 
-	// The height of the heart images
+	/**
+	 * The height of the heart images in pixels.
+	 */
 	private static final int HEART_HEIGHT = 50;
 
-	// The index used to remove the first heart from the container
+	/**
+	 * The index used to remove the first heart from the container when a life is lost.
+	 */
 	private static final int INDEX_OF_FIRST_ITEM = 0;
 
-	// The container that holds the heart images
+	/**
+	 * The container that holds the heart images.
+	 * It is used to organize the hearts horizontally on the screen.
+	 */
 	private HBox container;
 
-	// The x and y positions of the heart container
+	/**
+	 * The x-coordinate of the heart container's position.
+	 */
 	private double containerXPosition;
+
+	/**
+	 * The y-coordinate of the heart container's position.
+	 */
 	private double containerYPosition;
 
-	// The number of hearts to initially display
+	/**
+	 * The number of hearts to initially display.
+	 */
 	private int numberOfHeartsToDisplay;
 
 	/**
@@ -56,6 +74,7 @@ public class HeartDisplay {
 
 	/**
 	 * Initializes the specified number of hearts and adds them to the container.
+	 * The hearts are represented by ImageView objects, and each heart is sized appropriately.
 	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {

@@ -10,7 +10,19 @@ import javafx.scene.shape.Rectangle;
  */
 public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
 
+	/**
+	 * A boolean flag that tracks whether the actor has been destroyed.
+	 * When set to true, the actor is considered to no longer be active or
+	 * participating in the game world.
+	 */
 	private boolean isDestroyed;
+
+	/**
+	 * The {@link Rectangle} representing the collision area of the actor.
+	 * This hitbox is used to detect interactions with other game elements
+	 * (e.g., bullets, obstacles) and is updated alongside the actor's position.
+	 * The hitbox is transparent and is drawn for collision purposes.
+	 */
 	private Rectangle hitbox;
 
 	/**

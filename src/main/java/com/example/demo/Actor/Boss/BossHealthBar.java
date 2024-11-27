@@ -9,11 +9,29 @@ import javafx.scene.layout.HBox;
  */
 public class BossHealthBar extends HBox {
 
-    private int initialHealth;      // Initial health of the Boss
-    private final ProgressBar healthBar; // ProgressBar for visualizing health
+    /**
+     * The initial health value of the Boss.
+     * This is used to calculate the health percentage for the progress bar.
+     */
+    private int initialHealth;
 
-    private static final int WIDTH = 290;  // Width of the health bar
-    private static final int HEIGHT = 10;  // Height of the health bar
+    /**
+     * The {@link ProgressBar} used to represent the Boss's health.
+     * This visual element is updated as the Boss's health changes.
+     */
+    private final ProgressBar healthBar;
+
+    /**
+     * The width of the health bar in pixels.
+     * It defines how wide the progress bar will be displayed.
+     */
+    private static final int WIDTH = 290;
+
+    /**
+     * The height of the health bar in pixels.
+     * It defines how tall the progress bar will be displayed.
+     */
+    private static final int HEIGHT = 10;
 
     /**
      * Constructor for the {@code BossHealthBar}.
