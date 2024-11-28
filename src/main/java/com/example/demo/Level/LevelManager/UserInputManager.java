@@ -47,6 +47,9 @@ public class    UserInputManager {
     /** Flag indicating whether the game is paused or not. */
     private boolean isPaused = false;
 
+    /**Flag indicating if the game is over. */
+    private boolean gameIsOver = false;
+
     /** Flag indicating whether the user is currently dragging the plane with the mouse. */
     private boolean isDragging = false;
 
@@ -225,7 +228,11 @@ public class    UserInputManager {
     }
 
     /**
-     * Fires a projectile from the user plane if the game is not paused and cooldown has passed.
+     * Fires a projectile from the user plane if the game is not paused and the cooldown has passed.
+     * This method checks if the game is paused or if a cooldown period is active. If either condition
+     * is true, it returns early and does not fire a projectile. If neither condition is met, it triggers
+     * the user's plane to fire projectiles, adds them to the game root for rendering, and starts a cooldown
+     * period to prevent rapid firing. It also plays the shoot sound effect.
      */
     private void fireProjectile() {
         if (isPaused || isOnCooldown) {
@@ -238,6 +245,8 @@ public class    UserInputManager {
                 root.getChildren().add(projectile);
                 userProjectiles.add(projectile);
             });
+
+            ShootAudioManager.triggerShootAudio();
         }
 
         startCooldown();
@@ -255,22 +264,20 @@ public class    UserInputManager {
 
     /**
      * Handles middle mouse button click to toggle the pause state.
-     *
      * @param event the mouse event triggered
      */
     public void handleMouseMiddleClick(MouseEvent event) {
-        if (event.getButton() == MouseButton.MIDDLE) {
+        if (event.getButton() == MouseButton.MIDDLE && !gameIsOver) {
             togglePause();
         }
     }
 
     /**
      * Handles the Enter key press to toggle the pause state.
-     *
      * @param event the key event triggered
      */
     public void handleKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
+        if (event.getCode() == KeyCode.ENTER && !gameIsOver) {
             togglePause();
         }
     }
@@ -313,5 +320,20 @@ public class    UserInputManager {
         if (gameLoop != null) {
             gameLoop.stop();
         }
+    }
+
+    /**
+     * Sets the game over flag and ensures the user can't interact with the pause menu.
+     * @param gameIsOver true if the game is over, false otherwise
+     */
+    public void setGameIsOver(boolean gameIsOver) {
+        this.gameIsOver = gameIsOver;
+    }
+
+    /**
+     * Clears all active key states to ensure no unwanted actions carry over.
+     */
+    public void clearActiveKeys() {
+        activeKeys.clear();
     }
 }

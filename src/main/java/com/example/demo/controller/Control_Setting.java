@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Level.LevelManager.ExplosionEffectManager;
+import com.example.demo.Level.LevelManager.ShootAudioManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -9,8 +10,8 @@ import javafx.scene.Node;
 
 /**
  * The Control_Setting class is responsible for managing the settings interface in the game.
- * It allows the user to toggle background music and explosion sound effects,
- * and provides the functionality to close the settings window.
+ * It allows the user to toggle background music, explosion sound effects, and shooting sound effects,
+ * and provides the functionality to close the settings window and remove blur effects from the main interface.
  */
 public class Control_Setting {
 
@@ -26,7 +27,14 @@ public class Control_Setting {
      * This enables the user to enable or disable the explosion sound during gameplay.
      */
     @FXML
-    private CheckBox gsToggle;  // Checkbox to toggle explosion sound effect
+    private CheckBox gsToggleExplosion;  // Checkbox to toggle explosion sound effect
+
+    /**
+     * A checkbox to toggle the shooting sound effect on or off.
+     * This enables the user to enable or disable the shooting sound during gameplay.
+     */
+    @FXML
+    private CheckBox gsToggleShoot;  // Checkbox to toggle shooting sound effect
 
     /**
      * The button used to close the settings window.
@@ -43,7 +51,7 @@ public class Control_Setting {
 
     /**
      * Default constructor for the Control_Setting class.
-     * Initializes default values for the fields.
+     * Initializes default values for the fields and prepares the settings interface.
      */
     public Control_Setting() {
         this.mainRoot = null;
@@ -52,14 +60,17 @@ public class Control_Setting {
     /**
      * Initializes the settings interface by adding event listeners to the toggle checkboxes
      * and setting their initial values based on the current settings.
+     * Also adds a hover sound effect to the close button.
      */
     public void initialize() {
         addHoverSoundToButton(closeButton); // Add hover sound effect to the close button
         bgToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleBackgroundMusic(newValue));
-        gsToggle.selectedProperty().addListener((observable, oldValue, newValue) -> toggleExplosionSound(newValue));
+        gsToggleExplosion.selectedProperty().addListener((observable, oldValue, newValue) -> toggleExplosionSound(newValue));
+        gsToggleShoot.selectedProperty().addListener((observable, oldValue, newValue) -> toggleShootSound(newValue));
 
         // Set initial states for the toggles based on current settings
-        gsToggle.setSelected(ExplosionEffectManager.isExplosionSoundEnabled()); // Set explosion sound toggle state
+        gsToggleExplosion.setSelected(ExplosionEffectManager.isExplosionSoundEnabled()); // Set explosion sound toggle state
+        gsToggleShoot.setSelected(ShootAudioManager.isShootSoundEnabled()); // Set shooting sound toggle state
         bgToggle.setSelected(AudioManager.isBackgroundMusicPlaying()); // Set background music toggle state
     }
 
@@ -96,6 +107,15 @@ public class Control_Setting {
     }
 
     /**
+     * Toggles the shooting sound effect on or off based on the provided boolean value.
+     *
+     * @param play If true, shooting sound is enabled; if false, shooting sound is disabled.
+     */
+    private void toggleShootSound(boolean play) {
+        ShootAudioManager.setExplosionSoundEnabled(play); // Enable or disable shooting sound
+    }
+
+    /**
      * Sets the root container of the main interface, used to remove the blur effect when closing the settings window.
      *
      * @param mainRoot The root container of the main interface.
@@ -106,6 +126,7 @@ public class Control_Setting {
 
     /**
      * Closes the settings window and removes the blur effect from the main interface.
+     * This also removes the settings pane from the main interface.
      */
     @FXML
     private void closeSettings() {

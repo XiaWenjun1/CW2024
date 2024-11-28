@@ -244,10 +244,17 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Cleans up the level by stopping the timeline, clearing the root, and removing actors.
+	 * Cleans up the level by stopping the game timeline, stopping the game loop,
+	 * clearing any active input keys, and removing all UI components and actors
+	 * associated with the current level.
+	 * This method is typically called when transitioning to a new level or when the game is ending.
+	 * It ensures that all active elements are cleared and that no processes (such as game loops or animations)
+	 * continue running after the level has been cleaned up.
 	 */
 	public void cleanUp() {
 		timeline.stop();
+		userInputManager.stopGameLoop();
+		userInputManager.clearActiveKeys();
 		root.getChildren().clear();
 		cleanUpActors();
 	}
@@ -318,20 +325,18 @@ public abstract class LevelParent {
 
 	/**
 	 * Ends the game with a victory, displaying the win screen to the player.
-	 * Stops the user input handling and game loop.
 	 */
 	public void winGame() {
+		userInputManager.setGameIsOver(true);
 		endGameMenuManager.winGame();
-		userInputManager.stopGameLoop();
 	}
 
 	/**
 	 * Ends the game with a defeat, displaying the loss screen to the player.
-	 * Stops the user input handling and game loop.
 	 */
 	public void loseGame() {
+		userInputManager.setGameIsOver(true);
 		endGameMenuManager.loseGame();
-		userInputManager.stopGameLoop();
 	}
 
 	/**
