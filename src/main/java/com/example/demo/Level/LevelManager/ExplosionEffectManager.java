@@ -29,6 +29,14 @@ public class ExplosionEffectManager {
     private static boolean explosionSoundEnabled = true;
 
     /**
+     * No-argument constructor for ExplosionEffectManager.
+     * Initializes the class without needing any parameters.
+     */
+    public ExplosionEffectManager() {
+        // Default constructor, no initialization required for static fields
+    }
+
+    /**
      * Triggers an explosion effect at the specified location for the given actor.
      * This includes displaying the explosion image and playing the explosion sound.
      *

@@ -73,16 +73,13 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Initializes the specified number of hearts and adds them to the container.
-	 * The hearts are represented by ImageView objects, and each heart is sized appropriately.
+	 * Initializes and displays the specified number of hearts (lives) in the container.
+	 * Each heart is represented by an {@link ImageView} object, styled and sized appropriately.
+	 * This method is typically called during the initialization of the game to set up the initial lives.
 	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
-			ImageView heart = new ImageView(new Image(getClass().getResource(HEART_IMAGE_NAME).toExternalForm()));
-
-			heart.setFitHeight(HEART_HEIGHT);
-			heart.setPreserveRatio(true);
-			container.getChildren().add(heart);
+			addHeart();
 		}
 	}
 
@@ -96,7 +93,9 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Adds a heart to the container, representing the addition of a life.
+	 * Adds a heart (life) to the container, visually representing the gain of an extra life.
+	 * The heart is displayed as an {@link ImageView} with a predefined size and aspect ratio.
+	 * The heart image is loaded from the specified resource defined by {@code HEART_IMAGE_NAME}.
 	 */
 	public void addHeart() {
 		ImageView heart = new ImageView(new Image(getClass().getResource(HEART_IMAGE_NAME).toExternalForm()));

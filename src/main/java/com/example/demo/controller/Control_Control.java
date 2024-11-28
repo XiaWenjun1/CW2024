@@ -8,65 +8,82 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 /**
- * The Control_Control class is responsible for managing the control panel in the game.
- * It handles the setup of UI elements such as images, buttons, and resizing them.
- * It also manages the closing of the control panel and cleaning up resources.
+ * The Control_Control class manages the control panel in the game.
+ * It is responsible for setting up UI elements such as images, buttons, and resizing them.
+ * It also manages the closing of the control panel and releasing resources when necessary.
  */
 public class Control_Control {
+
     /**
-     * The button used to close the application or exit the current view.
+     * The button used to close the control panel or exit the current view.
      */
     @FXML
     private Button closeButton; // Close button
 
     /**
-     * The image of the user's plane displayed in the game.
+     * The ImageView displaying the player's plane in the game.
      */
-    @FXML private ImageView planeImageView; // Aircraft image
+    @FXML
+    private ImageView planeImageView; // Aircraft image
 
     /**
-     * The image representing the first bullet fired by the user.
+     * The ImageView representing the first bullet fired by the user.
      */
-    @FXML private ImageView userfire1ImageView; // User bullet
+    @FXML
+    private ImageView userfire1ImageView; // User bullet
 
     /**
-     * The image representing the second bullet fired by the user.
+     * The ImageView representing the second bullet fired by the user.
      */
-    @FXML private ImageView userfire2ImageView; // User bullet
+    @FXML
+    private ImageView userfire2ImageView; // User bullet
 
     /**
-     * The image representing the third bullet fired by the user.
+     * The ImageView representing the third bullet fired by the user.
      */
-    @FXML private ImageView userfire3ImageView; // User bullet
+    @FXML
+    private ImageView userfire3ImageView; // User bullet
 
     /**
-     * The image representing the fourth bullet fired by the user.
+     * The ImageView representing the fourth bullet fired by the user.
      */
-    @FXML private ImageView userfire4ImageView; // User bullet
+    @FXML
+    private ImageView userfire4ImageView; // User bullet
 
     /**
-     * The image representing the fifth bullet fired by the user.
+     * The ImageView representing the fifth bullet fired by the user.
      */
-    @FXML private ImageView userfire5ImageView; // User bullet
+    @FXML
+    private ImageView userfire5ImageView; // User bullet
 
     /**
-     * The image representing a heart in the game, likely used for health or score purposes.
+     * The ImageView representing a heart in the game, possibly used for health or score purposes.
      */
-    @FXML private ImageView heartImageView; // Heart
+    @FXML
+    private ImageView heartImageView; // Heart
 
     /**
-     * The image representing an ammo box, which may be collected for power-ups or replenishment in the game.
+     * The ImageView representing an ammo box, which may be collected for power-ups or replenishment.
      */
-    @FXML private ImageView ammoboxImageView; // Ammo box
+    @FXML
+    private ImageView ammoboxImageView; // Ammo box
 
     /**
-     * The root container of the main user interface. It holds all the UI components for the main screen.
+     * The root container of the main interface. It holds all the UI components for the main screen.
      */
     private Pane mainRoot; // The root container of the main interface
 
     /**
-     * Initializes the control panel by setting up button hover sound,
-     * loading images, and setting the sizes of the UI elements.
+     * Default constructor for Control_Control.
+     * Initializes default values for fields.
+     */
+    public Control_Control() {
+        this.mainRoot = null;
+    }
+
+    /**
+     * Initializes the control panel by setting up button hover sound effects,
+     * loading images, and adjusting the sizes of UI elements.
      */
     public void initialize() {
         addHoverSoundToButton(closeButton);
@@ -75,7 +92,7 @@ public class Control_Control {
     }
 
     /**
-     * Adds a hover sound effect to a given button.
+     * Adds a hover sound effect to the given button.
      *
      * @param button The button to which the hover sound will be added.
      */
@@ -84,7 +101,7 @@ public class Control_Control {
     }
 
     /**
-     * Loads the images for the control panel elements (aircraft, bullets, heart, ammo box).
+     * Loads the images for the control panel elements, such as the aircraft, bullets, heart, and ammo box.
      */
     private void loadImages() {
         planeImageView.setImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/userplane.png")));
@@ -98,7 +115,7 @@ public class Control_Control {
     }
 
     /**
-     * Sets the size of the image views for each control element.
+     * Sets the size of the ImageViews for each control element.
      */
     private void setElementSizes() {
         setImageViewSize(planeImageView, 150, 150);
@@ -124,7 +141,7 @@ public class Control_Control {
     }
 
     /**
-     * Sets the root container of the main interface to remove the blur effect when closing.
+     * Sets the root container of the main interface, used to remove the blur effect when closing the control panel.
      *
      * @param mainRoot The root container of the main interface.
      */
@@ -133,16 +150,17 @@ public class Control_Control {
     }
 
     /**
-     * Closes the control panel, removing the blur effect and the control pane from the main interface.
+     * Closes the control panel by removing the blur effect from the main interface and
+     * removing the control pane from the main UI.
      */
     @FXML
     private void closeControl() {
-        // Remove the blur effect
+        // Remove the blur effect from all elements in the main interface
         if (mainRoot != null) {
             for (Node child : mainRoot.getChildren()) {
-                child.setEffect(null); // Remove the blur effect from all elements
+                child.setEffect(null); // Remove the blur effect
             }
-            // Remove controlPane from the main interface
+            // Remove the control pane from the main interface
             mainRoot.getChildren().removeIf(node -> "controlPane".equals(node.getId()));
         }
     }
@@ -162,7 +180,7 @@ public class Control_Control {
     }
 
     /**
-     * Clears the image of the given ImageView.
+     * Clears the image of the given ImageView to release resources.
      *
      * @param imageView The ImageView whose image will be cleared.
      */

@@ -12,26 +12,27 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * The Control_Main class handles the main user interface of the game, including the
- * buttons for starting the game, opening settings, and viewing control information.
+ * The Control_Main class handles the main user interface of the game, including
+ * the buttons for starting the game, opening settings, and viewing control information.
  * It also manages background music, animations, and loading of different UI elements.
  */
 public class Control_Main {
+
     /**
      * The controller responsible for managing animations in the game.
-     * This object handles the animations for various elements such as the plane, bullets, and enemies.
+     * This controller handles animations for various elements such as the plane, bullets, and enemies.
      */
     private Control_Animation controlAnimation; // Animation controller
 
     /**
-     * The controller responsible for managing the settings in the game.
-     * This object handles user interactions with the game settings.
+     * The controller responsible for managing the game settings.
+     * This controller handles user interactions with the game settings.
      */
     private Control_Setting settingsController;
 
     /**
-     * The controller responsible for managing user controls in the game.
-     * This object handles user interactions related to controls and input configurations.
+     * The controller responsible for managing user input controls in the game.
+     * This controller handles user interactions related to input configuration.
      */
     private Control_Control controlController;
 
@@ -44,7 +45,7 @@ public class Control_Main {
 
     /**
      * The button to start the game.
-     * This button initiates the game when clicked by the user.
+     * This button triggers the game start when clicked by the user.
      */
     @FXML
     private Button startButton;
@@ -68,7 +69,7 @@ public class Control_Main {
      * This pane is responsible for displaying animations of the game.
      */
     @FXML
-    private AnchorPane animationController; // AnchorPane for the animation controller
+    private AnchorPane animationController; // AnchorPane for animation controller
 
     /**
      * The settings pane for configuring game settings.
@@ -83,10 +84,22 @@ public class Control_Main {
     private AnchorPane controlPane; // Control pane
 
     /**
-     * The blur effect used for the settings or control panels when active.
-     * This effect adds a blur to the background when the user is in the settings or control menus.
+     * The blur effect applied to the background when settings or control panels are active.
+     * This effect adds a blur to the background to focus on the active panel.
      */
     private final BoxBlur blurEffect = new BoxBlur(10, 10, 3); // Blur effect
+
+    /**
+     * Default constructor for the Control_Main class.
+     * <p>
+     * This constructor initializes the Control_Main object. It is a no-argument constructor
+     * required by JavaFX for instantiating the controller. Initialization logic is handled
+     * by the {@link #initialize()} method after the object is created.
+     * </p>
+     */
+    public Control_Main() {
+        // Default constructor required by JavaFX
+    }
 
     /**
      * Initialization method called automatically by JavaFX.
@@ -123,8 +136,8 @@ public class Control_Main {
     }
 
     /**
-     * Loads animation into the animation controller pane.
-     * If animation is already loaded, it starts the animations.
+     * Loads the animation into the animation controller pane.
+     * If the animation is already loaded, it starts the animations.
      */
     private void loadAnimation() {
         if (controlAnimation != null) {
@@ -244,7 +257,7 @@ public class Control_Main {
     }
 
     /**
-     * Adds hover sounds to the specified buttons.
+     * Adds hover sound effects to the specified buttons.
      *
      * @param buttons The buttons to which hover sounds should be added.
      */
@@ -298,7 +311,7 @@ public class Control_Main {
     }
 
     /**
-     * Adds the settings pane to the root container if not already present.
+     * Adds the settings pane to the root container if it's not already present.
      */
     private void addSettingsPaneToRoot() {
         if (!rootPane.getChildren().contains(settingsPane)) {
@@ -307,7 +320,7 @@ public class Control_Main {
     }
 
     /**
-     * Adds the control pane to the root container if not already present.
+     * Adds the control pane to the root container if it's not already present.
      */
     private void addControlPaneToRoot() {
         if (!rootPane.getChildren().contains(controlPane)) {

@@ -31,6 +31,18 @@ public class Control_EndGameMenu {
     private LevelParent levelParent; // The current level parent to clean up when returning to the main menu
 
     /**
+     * No-argument constructor for the Control_EndGameMenu class.
+     * <p>
+     * Initializes the levelParent field to null. This constructor is used for creating an instance of
+     * the Control_EndGameMenu class without any specific initialization, leaving the levelParent to
+     * be set later via the initialize method.
+     * </p>
+     */
+    public Control_EndGameMenu() {
+        this.levelParent = null;
+    }
+
+    /**
      * Initializes the controller with the provided LevelParent.
      *
      * @param levelParent The parent of the current level, used for cleanup.

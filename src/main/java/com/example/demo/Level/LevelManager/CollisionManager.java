@@ -15,6 +15,14 @@ import java.util.List;
 public class CollisionManager {
 
     /**
+     * Default constructor for the CollisionManager class.
+     * This constructor is provided explicitly, but does not perform any initialization as all methods are static.
+     */
+    public CollisionManager() {
+        // No initialization required
+    }
+
+    /**
      * Handles collisions between two lists of actors, applying damage to both colliding actors.
      * If two actors collide, both will take damage.
      *

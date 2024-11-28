@@ -32,6 +32,16 @@ public class AudioManager {
     private static boolean backgroundMusicEnabled = true;
 
     /**
+     * Default constructor for the AudioManager class.
+     * <p>
+     * Since this class only provides static methods and fields, there is no need to instantiate it.
+     * However, the constructor is provided for compliance with certain frameworks or tools that may require it.
+     */
+    public AudioManager() {
+        // This constructor is intentionally empty.
+    }
+
+    /**
      * Initializes the background music player if not already initialized.
      * Loads the background music from the resources.
      */

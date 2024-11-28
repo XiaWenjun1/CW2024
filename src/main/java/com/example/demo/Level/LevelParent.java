@@ -155,6 +155,7 @@ public abstract class LevelParent {
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		scene.setOnMouseClicked(userInputManager::handleMouseMiddleClick);
+		scene.setOnKeyPressed(userInputManager::handleKeyPress);
 		pauseMenuManager.loadPauseMenu();
 		root.getChildren().add(pauseMenuManager.getPauseMenuRoot());
 		return scene;
@@ -439,9 +440,9 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Returns the StringProperty representing the current level name.
-	 *
-	 * @return the current level name property.
+	 * Gets the {@link StringProperty} representing the name of the current level.
+	 * This property can be used for data binding or observing changes to the current level's name.
+	 * @return the {@link StringProperty} representing the name of the current level
 	 */
 	public StringProperty currentLevelNameProperty() {
 		return currentLevelName;

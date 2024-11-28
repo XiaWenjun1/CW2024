@@ -5,54 +5,156 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/allclasses-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/allpackages-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/ActiveActor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/ActiveActorDestructible.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/BossFirePattern.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/BossHealthBar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss1/MutationBoss1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss1/MutationBossProjectile1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss1/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss1/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss2/MutationBoss2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss2/MutationBossProjectile2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss2/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss2/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss3/MutationBoss3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss3/MutationBossProjectile3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss3/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/MutationBoss3/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/ParentBoss/Boss.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/ParentBoss/BossProjectile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/ParentBoss/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/ParentBoss/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Boss/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Destructible.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/EnemyPlane/EnemyPlane.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/EnemyPlane/EnemyProjectile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/EnemyPlane/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/EnemyPlane/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/FighterPlane.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/Projectile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/UserPlane/UserPlane.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/UserPlane/UserProjectile.ProjectileProperties.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/UserPlane/UserProjectile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/UserPlane/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/UserPlane/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Actor/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/GameOverImage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/HeartDisplay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/ScoreBoard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/ShieldImage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/TargetLevel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/WinImage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Display/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelFour.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/ActiveActorManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/ActorSpawnerManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/CleanDestroyedManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/CollisionManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/EndGameMenuManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/ExplosionEffectManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/PauseMenuManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/UserInputManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelManager/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelOne.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelParent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelThree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelTwo.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/LevelView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/LevelViewLevelFour.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/LevelViewLevelOne.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/LevelViewLevelThree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/LevelViewLevelTwo.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/LevelView/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Level/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/Boundary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/Object/AmmoBox.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/Object/Heart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/Object/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/Object/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/Object/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/AudioManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_Animation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_Control.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_EndGameMenu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_Main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_PauseMenu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_Setting.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Control_Start.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/Main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/com/example/demo/controller/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/com.example.demo/module-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/constant-values.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/copy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/element-list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/help-doc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-10.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-11.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-12.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-13.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-14.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-15.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-16.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-17.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-18.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-19.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-20.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-21.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-22.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-23.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-24.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-6.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-7.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-8.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-9.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/jquery-ui.overrides.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/legal/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/legal/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/legal/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/legal/jquery.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/legal/jqueryUI.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/member-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/module-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/package-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/resources/glass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/resources/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/script-dir/jquery-3.6.0.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/script-dir/jquery-ui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/script-dir/jquery-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/search-page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/tag-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/type-search-index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActorDestructible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActorDestructible.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/BossFirePattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/BossFirePattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/BossHealthBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/BossHealthBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss1/MutationBoss1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss1/MutationBoss1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss1/MutationBossProjectile1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss1/MutationBossProjectile1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss2/MutationBoss2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss2/MutationBoss2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss2/MutationBossProjectile2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss2/MutationBossProjectile2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss3/MutationBoss3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss3/MutationBoss3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss3/MutationBossProjectile3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/MutationBoss3/MutationBossProjectile3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/ParentBoss/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/ParentBoss/Boss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/ParentBoss/BossProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boss/ParentBoss/BossProjectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/EnemyPlane/EnemyPlane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/EnemyPlane/EnemyPlane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/EnemyPlane/EnemyProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/EnemyPlane/EnemyProjectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/FighterPlane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/FighterPlane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/UserPlane/UserPlane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/UserPlane/UserPlane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/UserPlane/UserProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/UserPlane/UserProjectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/GameOverImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/GameOverImage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/HeartDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/HeartDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/ScoreBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/ScoreBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/ShieldImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/ShieldImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/TargetLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/TargetLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/WinImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/WinImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelFour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelFour.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ActiveActorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ActiveActorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ActorSpawnerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ActorSpawnerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CollisionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CollisionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ExplosionEffectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ExplosionEffectManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/PauseMenuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/PauseMenuManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/UserInputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/UserInputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelOne.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelThree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelTwo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelTwo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelFour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelFour.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelThree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelTwo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelViewLevelTwo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Object/Boundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Object/Boundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Object/Object/AmmoBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Object/Object/AmmoBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Object/Object/Heart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Object/Object/Heart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/AudioManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/AudioManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Animation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Control.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Control.java" afterDir="false" />
@@ -60,8 +162,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_PauseMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_PauseMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Setting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Setting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Control/Control.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Control/Control.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +197,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.CW2024.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Maven.CW2024 [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.CW2024 [install].executor&quot;: &quot;Run&quot;,
@@ -101,16 +205,30 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;test&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java/javafx-sdk-19.0.2/lib&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.and.region&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.25688073&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
     &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="CW2024" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.controller.Main" />
+      <module name="CW2024" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -137,6 +255,14 @@
       <workItem from="1732673094675" duration="2020000" />
       <workItem from="1732675999610" duration="133000" />
       <workItem from="1732676666843" duration="26000" />
+      <workItem from="1732676824311" duration="275000" />
+      <workItem from="1732677180640" duration="4766000" />
+      <workItem from="1732691435746" duration="4634000" />
+      <workItem from="1732696105545" duration="2046000" />
+      <workItem from="1732698381406" duration="2259000" />
+      <workItem from="1732700671403" duration="3058000" />
+      <workItem from="1732777982687" duration="857000" />
+      <workItem from="1732779139586" duration="1578000" />
     </task>
     <servers />
   </component>

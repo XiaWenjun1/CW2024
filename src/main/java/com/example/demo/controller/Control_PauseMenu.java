@@ -38,6 +38,16 @@ public class Control_PauseMenu {
     private Pane mainRoot; // The root container of the main interface
 
     /**
+     * No-argument constructor for Control_PauseMenu.
+     * Initializes default values for fields and ensures the pause menu is hidden initially.
+     */
+    public Control_PauseMenu() {
+        // Initialize fields with default values
+        this.pauseMenuManager = null;
+        this.mainRoot = null;
+    }
+
+    /**
      * Initializes the pause menu controller with the provided PauseMenuManager.
      * It hides the pause menu and continue button by default.
      *

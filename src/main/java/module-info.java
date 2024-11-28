@@ -67,6 +67,26 @@ module com.example.demo {
      */
     exports com.example.demo.Actor.EnemyPlane;
     /**
+     * Exports the {@code com.example.demo.Actor.Boss.MutationBoss1} package for logic related to MutationBoss1.
+     * <p>This package contains classes and behavior for the first mutation of the boss character in the game.</p>
+     */
+    exports com.example.demo.Actor.Boss.MutationBoss1;
+    /**
+     * Exports the {@code com.example.demo.Actor.Boss.MutationBoss2} package for logic related to MutationBoss2.
+     * <p>This package contains classes and behavior for the second mutation of the boss character in the game.</p>
+     */
+    exports com.example.demo.Actor.Boss.MutationBoss2;
+    /**
+     * Exports the {@code com.example.demo.Actor.Boss.MutationBoss3} package for logic related to MutationBoss3.
+     * <p>This package contains classes and behavior for the third mutation of the boss character in the game.</p>
+     */
+    exports com.example.demo.Actor.Boss.MutationBoss3;
+    /**
+     * Exports the {@code com.example.demo.Actor.Boss.ParentBoss} package for base logic related to the parent boss.
+     * <p>This package includes base functionality and attributes common to all boss characters in the game.</p>
+     */
+    exports com.example.demo.Actor.Boss.ParentBoss;
+    /**
      * Exports the {@code com.example.demo.Actor.UserPlane} package for user-controlled plane logic.
      */
     exports com.example.demo.Actor.UserPlane;

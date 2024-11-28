@@ -19,7 +19,7 @@ import java.util.Set;
  * Manages user input for controlling the player's plane and handling interactions
  * such as movement, shooting, and pausing the game.
  */
-public class UserInputManager {
+public class    UserInputManager {
     /** The game loop that continuously updates user movement and actions. */
     private AnimationTimer gameLoop;
 
@@ -260,6 +260,17 @@ public class UserInputManager {
      */
     public void handleMouseMiddleClick(MouseEvent event) {
         if (event.getButton() == MouseButton.MIDDLE) {
+            togglePause();
+        }
+    }
+
+    /**
+     * Handles the Enter key press to toggle the pause state.
+     *
+     * @param event the key event triggered
+     */
+    public void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
             togglePause();
         }
     }

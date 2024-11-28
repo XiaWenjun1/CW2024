@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 /**
  * The {@code UserProjectile} class represents a projectile fired by the user's plane.
  * It handles the appearance, movement, and properties of the projectile in the game.
+ * This class supports different power levels, which affect the projectile's size,
+ * velocity, hitbox dimensions, and image.
  */
 public class UserProjectile extends Projectile {
 
@@ -26,7 +28,8 @@ public class UserProjectile extends Projectile {
 
 	/**
 	 * An array of properties for projectiles at different power levels,
-	 * with each entry containing the projectile's size, velocity, and hitbox size for that power level.
+	 * with each entry containing the projectile's size, velocity, and hitbox dimensions
+	 * for that power level.
 	 */
 	private static final ProjectileProperties[] PROPERTIES = {
 			new ProjectileProperties(50, 50, 6, 50, 10),       // Power Level 1
@@ -97,34 +100,14 @@ public class UserProjectile extends Projectile {
 
 	/**
 	 * Updates the projectile's state based on its current power level.
-	 * This includes updating its velocity, hitbox size, and image size.
+	 * This includes updating its velocity, hitbox size, image size, and appearance.
 	 */
 	public void updateProjectileState() {
 		ProjectileProperties properties = PROPERTIES[powerLevel - 1];
 		setVelocity(properties.velocity);
 		setHitboxSize(properties.hitboxWidth, properties.hitboxHeight);
 		setImageSize(properties.imageWidth, properties.imageHeight);
-
-		// Set the image based on the power level
-		switch (powerLevel) {
-			case 1:
-				setImage("userfire_level1.png");
-				break;
-			case 2:
-				setImage("userfire_level2.png");
-				break;
-			case 3:
-				setImage("userfire_level3.png");
-				break;
-			case 4:
-				setImage("userfire_level4.png");
-				break;
-			case 5:
-				setImage("userfire_level5.png");
-				break;
-			default:
-				System.out.println("Invalid power level: " + powerLevel);
-		}
+		setImage("userfire_level" + powerLevel + ".png");
 	}
 
 	/**
@@ -166,13 +149,33 @@ public class UserProjectile extends Projectile {
 	}
 
 	/**
+	 * Moves the projectile horizontally based on its velocity.
+	 *
+	 * @param velocity the horizontal velocity to move the projectile by
+	 */
+	private void moveHorizontally(int velocity) {
+		setTranslateX(getTranslateX() + velocity);
+	}
+
+	/**
 	 * Inner class that represents the properties of a projectile at different power levels.
+	 * Each instance holds data for a specific power level, including the image size,
+	 * velocity, and hitbox dimensions.
 	 */
 	private static class ProjectileProperties {
+		/** The width of the projectile's image in pixels. */
 		final int imageWidth;
+
+		/** The height of the projectile's image in pixels. */
 		final int imageHeight;
+
+		/** The velocity of the projectile. */
 		final int velocity;
+
+		/** The width of the projectile's hitbox in pixels. */
 		final double hitboxWidth;
+
+		/** The height of the projectile's hitbox in pixels. */
 		final double hitboxHeight;
 
 		/**
@@ -191,14 +194,5 @@ public class UserProjectile extends Projectile {
 			this.hitboxWidth = hitboxWidth;
 			this.hitboxHeight = hitboxHeight;
 		}
-	}
-
-	/**
-	 * Moves the projectile horizontally based on its velocity.
-	 *
-	 * @param velocity the horizontal velocity to move the projectile by
-	 */
-	private void moveHorizontally(int velocity) {
-		setTranslateX(getTranslateX() + velocity);
 	}
 }

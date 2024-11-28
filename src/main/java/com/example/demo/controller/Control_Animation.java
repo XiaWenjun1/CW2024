@@ -16,10 +16,11 @@ import javafx.util.Duration;
  * It manages the movement and firing of the plane, bullets, and enemies, as well as their animations.
  */
 public class Control_Animation {
+
     /**
      * The speed at which the plane moves across the screen.
      */
-    private double planeSpeed = 5;
+    private double planeSpeed;
 
     /**
      * The current X position of the plane.
@@ -29,27 +30,28 @@ public class Control_Animation {
     /**
      * The speed at which bullets move across the screen.
      */
-    private double bulletSpeed = 10;
+    private double bulletSpeed;
 
     /**
      * A flag indicating whether the user's bullet is visible on the screen.
      */
-    private boolean bulletVisible = false;
+    private boolean bulletVisible;
 
     /**
      * A flag indicating whether the enemy's bullet is visible on the screen.
      */
-    private boolean enemyBulletVisible = false;
+    private boolean enemyBulletVisible;
 
     /**
      * A flag indicating whether the boss's bullet is visible on the screen.
      */
-    private boolean bossBulletVisible = false;
+    private boolean bossBulletVisible;
 
     /**
      * ImageView for the background of the game.
      */
     @FXML private ImageView backgroundImageView;
+
     /**
      * ImageView for the user's plane.
      */
@@ -114,6 +116,32 @@ public class Control_Animation {
      * PathTransition for animating the boss's movement.
      */
     private PathTransition bossPathTransition;
+
+    /**
+     * Default constructor for the Control_Animation class.
+     * <p>
+     * This constructor initializes all essential fields of the controller to their default values,
+     * ensuring the class is in a ready state for use. It sets initial speeds for the plane and bullets,
+     * initializes visibility flags for bullets, and sets all animation timelines and path transitions to null.
+     * These default values provide a clean starting point for animation control in the game.
+     */
+    public Control_Animation() {
+        this.planeSpeed = 5;
+        this.bulletSpeed = 10;
+        this.planeXPosition = 0;
+        this.bulletVisible = false;
+        this.enemyBulletVisible = false;
+        this.bossBulletVisible = false;
+
+        this.planeTimeline = null;
+        this.bulletTimeline = null;
+        this.bulletMovementTimeline = null;
+        this.enemyBulletTimeline = null;
+        this.bossBulletTimeline = null;
+
+        this.enemyPathTransition = null;
+        this.bossPathTransition = null;
+    }
 
     /**
      * Initializes the controller by loading images, setting element sizes, and starting animations.
@@ -309,7 +337,7 @@ public class Control_Animation {
             path.getElements().add(new MoveTo(1500, -200));
             path.getElements().add(new CubicCurveTo(1084, 100, 868, 467, 650, 900));
 
-            enemyPathTransition = new PathTransition(Duration.seconds(30), path, enemyImageView);
+            enemyPathTransition = new PathTransition(Duration.seconds(10), path, enemyImageView);
             enemyPathTransition.setCycleCount(PathTransition.INDEFINITE);
             enemyPathTransition.setAutoReverse(false);
             enemyPathTransition.play();
@@ -325,7 +353,7 @@ public class Control_Animation {
             path.getElements().add(new MoveTo(1500, 900));
             path.getElements().add(new CubicCurveTo(1200, 600, 650, 300, -200, 200));
 
-            bossPathTransition = new PathTransition(Duration.seconds(25), path, bossImageView);
+            bossPathTransition = new PathTransition(Duration.seconds(10), path, bossImageView);
             bossPathTransition.setCycleCount(PathTransition.INDEFINITE);
             bossPathTransition.setAutoReverse(false);
             bossPathTransition.play();

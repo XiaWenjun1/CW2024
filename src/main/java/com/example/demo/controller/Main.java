@@ -13,6 +13,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     /**
+     * Default constructor for the Main class.
+     * Initializes the application.
+     */
+    public Main() {
+        // Default constructor, nothing to initialize here.
+    }
+
+    /**
      * The main entry point for the JavaFX application.
      * It initializes the primary stage, loads the main FXML layout, and sets the scene for the game.
      *
