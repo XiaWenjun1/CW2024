@@ -74,7 +74,7 @@ public class ScoreBoard extends HBox {
      */
     private Label createKillInfoLabel() {
         Label label = new Label("Kills: " + currentKills + " / " + targetKills);
-        label.setStyle("-fx-font-size: 20px; -fx-text-fill: black; -fx-font-weight: bold;");
+        label.setStyle("-fx-font-size: 20px; -fx-text-fill: White; -fx-font-weight: bold;");
         return label;
     }
 

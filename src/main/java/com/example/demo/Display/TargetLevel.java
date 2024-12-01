@@ -33,7 +33,7 @@ public class TargetLevel extends Pane {
      * The style string applied to the hint label.
      * It defines the font size, color, and weight for the hint text.
      */
-    private static final String HINT_STYLE = "-fx-font-size: 20px; -fx-text-fill: black; -fx-font-weight: bold";
+    private static final String HINT_STYLE = "-fx-font-size: 20px; -fx-text-fill: White; -fx-font-weight: bold";
 
     // Label to display the hint message
     /**

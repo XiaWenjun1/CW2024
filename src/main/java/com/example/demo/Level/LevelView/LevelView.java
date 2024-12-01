@@ -6,51 +6,15 @@ import com.example.demo.Display.WinImage;
 import javafx.scene.Group;
 
 /**
- * Represents the view layer of the level, responsible for displaying hearts, win and game over images,
- * and updating the UI as the game progresses.
- * <p>
- * This class manages and displays the UI elements related to the game's status, including heart icons
- * (representing the player's health), the win image (shown when the player wins), and the game over image
- * (shown when the player loses). It also provides methods to update and remove hearts based on the player's health.
- * </p>
+ * Represents the view layer of the level in the game, responsible for managing and displaying various UI elements
+ * such as heart icons (representing the player's health), win and game over images, and updating the UI as the game progresses.
+ * This class is responsible for displaying important game status elements, including:
+ * - Heart icons that represent the player's current health.
+ * - A win image displayed when the player successfully completes the level.
+ * - A game over image shown when the player loses the game.
+ * It also provides methods to dynamically update the UI elements, such as adding or removing hearts based on the player's health.
  */
 public class LevelView {
-
-	/**
-	 * The X position of the heart display on the screen.
-	 * This constant defines where the heart display (representing the player's health) will be positioned horizontally.
-	 */
-	private static final double HEART_DISPLAY_X_POSITION = 5;
-
-	/**
-	 * The Y position of the heart display on the screen.
-	 * This constant defines where the heart display (representing the player's health) will be positioned vertically.
-	 */
-	private static final double HEART_DISPLAY_Y_POSITION = 25;
-
-	/**
-	 * The X position of the win image on the screen.
-	 * This constant defines where the win image will be positioned horizontally when the player wins.
-	 */
-	private static final int WIN_IMAGE_X_POSITION = 355;
-
-	/**
-	 * The Y position of the win image on the screen.
-	 * This constant defines where the win image will be positioned vertically when the player wins.
-	 */
-	private static final int WIN_IMAGE_Y_POSITION = 175;
-
-	/**
-	 * The X position of the game over image on the screen.
-	 * This constant defines where the game over image will be positioned horizontally when the player loses.
-	 */
-	private static final int LOSS_SCREEN_X_POSITION = -160;
-
-	/**
-	 * The Y position of the game over image on the screen.
-	 * This constant defines where the game over image will be positioned vertically when the player loses.
-	 */
-	private static final int LOSS_SCREEN_Y_POSISITION = -375;
 
 	/**
 	 * The root container of the scene where the UI elements will be added.
@@ -60,67 +24,57 @@ public class LevelView {
 
 	/**
 	 * The image displayed when the player wins the level.
-	 * This represents the victory condition and shows an image indicating that the player has won the game.
+	 * This image represents the victory condition and indicates that the player has won the game.
 	 */
 	private final WinImage winImage;
 
 	/**
 	 * The image displayed when the player loses the game.
-	 * This represents the game over condition and shows an image indicating that the player has lost the game.
+	 * This image represents the game over condition and indicates that the player has lost the game.
 	 */
 	private final GameOverImage gameOverImage;
 
 	/**
 	 * The display for the player's hearts, representing the player's health.
-	 * This object manages the heart icons that represent the player's current health.
+	 * This object manages the heart icons that represent the player's current health status.
 	 */
 	private final HeartDisplay heartDisplay;
 
 	/**
 	 * Constructs a LevelView instance with the specified root group and number of hearts to display.
-	 * This view manages the display of heart icons, win image, and game over image.
-	 * <p>
-	 * The constructor initializes the heart display, win image, and game over image based on the provided
+	 * This constructor initializes the heart display, win image, and game over image based on the provided
 	 * root container and the number of hearts the player starts with.
-	 * </p>
 	 *
 	 * @param root the root container of the scene where the UI elements will be added.
-	 * @param heartsToDisplay the initial number of hearts to be displayed.
+	 * @param heartsToDisplay the initial number of hearts to be displayed, representing the player's health.
 	 */
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
-		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
-		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSISITION);
+		this.heartDisplay = new HeartDisplay(heartsToDisplay);
+		this.winImage = new WinImage();
+		this.gameOverImage = new GameOverImage();
 	}
 
 	/**
 	 * Displays the heart display on the screen, showing the current number of hearts.
-	 * <p>
 	 * This method adds the heart display to the root container so that the player's health (represented
 	 * by heart icons) is visible in the UI.
-	 * </p>
 	 */
 	public void showHeartDisplay() {
 		root.getChildren().add(heartDisplay.getContainer());
 	}
 
 	/**
-	 * Displays the win image on the screen when the player wins the level.
-	 * <p>
-	 * This method adds the win image to the root container and calls the method to show the win image.
-	 * </p>
+	 * Displays the win image on the screen when the player wins the game.
+	 * This method adds the win image to the root container to signal the end of the game.
 	 */
 	public void showWinImage() {
 		root.getChildren().add(winImage);
-		winImage.showWinImage();
 	}
 
 	/**
 	 * Displays the game over image on the screen when the player loses the game.
-	 * <p>
 	 * This method adds the game over image to the root container to signal the end of the game.
-	 * </p>
 	 */
 	public void showGameOverImage() {
 		root.getChildren().add(gameOverImage);
@@ -128,11 +82,9 @@ public class LevelView {
 
 	/**
 	 * Removes hearts from the display when the player's health decreases.
-	 * <p>
 	 * This method adjusts the heart display by removing heart icons based on the remaining number of hearts.
-	 * </p>
-	 *
 	 * @param heartsRemaining the current number of hearts to display after removal.
+	 *                         This represents the player's remaining health.
 	 */
 	public void removeHearts(int heartsRemaining) {
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
@@ -144,11 +96,9 @@ public class LevelView {
 
 	/**
 	 * Adds hearts to the display when the player's health increases.
-	 * <p>
 	 * This method adjusts the heart display by adding heart icons based on the remaining number of hearts.
-	 * </p>
-	 *
 	 * @param heartsRemaining the current number of hearts to display after addition.
+	 *                         This represents the player's current health.
 	 */
 	public void addHearts(int heartsRemaining) {
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();

@@ -6,7 +6,7 @@
 
 <AnchorPane fx:id="pauseMenuPane" prefWidth="1300" prefHeight="800"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.Control_PauseMenu"
+            fx:controller="com.example.demo.Controller.Control_PauseMenu"
             stylesheets="@Style.css">
 
     <VBox alignment="CENTER" spacing="30"

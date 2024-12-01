@@ -1,6 +1,8 @@
 package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
+import com.example.demo.Actor.HeavyEnemy.HeavyEnemy;
+import com.example.demo.Actor.SpeedEnemy.SpeedEnemy;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelThree;
 import com.example.demo.Actor.Boss.ParentBoss.Boss;
@@ -152,12 +154,30 @@ public class LevelThree extends LevelParent {
     }
 
     /**
-     * Spawns enemy units with a specified probability and adds them to the level.
-     * The boss is added to the level once certain conditions are met.
+     * Spawns enemy units and introduces a boss under specific conditions.
      * <p>
-     * This method ensures that a set number of enemy units are spawned based on the kill target.
-     * Once the kill target is reached, the boss is added to the level.
+     * This method handles the spawning of standard enemy units and the introduction of a boss enemy:
      * </p>
+     * <ul>
+     *     <li>While the user's current kill count is below the kill target (<code>KILLS_TO_ADVANCE</code>),
+     *     it spawns standard enemy units based on the defined spawn probability
+     *     (<code>ENEMY_SPAWN_PROBABILITY</code>).</li>
+     *     <li>Enemy units are chosen randomly from three types:</li>
+     *     <ul>
+     *         <li>40% chance to spawn a {@link EnemyPlane}, a balanced enemy type.</li>
+     *         <li>30% chance to spawn a {@link SpeedEnemy}, a faster but less durable enemy.</li>
+     *         <li>30% chance to spawn a {@link HeavyEnemy}, a slower but more durable enemy.</li>
+     *     </ul>
+     *     <li>Once the player reaches the kill target, the boss enemy is added to the level.
+     *     The boss is added only once, ensuring it appears under the correct conditions.</li>
+     * </ul>
+     * <p>
+     * All enemy units are positioned randomly within a vertical range defined by
+     * <code>getEnemyMinimumYPosition()</code> and <code>getEnemyMaximumYPosition()</code>.
+     * </p>
+     *
+     * @implNote The method ensures that the number of enemy units in the level does not exceed
+     * <code>TOTAL_ENEMIES</code> at any given time.
      */
     @Override
     protected void spawnEnemyUnits() {
@@ -168,7 +188,16 @@ public class LevelThree extends LevelParent {
                     double minY = getEnemyMinimumYPosition();
                     double maxY = getEnemyMaximumYPosition();
                     double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
-                    ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+                    ActiveActorDestructible newEnemy;
+
+                    double randomValue = Math.random();
+                    if (randomValue < 0.4) {
+                        newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+                    } else if (randomValue < 0.7) {
+                        newEnemy = new SpeedEnemy(getScreenWidth(), newEnemyInitialYPosition);
+                    } else {
+                        newEnemy = new HeavyEnemy(getScreenWidth(), newEnemyInitialYPosition);
+                    }
                     addEnemyUnit(newEnemy);
                 }
             }

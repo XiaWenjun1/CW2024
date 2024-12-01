@@ -1,6 +1,8 @@
 package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
+import com.example.demo.Actor.HeavyEnemy.HeavyEnemy;
+import com.example.demo.Actor.SpeedEnemy.SpeedEnemy;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelOne;
 import com.example.demo.Actor.EnemyPlane.EnemyPlane;
@@ -96,6 +98,15 @@ public class LevelOne extends LevelParent {
 	 * <p>
 	 * This method adds new enemies to the level based on the spawn probability until the total number of enemies
 	 * reaches the specified limit (TOTAL_ENEMIES). Enemies are spawned within a vertical range defined by minY and maxY.
+	 * The type of enemy spawned is determined randomly:
+	 * </p>
+	 * <ul>
+	 *     <li>40% chance to spawn a {@link EnemyPlane}, a basic enemy plane with standard speed and health.</li>
+	 *     <li>30% chance to spawn a {@link SpeedEnemy}, a fast-moving enemy plane with lower health.</li>
+	 *     <li>30% chance to spawn a {@link HeavyEnemy}, a slow-moving but heavily armored enemy plane.</li>
+	 * </ul>
+	 * <p>
+	 * The position of each enemy is determined randomly within the vertical range [minY, maxY].
 	 * </p>
 	 */
 	@Override
@@ -106,7 +117,18 @@ public class LevelOne extends LevelParent {
 				double minY = getEnemyMinimumYPosition();
 				double maxY = getEnemyMaximumYPosition();
 				double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
-				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+
+				ActiveActorDestructible newEnemy;
+
+				double randomValue = Math.random();
+				if (randomValue < 0.4) {
+					newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+				} else if (randomValue < 0.7) {
+					newEnemy = new SpeedEnemy(getScreenWidth(), newEnemyInitialYPosition);
+				} else {
+					newEnemy = new HeavyEnemy(getScreenWidth(), newEnemyInitialYPosition);
+				}
+
 				addEnemyUnit(newEnemy);
 			}
 		}

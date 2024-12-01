@@ -5,7 +5,7 @@
  *
  * <p>Package Structure:</p>
  * <ul>
- *   <li>{@code com.example.demo.controller}: Manages the game control logic.</li>
+ *   <li>{@code com.example.demo.Controller}: Manages the game control logic.</li>
  *   <li>{@code com.example.demo.Level}: Handles level-related logic, including level management and views.</li>
  *   <li>{@code com.example.demo.Actor}: Defines game characters and their behaviors, such as player and enemy planes.</li>
  *   <li>{@code com.example.demo.Object}: Manages game objects and related utilities.</li>
@@ -33,9 +33,9 @@ module com.example.demo {
 
     // Opens packages to javafx.fxml for reflection-based FXML loading
     /**
-     * Opens the {@code com.example.demo.controller} package to JavaFX FXML for loading controller classes.
+     * Opens the {@code com.example.demo.Controller} package to JavaFX FXML for loading controller classes.
      */
-    opens com.example.demo.controller to javafx.fxml;
+    opens com.example.demo.Controller to javafx.fxml;
     /**
      * Opens the {@code com.example.demo.Level} package to JavaFX FXML for loading level management classes.
      */
@@ -91,9 +91,9 @@ module com.example.demo {
      */
     exports com.example.demo.Actor.UserPlane;
     /**
-     * Exports the {@code com.example.demo.controller} package for game control-related logic.
+     * Exports the {@code com.example.demo.Controller} package for game control-related logic.
      */
-    exports com.example.demo.controller;
+    exports com.example.demo.Controller;
     /**
      * Exports the {@code com.example.demo.Display} package for game display management.
      */

@@ -153,6 +153,10 @@ public class    UserInputManager {
      * @param event the mouse event triggered
      */
     private void handleMouseDragged(MouseEvent event) {
+        if (gameIsOver) {
+            return;
+        }
+
         if (isDragging) {
             double deltaX = event.getSceneX() - initialMouseX;
             double deltaY = event.getSceneY() - initialMouseY;
@@ -228,27 +232,42 @@ public class    UserInputManager {
     }
 
     /**
-     * Fires a projectile from the user plane if the game is not paused and the cooldown has passed.
-     * This method checks if the game is paused or if a cooldown period is active. If either condition
-     * is true, it returns early and does not fire a projectile. If neither condition is met, it triggers
-     * the user's plane to fire projectiles, adds them to the game root for rendering, and starts a cooldown
-     * period to prevent rapid firing. It also plays the shoot sound effect.
+     * Fires a projectile from the user's plane if the game is not paused,
+     * a cooldown period is not active, and the game is not over.
+     *
+     * <p>This method ensures that projectiles are only fired under appropriate
+     * game conditions:
+     * <ul>
+     *   <li>The game must not be paused.</li>
+     *   <li>The cooldown period must have elapsed since the last shot.</li>
+     *   <li>The game must still be running (not in an end state).</li>
+     * </ul>
+     *
+     * <p>If all conditions are met, the user's plane fires one or more projectiles,
+     * which are added to the game root for rendering and to the list of active
+     * user projectiles. Additionally, it triggers a cooldown period to prevent
+     * excessive firing and plays a sound effect to indicate the action.
      */
     private void fireProjectile() {
-        if (isPaused || isOnCooldown) {
+        // Return early if the game is paused, a cooldown is active, or the game is over
+        if (isPaused || isOnCooldown || gameIsOver) {
             return;
         }
 
+        // Fire projectiles from the user's plane
         List<ActiveActorDestructible> projectiles = user.fireProjectiles();
         if (projectiles != null) {
+            // Add each projectile to the game root and track it in the active list
             projectiles.forEach(projectile -> {
                 root.getChildren().add(projectile);
                 userProjectiles.add(projectile);
             });
 
+            // Play the shooting sound effect
             ShootAudioManager.triggerShootAudio();
         }
 
+        // Start the cooldown timer to prevent rapid firing
         startCooldown();
     }
 

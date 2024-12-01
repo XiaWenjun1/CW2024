@@ -1,7 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Level.LevelParent;
-import com.example.demo.controller.Control_EndGameMenu;
+import com.example.demo.Controller.Control_EndGameMenu;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -13,56 +13,64 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 /**
- * Manages the end game menu and transitions when the player wins or loses the game.
- * It handles showing win/lose images and transitions to the end game menu.
+ * Manages the end game process, including showing win/lose images and transitioning
+ * to the end game menu. This class ensures the game can only enter the end state once
+ * to avoid redundant processing.
  */
 public class EndGameMenuManager {
 
-    /** The parent level that contains the game and view. */
+    /** Reference to the parent level that contains game elements and views. */
     private LevelParent levelParent;
 
+    /** Flag to ensure the end game logic is executed only once. */
+    private boolean isGameOver = false;
+
     /**
-     * Constructor that initializes the EndGameMenuManager with the given LevelParent.
+     * Constructs an EndGameMenuManager tied to a specific LevelParent.
      *
-     * @param levelParent the parent level that contains the game and view
+     * @param levelParent the parent level that contains the game logic and visuals.
      */
     public EndGameMenuManager(LevelParent levelParent) {
         this.levelParent = levelParent;
     }
 
     /**
-     * Handles the actions that occur when the player wins the game.
-     * This includes showing a win image and transitioning to the end game menu after a short delay.
+     * Handles the actions when the player wins the game.
+     * Displays a "win" image and transitions to the end game menu after a delay.
      */
     public void winGame() {
+        if (isGameOver) return; // Prevent multiple calls
+        isGameOver = true;
+
         Stage currentStage = getCurrentStage();
 
         Platform.runLater(() -> {
-            // Clean up the current game and show the win image
-            levelParent.cleanUp();
+            // Display the win image
             levelParent.getLevelView().showWinImage();
 
-            // Pause for 1 second before showing the end game menu
-            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            // Transition to the end game menu after a 2-second delay
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(event -> showEndGameMenu(currentStage, true));
             delay.play();
         });
     }
 
     /**
-     * Handles the actions that occur when the player loses the game.
-     * This includes showing a game over image and transitioning to the end game menu after a short delay.
+     * Handles the actions when the player loses the game.
+     * Displays a "game over" image and transitions to the end game menu after a delay.
      */
     public void loseGame() {
+        if (isGameOver) return; // Prevent multiple calls
+        isGameOver = true;
+
         Stage currentStage = getCurrentStage();
 
         Platform.runLater(() -> {
-            // Clean up the current game and show the game over image
-            levelParent.cleanUp();
+            // Display the game over image
             levelParent.getLevelView().showGameOverImage();
 
-            // Pause for 1 second before showing the end game menu
-            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            // Transition to the end game menu after a 2-second delay
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(event -> showEndGameMenu(currentStage, false));
             delay.play();
         });
@@ -70,8 +78,9 @@ public class EndGameMenuManager {
 
     /**
      * Retrieves the current stage from the LevelParent.
+     * The stage is required to update the scene for the end game menu.
      *
-     * @return the current stage of the application, or null if not found
+     * @return the current stage of the application, or {@code null} if not found.
      */
     private Stage getCurrentStage() {
         Scene currentScene = levelParent.getRoot().getScene();
@@ -82,22 +91,23 @@ public class EndGameMenuManager {
     }
 
     /**
-     * Loads and shows the end game menu scene based on the result (win or lose).
+     * Loads and displays the end game menu.
+     * The menu is configured differently depending on whether the player won or lost.
      *
-     * @param stage the current stage where the end game menu should be displayed
-     * @param isWin boolean indicating whether the player won or lost
+     * @param stage the current stage where the end game menu will be displayed.
+     * @param isWin {@code true} if the player won the game, {@code false} otherwise.
      */
     private void showEndGameMenu(Stage stage, boolean isWin) {
         try {
-            // Load the FXML layout for the end game menu
+            // Load the FXML file for the end game menu layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml"));
             Parent endGameRoot = loader.load();
 
-            // Initialize the controller for the end game menu
+            // Initialize the controller with the LevelParent reference
             Control_EndGameMenu controller = loader.getController();
             controller.initialize(levelParent);
 
-            // Set the new scene and show it
+            // Set the new scene and display the end game menu
             Scene endGameScene = new Scene(endGameRoot);
             stage.setScene(endGameScene);
             stage.show();

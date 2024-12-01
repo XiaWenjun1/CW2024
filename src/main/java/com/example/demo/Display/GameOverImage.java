@@ -4,33 +4,55 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * A custom class for displaying the "Game Over" image on the screen.
- * This class extends `ImageView` and positions the image at a given (x, y) coordinate.
- * It is used to show a "Game Over" screen when the game ends.
+ * A custom class that displays a "Game Over" image on the screen.
+ * This class extends `ImageView` and positions the image at a specified (x, y) coordinate.
+ * It is typically used to show a "Game Over" screen when the game ends.
+ * The image is loaded from the resources directory and displayed at a fixed position on the screen.
+ * The image will also be resized to a fixed width and height to fit the screen layout.
  */
 public class GameOverImage extends ImageView {
 
 	/**
-	 * The path to the Game Over image file.
-	 * This image is used to display when the game ends.
+	 * The X position of the "Game Over" image on the screen.
+	 * This constant defines the horizontal position where the image will be placed when the game ends.
+	 */
+	private static final int X_POSITION = 355;
+
+	/**
+	 * The Y position of the "Game Over" image on the screen.
+	 * This constant defines the vertical position where the image will be placed when the game ends.
+	 */
+	private static final int Y_POSITION = 140;
+
+	/**
+	 * The height to which the "Game Over" image will be resized.
+	 * This constant defines the height of the image displayed on the screen.
+	 */
+	private static final int HEIGHT = 500;
+
+	/**
+	 * The width to which the "Game Over" image will be resized.
+	 * This constant defines the width of the image displayed on the screen.
+	 */
+	private static final int WIDTH = 600;
+
+	/**
+	 * The path to the "Game Over" image file.
+	 * This image is displayed when the game ends, indicating that the player has lost.
+	 * The image is loaded from the resources directory of the application.
 	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
 
 	/**
-	 * Constructs a new GameOverImage and positions it at the specified coordinates.
-	 *
-	 * This constructor loads the "Game Over" image from resources and sets its position
-	 * on the screen based on the provided x and y coordinates.
-	 *
-	 * @param xPosition the x-coordinate where the Game Over image will be displayed
-	 * @param yPosition the y-coordinate where the Game Over image will be displayed
+	 * Constructs a `GameOverImage` object.
+	 * This constructor loads the "Game Over" image, sets its position on the screen,
+	 * and resizes it to the predefined width and height.
 	 */
-	public GameOverImage(double xPosition, double yPosition) {
-		// Load the image from the resources and set it as the image for this ImageView
+	public GameOverImage() {
 		setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
-
-		// Set the layout position of the image on the screen
-		setLayoutX(xPosition);
-		setLayoutY(yPosition);
+		setLayoutX(X_POSITION);
+		setLayoutY(Y_POSITION);
+		setFitHeight(HEIGHT);
+		setFitWidth(WIDTH);
 	}
 }

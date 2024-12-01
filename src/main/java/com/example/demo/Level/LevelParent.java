@@ -324,18 +324,22 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Ends the game with a victory, displaying the win screen to the player.
+	 * Ends the game with a victory, disabling user input, stopping the game loop,
+	 * and displaying the victory screen.
 	 */
 	public void winGame() {
 		userInputManager.setGameIsOver(true);
+		timeline.stop();
 		endGameMenuManager.winGame();
 	}
 
 	/**
-	 * Ends the game with a defeat, displaying the loss screen to the player.
+	 * Ends the game with a defeat, disabling user input, stopping the game loop,
+	 * and displaying the defeat screen.
 	 */
 	public void loseGame() {
 		userInputManager.setGameIsOver(true);
+		timeline.stop();
 		endGameMenuManager.loseGame();
 	}
 

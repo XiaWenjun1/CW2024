@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ShootAudioManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/HeavyEnemy/HeavyEnemy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/HeavyEnemy/HeavyEnemyProjectile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/SpeedEnemy/SpeedEnemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/allclasses-index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/allpackages-index.html" afterDir="false" />
@@ -61,6 +63,7 @@
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/EndGameMenuManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/EndGameMenuManager.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/ExplosionEffectManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/ExplosionEffectManager.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/PauseMenuManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/PauseMenuManager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/ShootAudioManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/ShootAudioManager.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/UserInputManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/UserInputManager.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/package-summary.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/Level/LevelManager/package-tree.html" afterDir="false" />
@@ -97,6 +100,7 @@
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/controller/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/com/example/demo/controller/package-tree.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/com.example.demo/module-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/com.example.demo/module-summary.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/element-list" beforeDir="false" afterPath="$PROJECT_DIR$/doc/element-list" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/help-doc.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/index-files/index-1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/index-files/index-10.html" afterDir="false" />
@@ -123,13 +127,40 @@
       <change beforePath="$PROJECT_DIR$/doc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/index-files/index-8.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/index-files/index-9.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/member-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/doc/member-search-index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/overview-tree.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/type-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/doc/type-search-index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/GameOverImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/GameOverImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/HeartDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/HeartDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/ScoreBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/ScoreBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/TargetLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/TargetLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/WinImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Display/WinImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/PauseMenuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/PauseMenuManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/UserInputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/UserInputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelOne.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Setting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Setting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelThree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelView/LevelView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/AudioManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/AudioManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_Animation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Control.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_Control.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_EndGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_EndGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_PauseMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_PauseMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Setting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_Setting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Control_Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Control_Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Controller/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/images/background4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Animation/Animation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Animation/Animation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Control/Control.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Control/Control.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Main/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Main/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/PauseMenu/PauseMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/PauseMenu/PauseMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Setting/Setting.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/layout/Setting/Setting.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -164,6 +195,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2pNSDJ8hN70SlPvVFclqMtxY6wm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -178,7 +212,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;test&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/Java/javafx-sdk-19.0.2/lib&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Fakegray/Desktop/DMS/CW2024&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -187,15 +221,16 @@
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;settings.editor.splitter.proportion&quot;: &quot;0.25688073&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.CW2024.executor&quot;: &quot;Run&quot;,
     &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   }
 }</component>
   <component name="RunManager">
     <configuration name="CW2024" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.example.demo.controller.Main" />
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.Controller.Main" />
       <module name="CW2024" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -236,6 +271,18 @@
       <workItem from="1732700671403" duration="3058000" />
       <workItem from="1732777982687" duration="857000" />
       <workItem from="1732779139586" duration="7360000" />
+      <workItem from="1732786810423" duration="778000" />
+      <workItem from="1732842506747" duration="2061000" />
+      <workItem from="1732856129279" duration="1131000" />
+      <workItem from="1732870534743" duration="9764000" />
+      <workItem from="1732928299369" duration="8000" />
+      <workItem from="1732928312030" duration="9796000" />
+      <workItem from="1732948465992" duration="13000" />
+      <workItem from="1732957032086" duration="1337000" />
+      <workItem from="1732959665942" duration="6365000" />
+      <workItem from="1732977602077" duration="270000" />
+      <workItem from="1733014000638" duration="4828000" />
+      <workItem from="1733019463338" duration="3596000" />
     </task>
     <servers />
   </component>
