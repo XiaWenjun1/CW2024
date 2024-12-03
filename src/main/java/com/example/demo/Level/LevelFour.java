@@ -1,10 +1,11 @@
 package com.example.demo.Level;
 
+import com.example.demo.Actor.Plane.Boss.Boss;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelFour;
-import com.example.demo.Actor.Boss.MutationBoss1.MutationBoss1;
-import com.example.demo.Actor.Boss.MutationBoss2.MutationBoss2;
-import com.example.demo.Actor.Boss.MutationBoss3.MutationBoss3;
+import com.example.demo.Actor.Plane.MutationBoss1;
+import com.example.demo.Actor.Plane.MutationBoss2;
+import com.example.demo.Actor.Plane.MutationBoss3;
 
 /**
  * Represents the fourth level of the game.
@@ -210,4 +211,28 @@ public class LevelFour extends LevelParent {
         levelView = new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH);
         return levelView;
     }
+
+    /**
+     * Returns the first boss of this level.
+     * This boss is represented by {@link MutationBoss1}.
+     *
+     * @return the first boss (boss1) of this level.
+     */
+    public MutationBoss1 getBoss1() { return boss1; }
+
+    /**
+     * Returns the second boss of this level.
+     * This boss is represented by {@link MutationBoss2}.
+     *
+     * @return the second boss (boss2) of this level.
+     */
+    public MutationBoss2 getBoss2() { return boss2; }
+
+    /**
+     * Returns the third boss of this level.
+     * This boss is represented by {@link MutationBoss3}.
+     *
+     * @return the third boss (boss3) of this level.
+     */
+    public MutationBoss3 getBoss3() { return boss3; }
 }

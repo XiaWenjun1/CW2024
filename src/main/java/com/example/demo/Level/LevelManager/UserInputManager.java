@@ -1,7 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Actor.UserPlane.UserPlane;
+import com.example.demo.Actor.Plane.UserPlane;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.scene.Group;
@@ -19,7 +19,7 @@ import java.util.Set;
  * Manages user input for controlling the player's plane and handling interactions
  * such as movement, shooting, and pausing the game.
  */
-public class    UserInputManager {
+public class UserInputManager {
     /** The game loop that continuously updates user movement and actions. */
     private AnimationTimer gameLoop;
 
@@ -264,7 +264,7 @@ public class    UserInputManager {
             });
 
             // Play the shooting sound effect
-            ShootAudioManager.triggerShootAudio();
+            AudioManager.getInstance().triggerShootAudio();
         }
 
         // Start the cooldown timer to prevent rapid firing

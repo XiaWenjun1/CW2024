@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.demo.Controller.Control_Setting"
+            fx:controller="com.example.demo.Ui.Control_Setting"
             stylesheets="@Style.css"
             fx:id="settingsPane">
 
@@ -25,4 +25,6 @@
     <Text layoutX="620" layoutY="360" text="Game Sound" styleClass="text-control"/>
     <CheckBox fx:id="gsToggleExplosion" layoutX="550" layoutY="380" text="Explosion Sound" styleClass="text-control"/>
     <CheckBox fx:id="gsToggleShoot" layoutX="550" layoutY="430" text="Shoot Sound" styleClass="text-control"/>
+    <CheckBox fx:id="gsToggleGetObject" layoutX="550" layoutY="480" text="Get Object Sound" styleClass="text-control"/>
+    <CheckBox fx:id="gsToggleUserDamage" layoutX="550" layoutY="530" text="User Damage Sound" styleClass="text-control"/>
 </AnchorPane>

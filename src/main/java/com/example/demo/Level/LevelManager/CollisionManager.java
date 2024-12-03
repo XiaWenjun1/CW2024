@@ -1,7 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Actor.UserPlane.UserPlane;
+import com.example.demo.Actor.Plane.UserPlane;
 
 import java.util.List;
 
@@ -67,7 +67,8 @@ public class CollisionManager {
 
     /**
      * Handles collisions between the user plane and ammo boxes.
-     * If a collision is detected, it triggers an upgrade for the user's projectiles.
+     * If a collision is detected, it triggers an upgrade for the user's projectiles
+     * and plays an audio cue to indicate the pickup.
      *
      * @param userPlane the user's plane
      * @param ammoBoxes the list of ammo boxes
@@ -76,6 +77,7 @@ public class CollisionManager {
         for (ActiveActorDestructible ammoBox : ammoBoxes) {
             if (checkCollision(userPlane, ammoBox)) {
                 handleAmmoBoxPickup(userPlane, ammoBox);
+                AudioManager.getInstance().triggerGetObjectAudio();
             }
         }
     }
@@ -97,7 +99,8 @@ public class CollisionManager {
 
     /**
      * Handles collisions between the user plane and heart items.
-     * If a collision is detected, it triggers an increase in the user's health.
+     * If a collision is detected, it triggers an increase in the user's health
+     * and plays an audio cue to indicate the pickup.
      *
      * @param userPlane the user's plane
      * @param hearts the list of hearts
@@ -106,6 +109,7 @@ public class CollisionManager {
         for (ActiveActorDestructible heart : hearts) {
             if (checkCollision(userPlane, heart)) {
                 handleHeartPickup(userPlane, heart);
+                AudioManager.getInstance().triggerGetObjectAudio();
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Level.LevelParent;
-import com.example.demo.Controller.Control_EndGameMenu;
+import com.example.demo.Ui.Control_EndGameMenu;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -99,6 +99,7 @@ public class EndGameMenuManager {
      */
     private void showEndGameMenu(Stage stage, boolean isWin) {
         try {
+            levelParent.cleanUp();
             // Load the FXML file for the end game menu layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml"));
             Parent endGameRoot = loader.load();
@@ -106,6 +107,11 @@ public class EndGameMenuManager {
             // Initialize the controller with the LevelParent reference
             Control_EndGameMenu controller = loader.getController();
             controller.initialize(levelParent);
+
+            // If the stage is null, create a new Stage
+            if (stage == null) {
+                stage = new Stage();  // Create a new Stage if current one is null
+            }
 
             // Set the new scene and display the end game menu
             Scene endGameScene = new Scene(endGameRoot);

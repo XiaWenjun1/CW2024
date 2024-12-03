@@ -1,6 +1,6 @@
 package com.example.demo.Level.LevelManager;
 
-import com.example.demo.Controller.Control_PauseMenu;
+import com.example.demo.Ui.Control_PauseMenu;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

@@ -1,12 +1,12 @@
 package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Actor.HeavyEnemy.HeavyEnemy;
-import com.example.demo.Actor.SpeedEnemy.SpeedEnemy;
+import com.example.demo.Actor.Plane.HeavyEnemy;
+import com.example.demo.Actor.Plane.SpeedEnemy;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelThree;
-import com.example.demo.Actor.Boss.ParentBoss.Boss;
-import com.example.demo.Actor.EnemyPlane.EnemyPlane;
+import com.example.demo.Actor.Plane.Boss.Boss;
+import com.example.demo.Actor.Plane.EnemyPlane;
 
 /**
  * Represents the third level of the game, where the player faces more enemies and the boss.
@@ -205,9 +205,6 @@ public class LevelThree extends LevelParent {
 
         if (!isBossAdded()) {
             addEnemyUnit(boss);
-            if (!getRoot().getChildren().contains(boss)) {
-                getRoot().getChildren().add(boss);
-            }
             setBossAdded(true);
         }
     }
@@ -289,5 +286,21 @@ public class LevelThree extends LevelParent {
     protected LevelView instantiateLevelView() {
         levelView = new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH, BOSS_HEALTH, 0, KILLS_TO_ADVANCE);
         return levelView;
+    }
+
+    /**
+     * Returns the boss of the current level.
+     *
+     * @return the {@link Boss} object representing the boss of this level.
+     */
+    public Boss getBoss() { return boss; }
+
+    /**
+     * Returns the fully qualified class name of the next level.
+     *
+     * @return the next level's class name.
+     */
+    public String getNextLevel() {
+        return NEXT_LEVEL;
     }
 }

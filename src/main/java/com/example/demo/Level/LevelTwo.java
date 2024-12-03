@@ -2,7 +2,7 @@ package com.example.demo.Level;
 
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelTwo;
-import com.example.demo.Actor.Boss.ParentBoss.Boss;
+import com.example.demo.Actor.Plane.Boss.Boss;
 
 /**
  * Represents the second level of the game, which includes the player, enemies, and the boss.
@@ -156,5 +156,21 @@ public class LevelTwo extends LevelParent {
 	protected LevelView instantiateLevelView() {
 		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, BOSS_HEALTH);
 		return levelView;
+	}
+
+	/**
+	 * Returns the boss of the current level.
+	 *
+	 * @return the {@link Boss} object representing the boss of this level.
+	 */
+	public Boss getBoss() { return boss; }
+
+	/**
+	 * Returns the fully qualified class name of the next level.
+	 *
+	 * @return the next level's class name.
+	 */
+	public String getNextLevel() {
+		return NEXT_LEVEL;
 	}
 }

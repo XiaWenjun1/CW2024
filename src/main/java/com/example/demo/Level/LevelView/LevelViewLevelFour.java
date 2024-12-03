@@ -2,8 +2,8 @@ package com.example.demo.Level.LevelView;
 
 import com.example.demo.Display.ShieldImage;
 import com.example.demo.Display.TargetLevel;
-import com.example.demo.Actor.Boss.ParentBoss.Boss;
-import com.example.demo.Actor.Boss.BossHealthBar;
+import com.example.demo.Actor.Plane.Boss.Boss;
+import com.example.demo.Display.BossHealthBar;
 import javafx.application.Platform;
 import javafx.scene.Group;
 
@@ -134,6 +134,15 @@ public class LevelViewLevelFour extends LevelView {
         double bossPositionX = boss.getLayoutX() + boss.getTranslateX() + 90;
         double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + 80;
         shieldImage.setLayout(bossPositionX, bossPositionY);
+    }
+
+    /**
+     * Retrieves the shield image.
+     *
+     * @return the shield image
+     */
+    protected ShieldImage getShieldImage() {
+        return shieldImage;
     }
 
     /**

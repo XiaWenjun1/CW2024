@@ -5,7 +5,7 @@
 
 <AnchorPane prefWidth="1300" prefHeight="750"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.Controller.Control_EndGameMenu"
+            fx:controller="com.example.demo.Ui.Control_EndGameMenu"
             stylesheets="@Style.css">
 
     <VBox alignment="CENTER" spacing="20" layoutX="325" layoutY="200" styleClass="VBox">

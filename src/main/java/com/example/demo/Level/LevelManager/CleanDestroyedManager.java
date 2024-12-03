@@ -1,8 +1,9 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Object.Boundary;
-import com.example.demo.Actor.FighterPlane;
+import com.example.demo.Actor.Boundary;
+import com.example.demo.Actor.Plane.FighterPlane;
+import com.example.demo.Display.Explosion;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 
@@ -24,7 +25,7 @@ import java.util.function.Consumer;
  * </p>
  *
  * @see com.example.demo.Actor.ActiveActorDestructible
- * @see com.example.demo.Object.Boundary
+ * @see Boundary
  */
 public class CleanDestroyedManager {
     /**
@@ -187,7 +188,7 @@ public class CleanDestroyedManager {
         actors.removeIf(actor -> {
             if (actor.isDestroyed()) {
                 if (actor instanceof FighterPlane) {
-                    ExplosionEffectManager.triggerExplosionEffect(root, (FighterPlane) actor);
+                    Explosion.triggerExplosionEffect(root, (FighterPlane) actor);
                 }
                 removeActorFromScene(actor);
                 return true; // Mark for removal

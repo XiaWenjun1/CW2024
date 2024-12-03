@@ -3,6 +3,7 @@ package com.example.demo.Level.LevelView;
 import com.example.demo.Display.GameOverImage;
 import com.example.demo.Display.HeartDisplay;
 import com.example.demo.Display.WinImage;
+import com.example.demo.Level.LevelManager.AudioManager;
 import javafx.scene.Group;
 
 /**
@@ -81,16 +82,18 @@ public class LevelView {
 	}
 
 	/**
-	 * Removes hearts from the display when the player's health decreases.
-	 * This method adjusts the heart display by removing heart icons based on the remaining number of hearts.
-	 * @param heartsRemaining the current number of hearts to display after removal.
-	 *                         This represents the player's remaining health.
+	 * Updates the heart display when the player's health decreases.
+	 * This method removes heart icons from the display to reflect the player's current health
+	 * and plays an audio cue for each heart removed.
+	 *
+	 * @param heartsRemaining the current number of hearts to display, representing the player's remaining health.
 	 */
 	public void removeHearts(int heartsRemaining) {
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
 		int heartsToRemove = currentNumberOfHearts - heartsRemaining;
 		for (int i = 0; i < heartsToRemove; i++) {
 			heartDisplay.removeHeart();
+			AudioManager.getInstance().triggerUserDamageAudio();
 		}
 	}
 
@@ -106,5 +109,32 @@ public class LevelView {
 		for (int i = 0; i < heartsToAdd; i++) {
 			heartDisplay.addHeart();
 		}
+	}
+
+	/**
+	 * Returns the HeartDisplay object.
+	 *
+	 * @return the HeartDisplay instance.
+	 */
+	public HeartDisplay getHeartDisplay() {
+		return heartDisplay;
+	}
+
+	/**
+	 * Returns the WinImage object.
+	 *
+	 * @return the WinImage instance.
+	 */
+	public WinImage getWinImage() {
+		return winImage;
+	}
+
+	/**
+	 * Returns the GameOverImage object.
+	 *
+	 * @return the GameOverImage instance.
+	 */
+	public GameOverImage getGameOverImage() {
+		return gameOverImage;
 	}
 }

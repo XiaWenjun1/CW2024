@@ -2,8 +2,8 @@ package com.example.demo.Level.LevelView;
 
 import com.example.demo.Display.ShieldImage;
 import com.example.demo.Display.TargetLevel;
-import com.example.demo.Actor.Boss.ParentBoss.Boss;
-import com.example.demo.Actor.Boss.BossHealthBar;
+import com.example.demo.Actor.Plane.Boss.Boss;
+import com.example.demo.Display.BossHealthBar;
 import javafx.application.Platform;
 import javafx.scene.Group;
 
@@ -92,6 +92,15 @@ public class LevelViewLevelTwo extends LevelView {
     }
 
     /**
+     * Retrieves the shield image.
+     *
+     * @return the shield image
+     */
+    protected ShieldImage getShieldImage() {
+        return shieldImage;
+    }
+
+    /**
      * Shows the shield image on the UI.
      * <p>
      * This method is used to make the shield image visible when the boss is shielded.
@@ -123,6 +132,18 @@ public class LevelViewLevelTwo extends LevelView {
         double bossPositionX = boss.getLayoutX() + boss.getTranslateX();
         double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + 65;  // Adjusted Y position
         bossHealthBar.setLayout(bossPositionX, bossPositionY);
+    }
+
+    /**
+     * Retrieves the boss's health bar.
+     * <p>
+     * This method is used to access the boss's health bar, for example, to update or customize its appearance during gameplay.
+     * </p>
+     *
+     * @return the boss's health bar {@link BossHealthBar} instance
+     */
+    protected BossHealthBar getBossHealthBar() {
+        return bossHealthBar;
     }
 
     /**

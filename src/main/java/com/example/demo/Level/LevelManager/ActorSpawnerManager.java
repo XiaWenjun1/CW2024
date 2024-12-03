@@ -1,10 +1,10 @@
 package com.example.demo.Level.LevelManager;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Actor.FighterPlane;
-import com.example.demo.Object.Object.AmmoBox;
-import com.example.demo.Object.Object.Heart;
-import com.example.demo.Actor.UserPlane.UserPlane;
+import com.example.demo.Actor.Plane.FighterPlane;
+import com.example.demo.Actor.Object.AmmoBox;
+import com.example.demo.Actor.Object.Heart;
+import com.example.demo.Actor.Plane.UserPlane;
 import javafx.scene.Group;
 import javafx.scene.Node;
 

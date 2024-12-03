@@ -3,7 +3,7 @@ package com.example.demo.Level;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Level.LevelManager.*;
 import com.example.demo.Level.LevelView.LevelView;
-import com.example.demo.Actor.UserPlane.UserPlane;
+import com.example.demo.Actor.Plane.UserPlane;
 import javafx.animation.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -93,6 +93,10 @@ public abstract class LevelParent {
 	 */
 	private final LevelView levelView;
 	/**
+	 * Indicates whether the game is over or not.
+	 */
+	private boolean gameOver;
+	/**
 	 * The name of the current level, represented as a {@link StringProperty} for easy data binding in the UI.
 	 */
 	private final StringProperty currentLevelName = new SimpleStringProperty();
@@ -123,7 +127,6 @@ public abstract class LevelParent {
 		this.userInputManager = new UserInputManager(user, root, activeActorManager.getUserProjectiles(), null);
 		this.pauseMenuManager = new PauseMenuManager(timeline, scene, userInputManager);
 		this.userInputManager.setPauseMenuManager(pauseMenuManager);
-		pauseMenuManager.loadPauseMenu();
 		this.endGameMenuManager = new EndGameMenuManager(this);
 		this.cleanDestroyedManager = new CleanDestroyedManager(root, activeActorManager);
 		this.actorSpawnerManager = new ActorSpawnerManager(activeActorManager, user, root);
@@ -339,6 +342,7 @@ public abstract class LevelParent {
 	 */
 	public void loseGame() {
 		userInputManager.setGameIsOver(true);
+		setGameOver(true);
 		timeline.stop();
 		endGameMenuManager.loseGame();
 	}
@@ -431,6 +435,13 @@ public abstract class LevelParent {
 	}
 
 	/**
+	 * Returns the height of the screen.
+	 *
+	 * @return the screen height.
+	 */
+	protected double getScreenHeight() { return screenHeight; }
+
+	/**
 	 * Returns whether the user has been destroyed.
 	 *
 	 * @return true if the user is destroyed, otherwise false.
@@ -455,5 +466,23 @@ public abstract class LevelParent {
 	 */
 	public StringProperty currentLevelNameProperty() {
 		return currentLevelName;
+	}
+
+	/**
+	 * Sets the game over status.
+	 *
+	 * @param gameOver true if the game is over, false otherwise.
+	 */
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	/**
+	 * Returns the current game over status.
+	 *
+	 * @return true if the game is over, false otherwise.
+	 */
+	public boolean isGameOver() {
+		return gameOver;
 	}
 }

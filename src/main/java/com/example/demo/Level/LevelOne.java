@@ -1,11 +1,11 @@
 package com.example.demo.Level;
 
 import com.example.demo.Actor.ActiveActorDestructible;
-import com.example.demo.Actor.HeavyEnemy.HeavyEnemy;
-import com.example.demo.Actor.SpeedEnemy.SpeedEnemy;
+import com.example.demo.Actor.Plane.HeavyEnemy;
+import com.example.demo.Actor.Plane.SpeedEnemy;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelOne;
-import com.example.demo.Actor.EnemyPlane.EnemyPlane;
+import com.example.demo.Actor.Plane.EnemyPlane;
 
 /**
  * Represents the first level of the game.
@@ -17,8 +17,9 @@ import com.example.demo.Actor.EnemyPlane.EnemyPlane;
  * </p>
  */
 public class LevelOne extends LevelParent {
+
 	/**
-	 * The view for the first level, which is responsible for rendering and managing the level's UI elements.
+	 * The view for the first level, responsible for rendering and managing the level's UI elements.
 	 */
 	private LevelViewLevelOne levelView;
 
@@ -75,10 +76,8 @@ public class LevelOne extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
-		} else {
-			if (userHasReachedKillTarget()) {
-				goToNextLevel(NEXT_LEVEL);
-			}
+		} else if (userHasReachedKillTarget()) {
+			goToNextLevel(NEXT_LEVEL);
 		}
 	}
 
@@ -166,7 +165,16 @@ public class LevelOne extends LevelParent {
 	 *
 	 * @return true if the user has reached the kill target, false otherwise.
 	 */
-	private boolean userHasReachedKillTarget() {
+	protected boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+	}
+
+	/**
+	 * Returns the fully qualified class name of the next level.
+	 *
+	 * @return the next level's class name.
+	 */
+	public String getNextLevel() {
+		return NEXT_LEVEL;
 	}
 }

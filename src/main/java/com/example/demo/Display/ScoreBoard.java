@@ -99,4 +99,22 @@ public class ScoreBoard extends HBox {
         this.setVisible(true);
         this.toFront();  // Brings the ScoreBoard to the front of other nodes
     }
+
+    /**
+     * Returns the current number of kills displayed on the scoreboard.
+     *
+     * @return the current number of kills.
+     */
+    public int getCurrentKills() {
+        return currentKills;
+    }
+
+    /**
+     * Returns the target number of kills required for progression.
+     *
+     * @return the target number of kills.
+     */
+    public int getTargetKills() {
+        return targetKills;
+    }
 }
