@@ -89,7 +89,6 @@ public class CleanDestroyedManager {
      * @param removeActorFromScene a function that removes an actor from the scene when necessary
      *
      * @see #cleanList(List, Boundary, Consumer)
-     * @see #cleanList(List, Boundary, Boundary, Consumer)
      */
     public void cleanObjects(
             List<ActiveActorDestructible> userProjectiles,
@@ -102,8 +101,8 @@ public class CleanDestroyedManager {
     ) {
         cleanList(userProjectiles, rightBoundary, removeActorFromScene);
         cleanList(enemyProjectiles, leftBoundary, removeActorFromScene);
-        cleanList(ammoBoxes, rightBoundary, leftBoundary, removeActorFromScene);
-        cleanList(hearts, rightBoundary, leftBoundary, removeActorFromScene);
+        cleanList(ammoBoxes, leftBoundary, removeActorFromScene);
+        cleanList(hearts, leftBoundary, removeActorFromScene);
     }
 
     /**
@@ -116,24 +115,6 @@ public class CleanDestroyedManager {
     private void cleanList(List<ActiveActorDestructible> actors, Boundary boundary, Consumer<ActiveActorDestructible> removeActorFromScene) {
         actors.removeIf(actor -> {
             if (checkCollision(actor.getHitbox(), boundary)) {
-                processActor(actor, removeActorFromScene);
-                return true; // Mark for removal
-            }
-            return false;
-        });
-    }
-
-    /**
-     * Cleans a list of actors by removing them from the scene if they collide with either of two boundaries.
-     *
-     * @param actors the list of actors to clean
-     * @param boundary1 the first boundary to check against
-     * @param boundary2 the second boundary to check against
-     * @param removeActorFromScene a function that removes an actor from the scene when necessary
-     */
-    private void cleanList(List<ActiveActorDestructible> actors, Boundary boundary1, Boundary boundary2, Consumer<ActiveActorDestructible> removeActorFromScene) {
-        actors.removeIf(actor -> {
-            if (checkCollision(actor.getHitbox(), boundary1) || checkCollision(actor.getHitbox(), boundary2)) {
                 processActor(actor, removeActorFromScene);
                 return true; // Mark for removal
             }

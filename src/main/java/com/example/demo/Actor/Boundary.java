@@ -18,13 +18,13 @@ public class Boundary extends Rectangle {
      * The X position for the right boundary.
      * This constant is used to set the position of the right boundary at the edge of the game area.
      */
-    public static final double RIGHT_BOUNDARY_X = 1350;
+    public static final double RIGHT_BOUNDARY_X = 1300;
 
     /**
      * The X position for the left boundary.
      * This constant is used to set the position of the left boundary at the left edge of the game area.
      */
-    public static final double LEFT_BOUNDARY_X = -50;
+    public static final double LEFT_BOUNDARY_X = -10;
 
     /**
      * The Y position for both boundaries.

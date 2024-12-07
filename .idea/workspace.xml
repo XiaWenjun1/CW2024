@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Object/AmmoBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Object/AmmoBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ActorSpawnerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/ActorSpawnerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Boundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/HeavyEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/HeavyEnemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/UserInputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/UserInputManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,6 +192,11 @@
       <workItem from="1733556719090" duration="312000" />
       <workItem from="1733557896764" duration="246000" />
       <workItem from="1733566442503" duration="418000" />
+      <workItem from="1733567048999" duration="522000" />
+      <workItem from="1733572423219" duration="1890000" />
+      <workItem from="1733577325163" duration="2368000" />
+      <workItem from="1733583806093" duration="1137000" />
+      <workItem from="1733584974881" duration="51000" />
     </task>
     <servers />
   </component>
