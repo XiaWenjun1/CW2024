@@ -41,16 +41,52 @@ public class AudioManager {
     private static AudioClip explosionSound;
 
     /**
-     * AudioClip for get object sound effects.
-     * This clip is used to play sound effects when get object in the game.
+     * AudioClip for get ammo box sound effects.
+     * This clip is used to play sound effects when get ammo box in the game.
      */
-    private static AudioClip getObjectSound;
+    private static AudioClip getAmmoBoxSound;
+
+    /**
+     * AudioClip for get heart sound effects.
+     * This clip is used to play sound effects when get heart in the game.
+     */
+    private static AudioClip getHeartSound;
 
     /**
      * AudioClip for user got damage sound effects.
      * This clip is used to play sound effects when user got damage in the game.
      */
     private static AudioClip userDamageSound;
+
+    /**
+     * AudioClip for shield sound effects.
+     * This clip is used to play sound effects when boss active shield in the game.
+     */
+    private static AudioClip shieldSound;
+
+    /**
+     * AudioClip for the winning sound effect.
+     * This clip is played when the player wins the game.
+     */
+    private static AudioClip winSound;
+
+    /**
+     * AudioClip for the losing sound effect.
+     * This clip is played when the player loses the game.
+     */
+    private static AudioClip loseSound;
+
+    /**
+     * AudioClip for the teleport-in sound effect.
+     * This clip is played when an entity teleports into the game.
+     */
+    private static AudioClip teleportInSound;
+
+    /**
+     * AudioClip for the teleport-out sound effect.
+     * This clip is played when an entity teleports out of the game.
+     */
+    private static AudioClip teleportOutSound;
 
     /**
      * Flag to track if explosion sound is enabled.
@@ -83,10 +119,28 @@ public class AudioManager {
     private static boolean userDamageSoundEnabled = true;
 
     /**
+     * Flag to track if shield sound effects are enabled.
+     * If true, shield sounds will play when the boss active shield; otherwise, they will be muted.
+     */
+    private static boolean shieldSoundEnabled = true;
+
+    /**
+     * Flag to track if user win, lose and level transfer sound effects are enabled.
+     * If true, sounds will play, otherwise, they will be muted.
+     */
+    private static boolean interactionSoundEnabled = true;
+
+    /**
      * Volume control for the shoot sound effect.
      * This value controls the volume of the shooting sound effect.
      */
     private final static double shootSoundVolume = 0.3;
+
+    /**
+     * Volume control for the background sound effect.
+     * This value controls the volume of the background music.
+     */
+    private final static double backgroundVolume = 0.5;
 
     /**
      * Private constructor to prevent instantiation from outside.
@@ -123,10 +177,11 @@ public class AudioManager {
     }
 
     /**
-     * Plays the background music if it's enabled.
+     * This method will play the background music at the currently set volume level
      */
     public static void playBackgroundMusic() {
         if (backgroundMusicEnabled) {
+            backgroundMusic.setVolume(backgroundVolume);
             backgroundMusic.play();
         }
     }
@@ -293,26 +348,50 @@ public class AudioManager {
     // ================== Object Pickup Sound Methods ====================
 
     /**
-     * Initializes the object pickup sound effect if it is not already initialized.
-     * Loads the object pickup sound resource for use in the game.
+     * Initializes the ammo box pickup sound effect if it is not already initialized.
+     * Loads the ammo box pickup sound resource for use in the game.
      */
-    public static void initGetObjectSound() {
-        if (getObjectSound == null) {
-            getObjectSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/getObject.mp3").toExternalForm());
+    public static void initGetAmmoBoxSound() {
+        if (getAmmoBoxSound == null) {
+            getAmmoBoxSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/levelup.mp3").toExternalForm());
         }
     }
 
     /**
-     * Plays the object pickup sound effect if the sound is enabled.
+     * Initializes the second heart pickup sound effect if it is not already initialized.
+     * Loads the second heart pickup sound resource for use in the game.
+     */
+    public static void initGetHeartSound() {
+        if (getHeartSound == null) {
+            getHeartSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/heal.mp3").toExternalForm());
+        }
+    }
+
+    /**
+     * Plays the ammo box pickup sound effect if the sound is enabled.
      * Ensures that the sound effect is initialized and plays it only if enabled.
      */
-    public static void triggerGetObjectAudio() {
-        if (getObjectSound == null) {
-            initGetObjectSound();
+    public static void triggerGetAmmoBoxAudio() {
+        if (getAmmoBoxSound == null) {
+            initGetAmmoBoxSound();
         }
 
         if (getObjectSoundEnabled) {
-            getObjectSound.play();
+            getAmmoBoxSound.play();
+        }
+    }
+
+    /**
+     * Plays the heart pickup sound effect if the sound is enabled.
+     * Ensures that the sound effect is initialized and plays it only if enabled.
+     */
+    public static void triggerGetHeartAudio() {
+        if (getHeartSound == null) {
+            initGetHeartSound();
+        }
+
+        if (getObjectSoundEnabled) {
+            getHeartSound.play();
         }
     }
 
@@ -342,7 +421,7 @@ public class AudioManager {
      */
     public static void initUserDamageSound() {
         if (userDamageSound == null) {
-            userDamageSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/userDamage.wav").toExternalForm());
+            userDamageSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/userDamage.mp3").toExternalForm());
         }
     }
 
@@ -376,5 +455,164 @@ public class AudioManager {
      */
     public static boolean isUserDamageSoundEnabled() {
         return userDamageSoundEnabled;
+    }
+
+    // ================== Shield Sound Methods ====================
+
+    /**
+     * Initializes the shield sound effect if it is not already initialized.
+     * This method loads the shield sound resource for use in the game, ensuring
+     * that the sound effect is ready to be played when triggered.
+     */
+    public static void initShieldSound() {
+        if (shieldSound == null) {
+            shieldSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/shield.mp3").toExternalForm());
+        }
+    }
+
+    /**
+     * Plays the shield sound effect if the sound is enabled.
+     * This method ensures that the sound effect is initialized and plays it only
+     * if the sound is enabled. If the sound effect is not yet initialized, it will
+     * initialize it before playing.
+     */
+    public static void triggerShieldAudio() {
+        if (shieldSound == null) {
+            initShieldSound();
+        }
+
+        if (shieldSoundEnabled) {
+            shieldSound.play();
+        }
+    }
+
+    /**
+     * Enables or disables the shield sound effect.
+     * This method allows the user to enable or disable the sound effect that plays
+     * when the shield is activated. It modifies the sound effect's enabled state.
+     *
+     * @param enabled true to enable the shield sound, false to disable it.
+     */
+    public static void setShieldSoundEnabled(boolean enabled) {
+        shieldSoundEnabled = enabled;
+    }
+
+    /**
+     * Checks whether the shield sound effect is enabled.
+     * This method checks the current state of the shield sound effect,
+     * indicating whether the sound is enabled or not.
+     *
+     * @return true if the shield sound is enabled, false otherwise.
+     */
+    public static boolean isShieldSoundEnabled() {
+        return shieldSoundEnabled;
+    }
+
+    // ================== Win, lose and level transfer Sound Methods ====================
+
+    /**
+     * Initializes the wining sound effect.
+     */
+    public static void initWinSound() {
+        if (winSound == null) {
+            winSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/win.mp3").toExternalForm());
+        }
+    }
+
+    /**
+     * Initializes the losing sound effect.
+     */
+    public static void initLoseSound() {
+        if (loseSound == null) {
+            loseSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/lose.mp3").toExternalForm());
+        }
+    }
+
+    /**
+     * Initializes the teleport-in sound effect.
+     */
+    public static void initTeleportInSound() {
+        if (teleportInSound == null) {
+            teleportInSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/teleportIn.mp3").toExternalForm());
+        }
+    }
+
+    /**
+     * Initializes the teleport-out sound effect.
+     */
+    public static void initTeleportOutSound() {
+        if (teleportOutSound == null) {
+            teleportOutSound = new AudioClip(AudioManager.class.getResource("/com/example/demo/sounds/teleportOut.mp3").toExternalForm());
+        }
+    }
+
+    /**
+     * Triggers the winning sound effect.
+     */
+    public static void triggerWinAudio() {
+        if (winSound == null) {
+            initWinSound();
+        }
+
+        if (interactionSoundEnabled) {
+            winSound.play();
+        }
+    }
+
+    /**
+     * Triggers the losing sound effect.
+     */
+    public static void triggerLoseAudio() {
+        if (loseSound == null) {
+            initLoseSound();
+        }
+
+        if (interactionSoundEnabled) {
+            loseSound.play();
+        }
+    }
+
+    /**
+     * Triggers the teleport-in sound effect.
+     */
+    public static void triggerTeleportInAudio() {
+        if (teleportInSound == null) {
+            initTeleportInSound();
+        }
+
+        if (interactionSoundEnabled) {
+            teleportInSound.play();
+        }
+    }
+
+    /**
+     * Triggers the teleport-out sound effect.
+     */
+    public static void triggerTeleportOutAudio() {
+        if (teleportOutSound == null) {
+            initTeleportOutSound();
+        }
+
+        if (interactionSoundEnabled) {
+            teleportOutSound.play();
+        }
+    }
+
+    /**
+     * Enables or disables interaction sound effects.
+     *
+     * @param enabled true to enable, false to disable interaction sounds
+     */
+    public static void setInteractionSoundEnabled(boolean enabled) {
+        interactionSoundEnabled = enabled;
+    }
+
+    /**
+     * Checks whether interaction sound effects are enabled.
+     *
+     * @return true if interaction sounds are enabled, false otherwise
+     */
+    public static boolean isInteractionSoundEnabled() {
+        return interactionSoundEnabled;
     }
 }

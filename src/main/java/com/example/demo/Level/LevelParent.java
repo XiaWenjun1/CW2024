@@ -176,12 +176,18 @@ public abstract class LevelParent {
 	}
 
 	/**
+	 * Sets up the game loop timeline with a 2-second delay.
 	 * Initializes the game loop with a fixed time interval.
 	 */
 	private void initializeTimeline() {
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-		timeline.getKeyFrames().add(gameLoop);
+		PauseTransition delay = new PauseTransition(Duration.seconds(2));
+		delay.setOnFinished(event -> {
+			timeline.setCycleCount(Timeline.INDEFINITE);
+			KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
+			timeline.getKeyFrames().add(gameLoop);
+			timeline.play();
+		});
+		delay.play();
 	}
 
 	/**
@@ -258,8 +264,33 @@ public abstract class LevelParent {
 		timeline.stop();
 		userInputManager.stopGameLoop();
 		userInputManager.clearActiveKeys();
-		root.getChildren().clear();
 		cleanUpActors();
+		root.getChildren().clear();
+	}
+
+	/**
+	 * Cleans up all active destructible actors for the animation.
+	 * This includes destroying all enemy units, enemy projectiles, ammo boxes,
+	 * hearts, and user projectiles currently managed by the ActiveActorManager.
+	 * The purpose of this method is to prepare for the animation by removing
+	 * any active objects that could interfere with the animation sequence.
+	 */
+	public void cleanUpForAnimation() {
+		for (ActiveActorDestructible enemy : activeActorManager.getEnemyUnits()) {
+			enemy.destroy();
+		}
+		for (ActiveActorDestructible enemyProjectile : activeActorManager.getEnemyProjectiles()) {
+			enemyProjectile.destroy();
+		}
+		for (ActiveActorDestructible ammobox : activeActorManager.getAmmoBoxes()) {
+			ammobox.destroy();
+		}
+		for (ActiveActorDestructible hearts : activeActorManager.getHearts()) {
+			hearts.destroy();
+		}
+		for (ActiveActorDestructible userProjectiles : activeActorManager.getUserProjectiles()) {
+			userProjectiles.destroy();
+		}
 	}
 
 	/**
@@ -331,6 +362,7 @@ public abstract class LevelParent {
 	 * and displaying the victory screen.
 	 */
 	public void winGame() {
+		AudioManager.getInstance().triggerWinAudio();
 		userInputManager.setGameIsOver(true);
 		timeline.stop();
 		endGameMenuManager.winGame();
@@ -341,6 +373,7 @@ public abstract class LevelParent {
 	 * and displaying the defeat screen.
 	 */
 	public void loseGame() {
+		AudioManager.getInstance().triggerLoseAudio();
 		userInputManager.setGameIsOver(true);
 		setGameOver(true);
 		timeline.stop();
@@ -485,4 +518,11 @@ public abstract class LevelParent {
 	public boolean isGameOver() {
 		return gameOver;
 	}
+
+	/**
+	 * Gets the UserInputManager instance used to handle user inputs.
+	 *
+	 * @return The UserInputManager instance.
+	 */
+	public UserInputManager getUserInputManager() { return userInputManager; }
 }

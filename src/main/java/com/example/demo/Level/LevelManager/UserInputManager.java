@@ -56,8 +56,14 @@ public class UserInputManager {
     /** Flag indicating whether the user is on cooldown after firing a projectile. */
     private boolean isOnCooldown = false;
 
-    /** The cooldown duration (in milliseconds) for firing projectiles. */
-    private static final int BULLET_COOLDOWN_MS = 200;
+    /** A flag that indicates whether the system is able to accept user input. */
+    private boolean canAcceptInput = false;
+
+    /**
+     * A {@link PauseTransition} that controls the delay before the system can accept user input.
+     * The timer triggers after a set delay (2 seconds in this case) to enable input acceptance.
+     */
+    private PauseTransition inputDelayTimer;
 
     /**
      * Constructs a UserInputManager for handling user inputs.
@@ -74,31 +80,49 @@ public class UserInputManager {
         this.pauseMenuManager = pauseMenuManager;
         bindMouseEvents();
         startGameLoop();
+        startInputDelay();
     }
 
     /**
-     * Handles key press events for controlling the user plane.
+     * Starts a timer with a 2-second delay before the system can accept input.
+     * After the delay, input acceptance is enabled.
+     */
+    public void startInputDelay() {
+        inputDelayTimer = new PauseTransition(Duration.seconds(2));
+        inputDelayTimer.setOnFinished(event -> canAcceptInput = true);
+        inputDelayTimer.play();
+    }
+
+    /**
+     * Handles key press events by adding the pressed key to the active keys set.
+     * Input is processed only if the game is not paused, input is accepted, and the game is not over.
      *
-     * @param e the key event triggered
+     * @param e the key event for the key press
      */
     public void handleKeyPressed(KeyEvent e) {
-        if (isPaused) return;
+        if (isPaused || !canAcceptInput || gameIsOver) return; // Only process input when allowed
         activeKeys.add(e.getCode());
     }
 
     /**
-     * Handles key release events and stops the corresponding action.
+     * Handles key release events by removing the released key from the active keys set.
+     * Input is processed only if the game is not paused, input is accepted, and the game is not over.
      *
-     * @param e the key event triggered
+     * @param e the key event for the key release
      */
     public void handleKeyReleased(KeyEvent e) {
+        if (isPaused || !canAcceptInput || gameIsOver) return; // Only process input when allowed
         activeKeys.remove(e.getCode());
     }
 
     /**
-     * Updates the user's movement and shooting based on active keys.
+     * Updates the user's movement based on the active keys.
+     * Moves the player up, down, left, or right, and allows firing projectiles if the spacebar is pressed.
+     * Input is processed only if the system can accept input.
      */
     private void updateUserMovement() {
+        if (!canAcceptInput || gameIsOver) return; // Wait until input delay is over
+
         if (activeKeys.contains(KeyCode.UP) && !activeKeys.contains(KeyCode.DOWN)) {
             user.moveUp();
         } else if (activeKeys.contains(KeyCode.DOWN) && !activeKeys.contains(KeyCode.UP)) {
@@ -233,51 +257,56 @@ public class UserInputManager {
 
     /**
      * Fires a projectile from the user's plane if the game is not paused,
-     * a cooldown period is not active, and the game is not over.
-     *
-     * <p>This method ensures that projectiles are only fired under appropriate
-     * game conditions:
-     * <ul>
-     *   <li>The game must not be paused.</li>
-     *   <li>The cooldown period must have elapsed since the last shot.</li>
-     *   <li>The game must still be running (not in an end state).</li>
-     * </ul>
-     *
-     * <p>If all conditions are met, the user's plane fires one or more projectiles,
-     * which are added to the game root for rendering and to the list of active
-     * user projectiles. Additionally, it triggers a cooldown period to prevent
-     * excessive firing and plays a sound effect to indicate the action.
+     * the cooldown has elapsed, and the game is still running.
+     * <p>Fires one or more projectiles, adds them to the game,
+     * plays the shoot sound, and triggers a cooldown for the next shot.</p>
      */
     private void fireProjectile() {
-        // Return early if the game is paused, a cooldown is active, or the game is over
+        // Check if the game is paused, on cooldown, or over
         if (isPaused || isOnCooldown || gameIsOver) {
             return;
         }
 
-        // Fire projectiles from the user's plane
+        // Fire projectiles and add them to the game root
         List<ActiveActorDestructible> projectiles = user.fireProjectiles();
-        if (projectiles != null) {
-            // Add each projectile to the game root and track it in the active list
+        if (projectiles != null && !projectiles.isEmpty()) {
             projectiles.forEach(projectile -> {
-                root.getChildren().add(projectile);
-                userProjectiles.add(projectile);
+                root.getChildren().add(projectile);  // Add to game UI
+                userProjectiles.add(projectile);     // Track active projectiles
             });
 
-            // Play the shooting sound effect
+            // Play shoot sound and start cooldown
             AudioManager.getInstance().triggerShootAudio();
+            startCooldown(calculateCooldownBasedOnPower(user.getCurrentProjectilePowerLevel()));
         }
-
-        // Start the cooldown timer to prevent rapid firing
-        startCooldown();
     }
 
     /**
-     * Starts the cooldown timer to prevent continuous firing of projectiles.
+     * Calculates the cooldown period based on the user's projectile power level.
+     *
+     * @param powerLevel The power level of the user's projectile.
+     * @return The cooldown time in milliseconds.
      */
-    private void startCooldown() {
+    private int calculateCooldownBasedOnPower(int powerLevel) {
+        switch (powerLevel) {
+            case 1: return 500;
+            case 2: return 400;
+            case 3: return 300;
+            case 4: return 200;
+            case 5: return 100;
+            default: return 500;
+        }
+    }
+
+    /**
+     * Starts a cooldown timer to prevent continuous projectile firing.
+     *
+     * @param cooldownDuration The cooldown duration in milliseconds.
+     */
+    private void startCooldown(int cooldownDuration) {
         isOnCooldown = true;
-        PauseTransition cooldownTimer = new PauseTransition(Duration.millis(BULLET_COOLDOWN_MS));
-        cooldownTimer.setOnFinished(event -> isOnCooldown = false);
+        PauseTransition cooldownTimer = new PauseTransition(Duration.millis(cooldownDuration));
+        cooldownTimer.setOnFinished(event -> isOnCooldown = false); // Reset cooldown after duration
         cooldownTimer.play();
     }
 
@@ -286,7 +315,7 @@ public class UserInputManager {
      * @param event the mouse event triggered
      */
     public void handleMouseMiddleClick(MouseEvent event) {
-        if (event.getButton() == MouseButton.MIDDLE && !gameIsOver) {
+        if (event.getButton() == MouseButton.MIDDLE && !gameIsOver && canAcceptInput) {
             togglePause();
         }
     }
@@ -296,16 +325,18 @@ public class UserInputManager {
      * @param event the key event triggered
      */
     public void handleKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER && !gameIsOver) {
+        if (event.getCode() == KeyCode.ENTER && !gameIsOver && canAcceptInput) {
             togglePause();
         }
     }
 
     /**
      * Toggles the pause menu visibility and pauses or resumes the game.
+     * Clears active keys to prevent input during the pause state.
      */
     private void togglePause() {
         pauseMenuManager.togglePause();
+        this.clearActiveKeys();
     }
 
     /**

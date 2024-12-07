@@ -19,9 +19,10 @@
             <Text fx:id="title" text="SKY BATTLE" styleClass="title" AnchorPane.leftAnchor="550" AnchorPane.topAnchor="200"/>
 
             <!-- Button -->
-            <Button fx:id="startButton" text="START GAME" styleClass="button" AnchorPane.leftAnchor="500" AnchorPane.topAnchor="400"/>
-            <Button fx:id="controlButton" text="CONTROL" styleClass="button" AnchorPane.leftAnchor="700" AnchorPane.topAnchor="400"/>
+            <Button fx:id="startButton" text="START GAME" styleClass="button" AnchorPane.leftAnchor="400" AnchorPane.topAnchor="400"/>
+            <Button fx:id="controlButton" text="CONTROL" styleClass="button" AnchorPane.leftAnchor="800" AnchorPane.topAnchor="400"/>
             <Button fx:id="settingsButton" text="SETTINGS" styleClass="button" AnchorPane.leftAnchor="620" AnchorPane.topAnchor="450"/>
+            <Button fx:id="startEndLessButton" text="START ENDLESS LEVEL" styleClass="button" AnchorPane.leftAnchor="560" AnchorPane.topAnchor="400"/>
         </AnchorPane>
     </StackPane>
 </AnchorPane>

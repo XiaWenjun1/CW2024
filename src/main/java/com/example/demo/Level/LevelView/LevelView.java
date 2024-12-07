@@ -93,7 +93,6 @@ public class LevelView {
 		int heartsToRemove = currentNumberOfHearts - heartsRemaining;
 		for (int i = 0; i < heartsToRemove; i++) {
 			heartDisplay.removeHeart();
-			AudioManager.getInstance().triggerUserDamageAudio();
 		}
 	}
 

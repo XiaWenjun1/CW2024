@@ -13,10 +13,9 @@
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
           AnchorPane.topAnchor="-100" AnchorPane.bottomAnchor="0">
 
-        <!-- 添加标题 -->
         <Text text="Pause Game Menu" styleClass="text-title"/>
 
-        <!-- 继续按钮 -->
+        <Button fx:id="returnToMainButton" text="Return to Main" onAction="#handleReturnToMainButton" styleClass="button-style"/>
         <Button fx:id="continueButton" text="Continue" onAction="#handleContinue" styleClass="button-style"/>
     </VBox>
 </AnchorPane>

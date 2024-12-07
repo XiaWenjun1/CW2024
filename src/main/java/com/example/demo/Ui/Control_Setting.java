@@ -19,27 +19,49 @@ public class Control_Setting {
      * This enables the user to enable or disable the background music during gameplay.
      */
     @FXML
-    private CheckBox bgToggle; // Checkbox to toggle background music
+    private CheckBox bgToggle;
 
     /**
      * A checkbox to toggle the explosion sound effect on or off.
      * This enables the user to enable or disable the explosion sound during gameplay.
      */
     @FXML
-    private CheckBox gsToggleExplosion;  // Checkbox to toggle explosion sound effect
+    private CheckBox gsToggleExplosion;
 
     /**
      * A checkbox to toggle the shooting sound effect on or off.
      * This enables the user to enable or disable the shooting sound during gameplay.
      */
     @FXML
-    private CheckBox gsToggleShoot;  // Checkbox to toggle shooting sound effect
+    private CheckBox gsToggleShoot;
 
+    /**
+     * A checkbox to toggle the get object sound effect on or off.
+     * This enables the user to enable or disable the getting object sound during gameplay.
+     */
     @FXML
     private CheckBox gsToggleGetObject;
 
+    /**
+     * A checkbox to toggle the user got damage sound effect on or off.
+     * This enables the user to enable or disable the user got damage sound during gameplay.
+     */
     @FXML
     private CheckBox gsToggleUserDamage;
+
+    /**
+     * A checkbox to toggle the shield sound effect on or off.
+     * This enables the user to enable or disable the shield sound during gameplay.
+     */
+    @FXML
+    private CheckBox gsToggleShield;
+
+    /**
+     * A checkbox to toggle the win, lose and teleport sound effects on or off.
+     * This enables the user to enable or disable the win, lose and teleport sound during gameplay.
+     */
+    @FXML
+    private CheckBox gsToggleInteraction;
 
     /**
      * The button used to close the settings window.
@@ -76,6 +98,8 @@ public class Control_Setting {
         gsToggleShoot.selectedProperty().addListener((observable, oldValue, newValue) -> toggleShootSound(newValue));
         gsToggleGetObject.selectedProperty().addListener((observable, oldValue, newValue) -> toggleGetObjectSound(newValue));
         gsToggleUserDamage.selectedProperty().addListener((observable, oldValue, newValue) -> toggleUserDamageSound(newValue));
+        gsToggleShield.selectedProperty().addListener((observable, oldValue, newValue) -> toggleShieldSound(newValue));
+        gsToggleInteraction.selectedProperty().addListener((observable, oldValue, newValue) -> toggleInteractionSound(newValue));
 
         // Set initial states for the toggles based on current settings
         bgToggle.setSelected(AudioManager.getInstance().isBackgroundMusicPlaying()); // Set background music toggle state
@@ -83,6 +107,8 @@ public class Control_Setting {
         gsToggleShoot.setSelected(AudioManager.getInstance().isShootSoundEnabled()); // Set shooting sound toggle state
         gsToggleGetObject.setSelected(AudioManager.getInstance().isGetObjectSoundEnabled()); // Set getting object sound toggle state
         gsToggleUserDamage.setSelected(AudioManager.getInstance().isUserDamageSoundEnabled()); // User damage sound toggle
+        gsToggleShield.setSelected(AudioManager.getInstance().isShieldSoundEnabled()); // Active shield sound toggle
+        gsToggleInteraction.setSelected(AudioManager.getInstance().isInteractionSoundEnabled()); // Win, lose and teleport toggle
     }
 
     /**
@@ -142,6 +168,24 @@ public class Control_Setting {
      */
     private void toggleUserDamageSound(boolean play) {
         AudioManager.getInstance().setUserDamageSoundEnabled(play);
+    }
+
+    /**
+     * Toggles the shield sound effect on or off based on the provided boolean value.
+     *
+     * @param play If true, enables the shield sound effect; if false, disables it.
+     */
+    private void toggleShieldSound(boolean play) {
+        AudioManager.getInstance().setShieldSoundEnabled(play);
+    }
+
+    /**
+     * Toggles the win, lose and teleport sound effects on or off based on the provided boolean value.
+     *
+     * @param play If true, enables the win, lose and teleport sound effects; if false, disables it.
+     */
+    private void toggleInteractionSound(boolean play) {
+        AudioManager.getInstance().setInteractionSoundEnabled(play);
     }
 
     /**

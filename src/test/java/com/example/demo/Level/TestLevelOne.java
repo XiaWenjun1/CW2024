@@ -1,8 +1,5 @@
 package com.example.demo.Level;
 
-import com.example.demo.Actor.Plane.EnemyPlane;
-import com.example.demo.Actor.Plane.SpeedEnemy;
-import com.example.demo.Actor.Plane.HeavyEnemy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

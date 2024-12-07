@@ -16,6 +16,8 @@ public class TestAudioManager {
         AudioManager.getInstance().setExplosionSoundEnabled(true);
         AudioManager.getInstance().setGetObjectSoundEnabled(true);
         AudioManager.getInstance().setUserDamageSoundEnabled(true);
+        AudioManager.getInstance().setShieldSoundEnabled(true);
+        AudioManager.getInstance().setInteractionSoundEnabled(true);
     }
 
     @Test
@@ -56,11 +58,13 @@ public class TestAudioManager {
 
     @Test
     void testGetObjectSoundInitializationAndPlay() {
-        AudioManager.getInstance().initGetObjectSound();
-        assertDoesNotThrow(AudioManager::triggerGetObjectAudio, "Get Object sound should play without throwing exceptions.");
+        AudioManager.getInstance().initGetAmmoBoxSound();
+        assertDoesNotThrow(AudioManager::triggerGetAmmoBoxAudio, "Get Ammo Box sound should play without throwing exceptions.");
+        AudioManager.getInstance().initGetHeartSound();
+        assertDoesNotThrow(AudioManager::triggerGetHeartAudio, "Get Heart sound should play without throwing exceptions.");
 
         AudioManager.getInstance().setGetObjectSoundEnabled(false);
-        assertFalse(AudioManager.isGetObjectSoundEnabled(), "Get Object sound should be disabled.");
+        assertFalse(AudioManager.isGetObjectSoundEnabled(), "Get Object sounds should be disabled.");
     }
 
     @Test
@@ -70,5 +74,29 @@ public class TestAudioManager {
 
         AudioManager.getInstance().setUserDamageSoundEnabled(false);
         assertFalse(AudioManager.isUserDamageSoundEnabled(), "User Damage sound should be disabled.");
+    }
+
+    @Test
+    void testShieldSoundInitializationAndPlay() {
+        AudioManager.getInstance().initShieldSound();
+        assertDoesNotThrow(AudioManager::triggerShieldAudio, "Active shield sound should play without throwing exceptions.");
+
+        AudioManager.getInstance().setShieldSoundEnabled(false);
+        assertFalse(AudioManager.isShieldSoundEnabled(), "Active shield sound should be disabled.");
+    }
+
+    @Test
+    void testInteractionSoundInitializationAndPlay() {
+        AudioManager.getInstance().initWinSound();
+        assertDoesNotThrow(AudioManager::triggerWinAudio, "Win sound should play without throwing exceptions.");
+        AudioManager.getInstance().initLoseSound();
+        assertDoesNotThrow(AudioManager::triggerLoseAudio, "Lose sound should play without throwing exceptions.");
+        AudioManager.getInstance().initTeleportInSound();
+        assertDoesNotThrow(AudioManager::triggerTeleportInAudio, "Teleport-In sound should play without throwing exceptions.");
+        AudioManager.getInstance().initTeleportOutSound();
+        assertDoesNotThrow(AudioManager::triggerTeleportOutAudio, "Teleport-Out sound should play without throwing exceptions.");
+
+        AudioManager.getInstance().setInteractionSoundEnabled(false);
+        assertFalse(AudioManager.isInteractionSoundEnabled(), "Interaction sounds should be disabled.");
     }
 }

@@ -45,7 +45,7 @@ public class Boss extends FighterPlane {
 	 * The probability of the boss activating its shield.
 	 * This value defines the chance that the boss will activate its shield in any given frame.
 	 */
-	private static final double BOSS_SHIELD_PROBABILITY = 0.001;
+	private static final double BOSS_SHIELD_PROBABILITY = 0.0025;
 
 	/**
 	 * The width of the boss image.

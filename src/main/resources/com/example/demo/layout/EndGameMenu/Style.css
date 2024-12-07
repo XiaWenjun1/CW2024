@@ -77,9 +77,3 @@
 #exitButton:pressed {
     -fx-background-color: #660000;
 }
-
-/* Game result image style */
-#gameResultImage {
-    -fx-opacity: 1.0;
-    -fx-z-index: 1;
-}

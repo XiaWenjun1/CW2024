@@ -77,7 +77,7 @@ public class CollisionManager {
         for (ActiveActorDestructible ammoBox : ammoBoxes) {
             if (checkCollision(userPlane, ammoBox)) {
                 handleAmmoBoxPickup(userPlane, ammoBox);
-                AudioManager.getInstance().triggerGetObjectAudio();
+                AudioManager.getInstance().triggerGetAmmoBoxAudio();
             }
         }
     }
@@ -109,7 +109,7 @@ public class CollisionManager {
         for (ActiveActorDestructible heart : hearts) {
             if (checkCollision(userPlane, heart)) {
                 handleHeartPickup(userPlane, heart);
-                AudioManager.getInstance().triggerGetObjectAudio();
+                AudioManager.getInstance().triggerGetHeartAudio();
             }
         }
     }

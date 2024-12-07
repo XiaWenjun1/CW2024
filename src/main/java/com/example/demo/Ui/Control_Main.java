@@ -1,5 +1,6 @@
 package com.example.demo.Ui;
 
+import com.example.demo.Controller.Control_StartEndLess;
 import com.example.demo.Level.LevelManager.AudioManager;
 import com.example.demo.Controller.Control_Start;
 import javafx.fxml.FXML;
@@ -51,6 +52,13 @@ public class Control_Main {
      */
     @FXML
     private Button startButton;
+
+    /**
+     * The button to start the endless level.
+     * This button triggers the endless level start when clicked by the user.
+     */
+    @FXML
+    private Button startEndLessButton;
 
     /**
      * The button to open the control settings menu.
@@ -127,12 +135,13 @@ public class Control_Main {
     }
 
     /**
-     * Sets up actions for buttons (start, control, settings) and adds hover sound effects.
+     * Sets up actions for buttons (start, start endless, control, settings) and adds hover sound effects.
      */
     private void setupButtonActions() {
-        setupHoverSounds(startButton, controlButton, settingsButton);
+        setupHoverSounds(startButton, startEndLessButton, controlButton, settingsButton);
 
         startButton.setOnAction(event -> startGame());
+        startEndLessButton.setOnAction(event -> startEndLessGame());
         settingsButton.setOnAction(event -> openSettings());
         controlButton.setOnAction(event -> openControl());
     }
@@ -193,6 +202,20 @@ public class Control_Main {
         Control_Start controlStart = new Control_Start((Stage) rootPane.getScene().getWindow());
         try {
             controlStart.launchGame();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Starts the endless game, releasing any resources and clearing UI components.
+     */
+    private void startEndLessGame() {
+        releaseResources();
+
+        Control_StartEndLess controlStartEndLess = new Control_StartEndLess((Stage) rootPane.getScene().getWindow());
+        try {
+            controlStartEndLess.launchGame();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -270,11 +293,11 @@ public class Control_Main {
     }
 
     /**
-     * Applies a blur effect to all children in the root pane except the settings pane.
+     * Applies a blur effect to all children in the root pane except the settings pane and control pane.
      */
     private void applyBlurEffectToBackground() {
         for (Node child : rootPane.getChildren()) {
-            if (!"settingsPane".equals(child.getId())) {
+            if (!"settingsPane".equals(child.getId()) && !"controlPane".equals(child.getId())) {
                 child.setEffect(blurEffect);
             }
         }

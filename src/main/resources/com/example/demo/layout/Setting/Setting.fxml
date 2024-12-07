@@ -27,4 +27,6 @@
     <CheckBox fx:id="gsToggleShoot" layoutX="550" layoutY="430" text="Shoot Sound" styleClass="text-control"/>
     <CheckBox fx:id="gsToggleGetObject" layoutX="550" layoutY="480" text="Get Object Sound" styleClass="text-control"/>
     <CheckBox fx:id="gsToggleUserDamage" layoutX="550" layoutY="530" text="User Damage Sound" styleClass="text-control"/>
+    <CheckBox fx:id="gsToggleShield" layoutX="550" layoutY="580" text="Shield Sound" styleClass="text-control"/>
+    <CheckBox fx:id="gsToggleInteraction" layoutX="550" layoutY="630" text="Win, Lose and Teleport Sound" styleClass="text-control"/>
 </AnchorPane>

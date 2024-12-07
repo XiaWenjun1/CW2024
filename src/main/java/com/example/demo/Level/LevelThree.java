@@ -3,10 +3,13 @@ package com.example.demo.Level;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Actor.Plane.HeavyEnemy;
 import com.example.demo.Actor.Plane.SpeedEnemy;
+import com.example.demo.Level.LevelManager.AudioManager;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelThree;
 import com.example.demo.Actor.Plane.Boss.Boss;
 import com.example.demo.Actor.Plane.EnemyPlane;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 /**
  * Represents the third level of the game, where the player faces more enemies and the boss.
@@ -109,6 +112,11 @@ public class LevelThree extends LevelParent {
     private boolean bossAdded = false;
 
     /**
+     * A flag indicating whether the boss active shield.
+     */
+    private boolean shieldAudioPlayed = false;
+
+    /**
      * Constructs the third level with the specified screen height and width.
      * <p>
      * This constructor initializes the level with the given screen size and sets up the boss
@@ -124,23 +132,21 @@ public class LevelThree extends LevelParent {
     }
 
     /**
-     * Initializes friendly units (the player) and adds them to the root of the scene.
-     * <p>
-     * This method ensures that the player (user) is placed into the scene for interaction.
-     * </p>
+     * Initializes the friendly unit (player) and adds it to the scene.
+     * This method ensures that the player is placed into the scene and triggers teleport in audio and the player's
+     * spiral portal entry animation.
      */
     @Override
     protected void initializeFriendlyUnits() {
+        AudioManager.getInstance().triggerTeleportInAudio();
         getRoot().getChildren().add(getUser());
+        super.getUser().spiralPortalEnter();
     }
 
     /**
-     * Checks if the game is over by verifying whether the player is destroyed
-     * or if the player has reached the kill target and the boss is destroyed.
-     * <p>
-     * If the player is destroyed, the game is lost. If the player has reached the kill target
-     * and the boss is destroyed, the game progresses to the next level.
-     * </p>
+     * Checks if the game is over by verifying the player's status and boss defeat.
+     * If the player is destroyed, the game ends. If the player reaches the kill target
+     * and the boss is destroyed, the boss health bar is hidden and the game progresses to the next level.
      */
     @Override
     protected void checkIfGameOver() {
@@ -148,64 +154,68 @@ public class LevelThree extends LevelParent {
             loseGame();
         } else {
             if (userHasReachedKillTarget() && boss.isDestroyed()) {
-                goToNextLevel(NEXT_LEVEL);
+                levelView.hideHealthBar();
+                delayToNextLevel();
             }
         }
     }
 
     /**
-     * Spawns enemy units and introduces a boss under specific conditions.
-     * <p>
-     * This method handles the spawning of standard enemy units and the introduction of a boss enemy:
-     * </p>
-     * <ul>
-     *     <li>While the user's current kill count is below the kill target (<code>KILLS_TO_ADVANCE</code>),
-     *     it spawns standard enemy units based on the defined spawn probability
-     *     (<code>ENEMY_SPAWN_PROBABILITY</code>).</li>
-     *     <li>Enemy units are chosen randomly from three types:</li>
-     *     <ul>
-     *         <li>40% chance to spawn a {@link EnemyPlane}, a balanced enemy type.</li>
-     *         <li>30% chance to spawn a {@link SpeedEnemy}, a faster but less durable enemy.</li>
-     *         <li>30% chance to spawn a {@link HeavyEnemy}, a slower but more durable enemy.</li>
-     *     </ul>
-     *     <li>Once the player reaches the kill target, the boss enemy is added to the level.
-     *     The boss is added only once, ensuring it appears under the correct conditions.</li>
-     * </ul>
-     * <p>
-     * All enemy units are positioned randomly within a vertical range defined by
-     * <code>getEnemyMinimumYPosition()</code> and <code>getEnemyMaximumYPosition()</code>.
-     * </p>
-     *
-     * @implNote The method ensures that the number of enemy units in the level does not exceed
-     * <code>TOTAL_ENEMIES</code> at any given time.
+     * Delays the transition to the next level and plays the exit animation.
+     * Stops the player’s movement, triggers the teleport out audio exit animation, and after a delay, moves to the next level.
+     */
+    private void delayToNextLevel() {
+        if (!super.isGameOver()) {
+            super.setGameOver(true);
+            AudioManager.getInstance().triggerTeleportOutAudio();
+            super.getUser().stopHorizontalMovement();
+            super.getUser().stopVerticalMovement();
+            super.getUserInputManager().setGameIsOver(true);
+            super.cleanUpForAnimation();
+            // Play the exit animation
+            getUser().spiralPortalExit(); // Assuming you have implemented the spiralPortalExit animation method
+            // Delay the transition to the next level by waiting for the animation to finish
+            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Delay for 2 seconds (adjust based on animation duration)
+            delay.setOnFinished(event -> goToNextLevel(NEXT_LEVEL)); // After the delay, load the next level
+            delay.play();
+        }
+    }
+
+    /**
+     * Spawns enemy units and introduces the boss after the kill target is reached.
+     * Standard enemies are spawned based on a kill count condition, with random selection
+     * of enemy types. Once the kill target is met, the boss is added to the level.
      */
     @Override
     protected void spawnEnemyUnits() {
-        int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-        if (getUser().getNumberOfKills() < KILLS_TO_ADVANCE) {
-            for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-                if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-                    double minY = getEnemyMinimumYPosition();
-                    double maxY = getEnemyMaximumYPosition();
-                    double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
-                    ActiveActorDestructible newEnemy;
+        if (!super.isGameOver()) {
+            int currentNumberOfEnemies = getCurrentNumberOfEnemies();
+            if (getUser().getNumberOfKills() < KILLS_TO_ADVANCE) {
+                for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
+                    if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
+                        double minY = getEnemyMinimumYPosition();
+                        double maxY = getEnemyMaximumYPosition();
+                        double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
+                        ActiveActorDestructible newEnemy;
 
-                    double randomValue = Math.random();
-                    if (randomValue < 0.4) {
-                        newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
-                    } else if (randomValue < 0.7) {
-                        newEnemy = new SpeedEnemy(getScreenWidth(), newEnemyInitialYPosition);
-                    } else {
-                        newEnemy = new HeavyEnemy(getScreenWidth(), newEnemyInitialYPosition);
+                        double randomValue = Math.random();
+                        if (randomValue < 0.4) {
+                            newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+                        } else if (randomValue < 0.7) {
+                            newEnemy = new SpeedEnemy(getScreenWidth(), newEnemyInitialYPosition);
+                        } else {
+                            newEnemy = new HeavyEnemy(getScreenWidth(), newEnemyInitialYPosition);
+                        }
+                        addEnemyUnit(newEnemy);
                     }
-                    addEnemyUnit(newEnemy);
                 }
             }
-        }
 
-        if (!isBossAdded()) {
-            addEnemyUnit(boss);
-            setBossAdded(true);
+            if (!isBossAdded()) {
+                addEnemyUnit(boss);
+                levelView.showBossHealthBar();
+                setBossAdded(true);
+            }
         }
     }
 
@@ -228,8 +238,13 @@ public class LevelThree extends LevelParent {
             levelView.updateShieldPosition(boss);
             if (boss.getShielded()) {
                 levelView.showShield();
+                if (!shieldAudioPlayed) {
+                    AudioManager.getInstance().triggerShieldAudio();
+                    shieldAudioPlayed = true;
+                }
             } else {
                 levelView.hideShield();
+                shieldAudioPlayed = false;
             }
         } else {
             levelView.hideHealthBar();

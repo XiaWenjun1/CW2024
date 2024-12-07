@@ -80,9 +80,9 @@ public class LevelViewLevelThree extends LevelView {
     private void initializeUI() {
         root.getChildren().addAll(shieldImage, bossHealthBar, hint, scoreBoard);
         Platform.runLater(() -> {
-            bossHealthBar.show();  // Show the boss health bar
-            hint.show();  // Show the hint
-            scoreBoard.show();  // Show the scoreboard
+            bossHealthBar.hide();
+            hint.show();
+            scoreBoard.show();
         });
     }
 
@@ -163,6 +163,14 @@ public class LevelViewLevelThree extends LevelView {
      */
     public void hideHealthBar() {
         bossHealthBar.hide();
+    }
+
+    /**
+     * Shows the boss health bar on the UI.
+     * This method is used to make the boss health bar visible.
+     */
+    public void showBossHealthBar() {
+        bossHealthBar.show();
     }
 
     /**

@@ -1,16 +1,31 @@
 package com.example.demo.Ui;
 
+import com.example.demo.Level.LevelParent;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import com.example.demo.Level.LevelManager.PauseMenuManager;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * The Control_PauseMenu class handles the functionality of the pause menu in the game.
  * It allows for showing and hiding the pause menu, as well as resuming the game.
  */
 public class Control_PauseMenu {
+    /**
+     * The button to return to the main menu.
+     * This button is used to navigate back to the main menu from the current screen.
+     */
+    @FXML
+    private Button returnToMainButton; // Button to return to the main menu
+
     /**
      * Manages the functionality of the pause menu in the game.
      * This object handles the logic for pausing, resuming, and closing the game.
@@ -84,6 +99,29 @@ public class Control_PauseMenu {
         // Remove the blur effect if the mainRoot is set
         if (mainRoot != null) {
             mainRoot.setEffect(null);
+        }
+    }
+
+    /**
+     * Handles the action when the "Return to Main" button is clicked.
+     * Cleans up the current level and loads the main menu scene.
+     *
+     * @param event The action event triggered by the button click.
+     */
+    @FXML
+    private void handleReturnToMainButton(ActionEvent event) {
+        try {
+            // Load the main menu scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/Main/Main.fxml"));
+            Parent mainRoot = loader.load();
+            Scene mainScene = new Scene(mainRoot, 1300, 750);
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) returnToMainButton.getScene().getWindow();
+            stage.setScene(mainScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

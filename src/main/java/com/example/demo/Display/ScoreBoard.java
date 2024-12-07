@@ -4,64 +4,88 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 /**
- * A class representing a ScoreBoard that displays the player's current kills and target kills.
- * The ScoreBoard is modeled using an HBox and contains a label to show kill statistics.
- * It is used to display the player's progress in terms of kills during gameplay.
+ * A class representing a ScoreBoard that displays the player's current kills.
+ * In endless mode, only the current kills are displayed, while in normal mode,
+ * both current and target kills are shown.
  */
 public class ScoreBoard extends HBox {
 
     /**
-     * Width constant for the ScoreBoard.
+     * The width of the scoreboard in pixels.
      */
     private static final int WIDTH = 200;
 
     /**
-     * Height constant for the ScoreBoard.
+     * The height of the scoreboard in pixels.
      */
     private static final int HEIGHT = 50;
 
     /**
-     * Initial x-coordinate position for the ScoreBoard on the screen.
+     * The initial x-coordinate for positioning the scoreboard on the screen.
      */
     private static final double INITIAL_X_POSITION = 10;
 
     /**
-     * Initial y-coordinate position for the ScoreBoard on the screen.
+     * The initial y-coordinate for positioning the scoreboard on the screen.
      */
     private static final double INITIAL_Y_POSITION = 690;
 
     /**
-     * Label to display the current and target kill information.
+     * Label used to display kill statistics on the scoreboard.
      */
     private final Label killInfoLabel;
 
     /**
-     * The current number of kills.
+     * The current number of kills achieved by the player.
      */
     private int currentKills;
 
     /**
-     * The target number of kills required to reach the next stage or level.
+     * The target number of kills required for level progression.
+     * This is set to 0 in endless mode.
      */
     private int targetKills;
 
     /**
-     * Constructor for the ScoreBoard. It initializes the current and target kills and creates the label.
+     * Indicates whether the scoreboard is operating in endless mode.
+     * If true, only the current kills are displayed, and target kills are ignored.
+     */
+    private final boolean endlessMode;
+
+    /**
+     * Constructor for normal mode ScoreBoard.
      *
      * @param currentKills The initial number of kills.
-     * @param targetKills  The target number of kills required to reach the next stage or level.
+     * @param targetKills  The target number of kills required for progression.
      */
     public ScoreBoard(int currentKills, int targetKills) {
         this.currentKills = currentKills;
         this.targetKills = targetKills;
+        this.endlessMode = false;
 
-        // Create and style the label for displaying kills information
         this.killInfoLabel = createKillInfoLabel();
+        initializeScoreBoard();
+    }
 
-        // Add the label to the ScoreBoard container (HBox)
+    /**
+     * Constructor for endless mode ScoreBoard.
+     *
+     * @param currentKills The initial number of kills.
+     */
+    public ScoreBoard(int currentKills) {
+        this.currentKills = currentKills;
+        this.targetKills = 0; // Target kills are not used in endless mode
+        this.endlessMode = true;
+
+        this.killInfoLabel = createKillInfoLabel();
+        initializeScoreBoard();
+    }
+
+    /**
+     * Initializes the ScoreBoard with the appropriate layout and label.
+     */
+    private void initializeScoreBoard() {
         this.getChildren().add(killInfoLabel);
-
-        // Set the dimensions and layout position of the ScoreBoard
         this.setPrefSize(WIDTH, HEIGHT);
         this.setLayoutX(INITIAL_X_POSITION);
         this.setLayoutY(INITIAL_Y_POSITION);
@@ -70,22 +94,37 @@ public class ScoreBoard extends HBox {
     /**
      * Creates and styles the label that displays the kills information.
      *
-     * @return A Label object that displays the current kills and target kills.
+     * @return A Label object for displaying kills.
      */
     private Label createKillInfoLabel() {
-        Label label = new Label("Kills: " + currentKills + " / " + targetKills);
+        String text = endlessMode ? "Kills: " + currentKills : "Kills: " + currentKills + " / " + targetKills;
+        Label label = new Label(text);
         label.setStyle("-fx-font-size: 20px; -fx-text-fill: White; -fx-font-weight: bold;");
         return label;
     }
 
     /**
-     * Updates the displayed kills and target kills on the scoreboard.
-     * This method is called when the player's kills or the target kills change.
+     * Updates the displayed kills on the scoreboard.
+     *
+     * @param currentKills The updated number of kills.
+     */
+    public void updateKills(int currentKills) {
+        this.currentKills = currentKills;
+        String text = endlessMode ? "Kills: " + currentKills : "Kills: " + currentKills + " / " + targetKills;
+        this.killInfoLabel.setText(text);
+    }
+
+    /**
+     * Updates the displayed kills and target kills in normal mode.
+     * This method is not used in endless mode.
      *
      * @param currentKills The updated number of kills.
      * @param targetKills  The updated target number of kills.
      */
     public void updateKills(int currentKills, int targetKills) {
+        if (endlessMode) {
+            throw new UnsupportedOperationException("updateKills with targetKills is not supported in endless mode.");
+        }
         this.currentKills = currentKills;
         this.targetKills = targetKills;
         this.killInfoLabel.setText("Kills: " + currentKills + " / " + targetKills);
@@ -93,11 +132,10 @@ public class ScoreBoard extends HBox {
 
     /**
      * Makes the ScoreBoard visible and brings it to the front of the scene.
-     * This method is called when the ScoreBoard should be displayed during the game.
      */
     public void show() {
         this.setVisible(true);
-        this.toFront();  // Brings the ScoreBoard to the front of other nodes
+        this.toFront();
     }
 
     /**
@@ -110,11 +148,11 @@ public class ScoreBoard extends HBox {
     }
 
     /**
-     * Returns the target number of kills required for progression.
+     * Returns the target number of kills. Always returns 0 in endless mode.
      *
      * @return the target number of kills.
      */
     public int getTargetKills() {
-        return targetKills;
+        return endlessMode ? 0 : targetKills;
     }
 }

@@ -3,9 +3,13 @@ package com.example.demo.Level;
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Actor.Plane.HeavyEnemy;
 import com.example.demo.Actor.Plane.SpeedEnemy;
+import com.example.demo.Level.LevelManager.AudioManager;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelOne;
 import com.example.demo.Actor.Plane.EnemyPlane;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  * Represents the first level of the game.
@@ -66,78 +70,86 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Checks if the game is over.
-	 * <p>
-	 * The game ends if the player is destroyed or if the player reaches the kill target.
-	 * If the player is destroyed, the game will trigger a loss. If the kill target is met,
+	 * The game ends if the player is destroyed or if the kill target is reached.
+	 * If the player is destroyed, the game triggers a loss. If the target is met,
 	 * the next level is loaded.
-	 * </p>
 	 */
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-			goToNextLevel(NEXT_LEVEL);
+			delayToNextLevel();
+		}
+	}
+
+	/**
+	 * Delays transitioning to the next level, trigger teleport out audio and plays the exit animation.
+	 * After the animation finishes, the next level is loaded.
+	 */
+	private void delayToNextLevel() {
+		if (!super.isGameOver()) {
+			super.setGameOver(true);
+			AudioManager.getInstance().triggerTeleportOutAudio();
+			super.getUser().stopHorizontalMovement();
+			super.getUser().stopVerticalMovement();
+			super.getUserInputManager().setGameIsOver(true);
+			super.cleanUpForAnimation();
+			// Play the exit animation
+			getUser().spiralPortalExit(); // Assuming you have implemented the spiralPortalExit animation method
+			// Delay the transition to the next level by waiting for the animation to finish
+			PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Delay for 2 seconds (adjust based on animation duration)
+			delay.setOnFinished(event -> goToNextLevel(NEXT_LEVEL)); // After the delay, load the next level
+			delay.play();
 		}
 	}
 
 	/**
 	 * Initializes the friendly units in the level.
-	 * <p>
-	 * This method adds the user (player) plane to the root node, setting up the player for the game.
-	 * </p>
+	 * Adds the user (player) plane to the root node, setting up the player for the game.
 	 */
 	@Override
 	protected void initializeFriendlyUnits() {
+		AudioManager.getInstance().triggerTeleportInAudio();
 		getRoot().getChildren().add(getUser());
+		super.getUser().spiralPortalEnter();
 	}
 
 	/**
 	 * Spawns enemy units in the current level.
-	 * <p>
-	 * This method adds new enemies to the level based on the spawn probability until the total number of enemies
-	 * reaches the specified limit (TOTAL_ENEMIES). Enemies are spawned within a vertical range defined by minY and maxY.
-	 * The type of enemy spawned is determined randomly:
-	 * </p>
-	 * <ul>
-	 *     <li>40% chance to spawn a {@link EnemyPlane}, a basic enemy plane with standard speed and health.</li>
-	 *     <li>30% chance to spawn a {@link SpeedEnemy}, a fast-moving enemy plane with lower health.</li>
-	 *     <li>30% chance to spawn a {@link HeavyEnemy}, a slow-moving but heavily armored enemy plane.</li>
-	 * </ul>
-	 * <p>
-	 * The position of each enemy is determined randomly within the vertical range [minY, maxY].
-	 * </p>
+	 * Adds new enemies based on spawn probability until the total number of enemies
+	 * reaches the specified limit. The type of enemy is chosen randomly.
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
-		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-				double minY = getEnemyMinimumYPosition();
-				double maxY = getEnemyMaximumYPosition();
-				double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
+		if (!super.isGameOver()) {
+			int currentNumberOfEnemies = getCurrentNumberOfEnemies();
+			for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
+				if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
+					double minY = getEnemyMinimumYPosition();
+					double maxY = getEnemyMaximumYPosition();
+					double newEnemyInitialYPosition = minY + Math.random() * (maxY - minY);
 
-				ActiveActorDestructible newEnemy;
+					ActiveActorDestructible newEnemy;
 
-				double randomValue = Math.random();
-				if (randomValue < 0.4) {
-					newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
-				} else if (randomValue < 0.7) {
-					newEnemy = new SpeedEnemy(getScreenWidth(), newEnemyInitialYPosition);
-				} else {
-					newEnemy = new HeavyEnemy(getScreenWidth(), newEnemyInitialYPosition);
+					double randomValue = Math.random();
+					if (randomValue < 0.4) {
+						newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+					} else if (randomValue < 0.7) {
+						newEnemy = new SpeedEnemy(getScreenWidth(), newEnemyInitialYPosition);
+					} else {
+						newEnemy = new HeavyEnemy(getScreenWidth(), newEnemyInitialYPosition);
+					}
+
+					addEnemyUnit(newEnemy);
 				}
-
-				addEnemyUnit(newEnemy);
 			}
 		}
 	}
 
 	/**
 	 * Updates the level view.
-	 * <p>
 	 * This method refreshes the level's UI, such as the kill count displayed on the scoreboard. It is called every frame.
-	 * </p>
 	 */
 	@Override
 	public void updateLevelView() {
@@ -148,9 +160,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Instantiates the LevelView for this level.
-	 * <p>
 	 * It creates an instance of LevelViewLevelOne and sets it up with the current player's health and other relevant data.
-	 * </p>
 	 *
 	 * @return the instantiated LevelView for this level.
 	 */

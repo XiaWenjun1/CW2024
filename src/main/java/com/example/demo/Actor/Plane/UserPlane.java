@@ -2,6 +2,9 @@ package com.example.demo.Actor.Plane;
 
 import com.example.demo.Actor.ActiveActorDestructible;
 import com.example.demo.Actor.Projectile.UserProjectile;
+import com.example.demo.Level.LevelManager.AudioManager;
+import javafx.animation.*;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,12 +74,12 @@ public class UserPlane extends FighterPlane {
 	/**
 	 * The vertical speed (velocity) of the user plane.
 	 */
-	private static final int VERTICAL_VELOCITY = 6;
+	private static final int VERTICAL_VELOCITY = 7;
 
 	/**
 	 * The horizontal speed (velocity) of the user plane.
 	 */
-	private static final int HORIZONTAL_VELOCITY = 6;
+	private static final int HORIZONTAL_VELOCITY = 7;
 
 	/**
 	 * The X offset for the projectile's starting position relative to the plane.
@@ -104,6 +107,21 @@ public class UserPlane extends FighterPlane {
 	private int numberOfKills;
 
 	/**
+	 * Invincibility flag
+	 */
+	private boolean isInvincible = false;
+
+	/**
+	 * Indicates if an animation is in progress.
+	 */
+	private boolean isAnimating = false;
+
+	/**
+	 * Timer for invincibility duration
+	 */
+	private final Timeline invincibilityTimer;
+
+	/**
 	 * Constructor to initialize the {@code UserPlane} with its starting position, health, and related parameters.
 	 *
 	 * @param initialHealth The initial health of the plane.
@@ -113,6 +131,71 @@ public class UserPlane extends FighterPlane {
 		setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT * 0.3);
 		userProjectile = new UserProjectile(INITIAL_X_POSITION, INITIAL_Y_POSITION, 50, 50);
 		updateProjectileSize();
+		invincibilityTimer = initializeInvincibilityTimer();
+	}
+
+	/**
+	 * Initializes the invincibility timer which triggers the end of invincibility after a duration.
+	 *
+	 * @return The initialized Timeline object for invincibility timer.
+	 */
+	private Timeline initializeInvincibilityTimer() {
+		Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> endInvincibility()));
+		timer.setCycleCount(1); // Only run once
+		return timer;
+	}
+
+	/**
+	 * Activates invincibility, starting the flashing effect and timer.
+	 */
+	public void triggerInvincibility() {
+		if (isInvincible) return; // Already invincible
+		isInvincible = true;
+		startFlashing();
+		invincibilityTimer.playFromStart();
+	}
+
+	/**
+	 * Ends invincibility and stops the flashing effect.
+	 */
+	private void endInvincibility() {
+		isInvincible = false;
+		stopFlashing();
+	}
+
+	/**
+	 * Starts the flashing effect of the plane (blinking).
+	 */
+	private void startFlashing() {
+		Timeline flashingTimer = new Timeline(
+				new KeyFrame(Duration.seconds(0.1), e -> setOpacity(getOpacity() == 1 ? 0.5 : 1))
+		);
+		flashingTimer.setCycleCount(Timeline.INDEFINITE);
+		flashingTimer.play();
+
+		// Stop flashing when invincibility ends
+		invincibilityTimer.setOnFinished(e -> {
+			flashingTimer.stop();
+			setOpacity(1); // Restore normal opacity
+		});
+	}
+
+	/**
+	 * Stops the flashing effect.
+	 */
+	private void stopFlashing() {
+		setOpacity(1); // Restore normal opacity
+	}
+
+	/**
+	 * Handles damage to the user plane, ignoring damage if invincible.
+	 */
+	@Override
+	public void takeDamage() {
+		if (isInvincible) return; // Ignore damage when invincible
+		super.takeDamage();
+		AudioManager.getInstance().triggerUserDamageAudio();
+		triggerInvincibility(); // Activate invincibility after damage
 	}
 
 	/**
@@ -220,6 +303,69 @@ public class UserPlane extends FighterPlane {
 	}
 
 	/**
+	 * Animates the player's entry into the scene using a spiral portal effect.
+	 * The animation includes rotation, scaling, and fading in.
+	 */
+	public void spiralPortalEnter() {
+		setOpacity(0);
+		setScaleX(0.1);
+		setScaleY(0.1);
+		setLayoutX(INITIAL_X_POSITION);
+		setLayoutY(INITIAL_Y_POSITION);
+
+		RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), this);
+		rotateTransition.setByAngle(720);
+
+		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(2), this);
+		scaleTransition.setToX(1);
+		scaleTransition.setToY(1);
+
+		FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(2), this);
+		fadeInTransition.setToValue(1);
+
+		ParallelTransition parallelTransition = new ParallelTransition(rotateTransition, scaleTransition, fadeInTransition);
+
+		parallelTransition.setOnFinished(event -> {
+			setOpacity(1);
+		});
+
+		parallelTransition.play();
+	}
+
+	/**
+	 * Animates the player's exit from the scene by moving it to the right and fading out.
+	 * The animation includes rotation, scaling, and fading out.
+	 */
+	public void spiralPortalExit() {
+		if (isAnimating) {
+			return;
+		}
+		isAnimating = true;
+
+		setOpacity(1);
+		setScaleX(1);
+		setScaleY(1);
+
+		RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), this);
+		rotateTransition.setByAngle(1440);
+
+		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(2), this);
+		scaleTransition.setToX(0.1);
+		scaleTransition.setToY(0.1);
+
+		FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(2), this);
+		fadeOutTransition.setToValue(0);
+
+		ParallelTransition parallelTransition = new ParallelTransition(rotateTransition, scaleTransition, fadeOutTransition);
+
+		parallelTransition.setOnFinished(event -> {
+			isAnimating = false;
+		});
+
+		parallelTransition.play();
+	}
+
+	/**
 	 * Updates the size of the projectile based on its power level.
 	 */
 	private void updateProjectileSize() {
@@ -293,4 +439,11 @@ public class UserPlane extends FighterPlane {
 	public UserProjectile getUserProjectile() {
 		return userProjectile;
 	}
+
+	/**
+	 * Retrieves the current power level of the user's projectiles.
+	 *
+	 * @return The power level of the user's projectiles.
+	 */
+	public int getCurrentProjectilePowerLevel() { return userProjectile.getPowerLevel(); }
 }

@@ -1,11 +1,13 @@
 package com.example.demo.Level;
 
-import com.example.demo.Actor.Plane.Boss.Boss;
+import com.example.demo.Level.LevelManager.AudioManager;
 import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelFour;
 import com.example.demo.Actor.Plane.MutationBoss1;
 import com.example.demo.Actor.Plane.MutationBoss2;
 import com.example.demo.Actor.Plane.MutationBoss3;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 /**
  * Represents the fourth level of the game.
@@ -72,6 +74,11 @@ public class LevelFour extends LevelParent {
     private boolean boss3Added = false;
 
     /**
+     * A flag indicating whether the boss active shield.
+     */
+    private boolean shieldAudioPlayed = false;
+
+    /**
      * Constructs a LevelFour instance with the specified screen dimensions and initializes the bosses.
      * <p>
      * The constructor creates the three bosses with their specified health values and passes them to the superclass.
@@ -95,7 +102,9 @@ public class LevelFour extends LevelParent {
      */
     @Override
     protected void initializeFriendlyUnits() {
+        AudioManager.getInstance().triggerTeleportInAudio();
         getRoot().getChildren().add(getUser());
+        super.getUser().spiralPortalEnter();
     }
 
     /**
@@ -109,7 +118,28 @@ public class LevelFour extends LevelParent {
         if (userIsDestroyed()) {
             loseGame();
         } else if (boss3.isDestroyed()) {
-            winGame();
+            delayToWin();
+        }
+    }
+
+    /**
+     * Delays the transition to the win image and plays the exit animation.
+     * Stops the player’s movement, triggers the teleport out audio, exit animation, and after a delay, show the win image.
+     */
+    private void delayToWin() {
+        if (!super.isGameOver()) {
+            super.setGameOver(true);
+            AudioManager.getInstance().triggerTeleportOutAudio();
+            super.getUser().stopHorizontalMovement();
+            super.getUser().stopVerticalMovement();
+            super.getUserInputManager().setGameIsOver(true);
+            super.cleanUpForAnimation();
+            // Play the exit animation
+            getUser().spiralPortalExit(); // Assuming you have implemented the spiralPortalExit animation method
+            // Delay the transition to the next level by waiting for the animation to finish
+            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Delay for 2 seconds (adjust based on animation duration)
+            delay.setOnFinished(event -> winGame()); // After the delay, load the win game image.
+            delay.play();
         }
     }
 
@@ -122,18 +152,20 @@ public class LevelFour extends LevelParent {
      */
     @Override
     protected void spawnEnemyUnits() {
-        if (getCurrentNumberOfEnemies() == 0) {
-            if (!boss1.isDestroyed()) {
-                addEnemyUnit(boss1);
-                levelView.showBossHealthBar(boss1);
-            } else if (!boss2.isDestroyed() && !boss2Added) {
-                addEnemyUnit(boss2);
-                boss2Added = true;
-                levelView.showBossHealthBar(boss2);
-            } else if (!boss3.isDestroyed() && !boss3Added) {
-                addEnemyUnit(boss3);
-                boss3Added = true;
-                levelView.showBossHealthBar(boss3);
+        if (!super.isGameOver()) {
+            if (getCurrentNumberOfEnemies() == 0) {
+                if (!boss1.isDestroyed()) {
+                    addEnemyUnit(boss1);
+                    levelView.showBossHealthBar(boss1);
+                } else if (!boss2.isDestroyed() && !boss2Added) {
+                    addEnemyUnit(boss2);
+                    boss2Added = true;
+                    levelView.showBossHealthBar(boss2);
+                } else if (!boss3.isDestroyed() && !boss3Added) {
+                    addEnemyUnit(boss3);
+                    boss3Added = true;
+                    levelView.showBossHealthBar(boss3);
+                }
             }
         }
     }
@@ -158,8 +190,13 @@ public class LevelFour extends LevelParent {
 
             if (boss1.getShielded()) {
                 levelView.showShield();
+                if (!shieldAudioPlayed) {
+                    AudioManager.getInstance().triggerShieldAudio();
+                    shieldAudioPlayed = true;
+                }
             } else {
                 levelView.hideShield();
+                shieldAudioPlayed = false;
             }
         }
 
@@ -175,8 +212,13 @@ public class LevelFour extends LevelParent {
 
                 if (boss2.getShielded()) {
                     levelView.showShield();
+                    if (!shieldAudioPlayed) {
+                        AudioManager.getInstance().triggerShieldAudio();
+                        shieldAudioPlayed = true;
+                    }
                 } else {
                     levelView.hideShield();
+                    shieldAudioPlayed = false;
                 }
             }
         }
@@ -193,8 +235,13 @@ public class LevelFour extends LevelParent {
 
                 if (boss3.getShielded()) {
                     levelView.showShield();
+                    if (!shieldAudioPlayed) {
+                        AudioManager.getInstance().triggerShieldAudio();
+                        shieldAudioPlayed = true;
+                    }
                 } else {
                     levelView.hideShield();
+                    shieldAudioPlayed = false;
                 }
             }
         }
