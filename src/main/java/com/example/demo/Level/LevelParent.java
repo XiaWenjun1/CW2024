@@ -129,7 +129,7 @@ public abstract class LevelParent {
 		this.userInputManager.setPauseMenuManager(pauseMenuManager);
 		this.endGameMenuManager = new EndGameMenuManager(this);
 		this.cleanDestroyedManager = new CleanDestroyedManager(root, activeActorManager);
-		this.actorSpawnerManager = new ActorSpawnerManager(activeActorManager, user, root);
+		this.actorSpawnerManager = new ActorSpawnerManager(activeActorManager, this, user, root);
 
 		initializeTimeline();
 		activeActorManager.getFriendlyUnits().add(user);

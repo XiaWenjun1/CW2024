@@ -5,6 +5,7 @@ import com.example.demo.Actor.Plane.FighterPlane;
 import com.example.demo.Actor.Object.AmmoBox;
 import com.example.demo.Actor.Object.Heart;
 import com.example.demo.Actor.Plane.UserPlane;
+import com.example.demo.Level.LevelParent;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
@@ -17,10 +18,17 @@ import java.util.Random;
  * The class interacts with the ActiveActorManager to manage and update actors, spawn projectiles, and spawn collectible items.
  */
 public class ActorSpawnerManager {
+
     /**
      * The ActiveActorManager that manages all active actors (enemies, projectiles, items, etc.) in the game.
      */
     private final ActiveActorManager activeActorManager;
+
+    /**
+     * The parent level managing game state and logic.
+     */
+    private final LevelParent levelParent;
+
     /**
      * The UserPlane representing the player's plane in the game.
      */
@@ -35,15 +43,16 @@ public class ActorSpawnerManager {
     private final Random random;
 
     /**
-     * Constructs an instance of ActorSpawnerManager.
-     * Initializes the manager with the provided ActiveActorManager, UserPlane, and the root Group for the scene.
+     * Constructs an ActorSpawnerManager to manage spawning of actors in the game.
      *
-     * @param activeActorManager the ActiveActorManager that manages all active actors in the game
-     * @param user the UserPlane representing the player's plane
-     * @param root the root Group where all actors are added to the scene
+     * @param activeActorManager the manager for all active actors
+     * @param levelParent        the LevelParent object controlling game states
+     * @param user               the player's plane
+     * @param root               the root Group where actors are added
      */
-    public ActorSpawnerManager(ActiveActorManager activeActorManager, UserPlane user, Group root) {
+    public ActorSpawnerManager(ActiveActorManager activeActorManager, LevelParent levelParent, UserPlane user, Group root) {
         this.activeActorManager = activeActorManager;
+        this.levelParent = levelParent;
         this.user = user;
         this.root = root;
         this.random = new Random();
@@ -114,27 +123,33 @@ public class ActorSpawnerManager {
 
     /**
      * Spawns a random ammo box based on its spawn probability.
-     * If an ammo box is spawned, it is added to the scene and the list of ammo boxes managed by ActiveActorManager.
+     * Adds the ammo box to the scene and ActiveActorManager if spawned.
+     * The position is randomly determined within allowed bounds.
      */
     private void spawnRandomAmmoBox() {
-        if (random.nextDouble() < AmmoBox.getSpawnProbability()) {
-            double randomX = random.nextDouble(AmmoBox.getMaximumXPosition());
-            double randomY = random.nextDouble(AmmoBox.getMaximumYPosition()) + 20;
-            AmmoBox ammoBox = new AmmoBox(randomX, randomY);
-            addAmmoBox(ammoBox);
+        if (!levelParent.isGameOver()) {
+            if (random.nextDouble() < AmmoBox.getSpawnProbability()) {
+                double randomX = random.nextDouble(AmmoBox.getMaximumXPosition());
+                double randomY = random.nextDouble(AmmoBox.getMaximumYPosition()) + 20;
+                AmmoBox ammoBox = new AmmoBox(randomX, randomY);
+                addAmmoBox(ammoBox);
+            }
         }
     }
 
     /**
      * Spawns a random heart based on its spawn probability.
-     * If a heart is spawned, it is added to the scene and the list of hearts managed by ActiveActorManager.
+     * Adds the heart to the scene and ActiveActorManager if spawned.
+     * The position is randomly determined within allowed bounds.
      */
     private void spawnRandomHeart() {
-        if (random.nextDouble() < Heart.getSpawnProbability()) {
-            double randomX = random.nextDouble(Heart.getMaximumXPosition());
-            double randomY = random.nextDouble(Heart.getMaximumYPosition()) + 20;
-            Heart heart = new Heart(randomX, randomY);
-            addHeart(heart);
+        if (!levelParent.isGameOver()) {
+            if (random.nextDouble() < Heart.getSpawnProbability()) {
+                double randomX = random.nextDouble(Heart.getMaximumXPosition());
+                double randomY = random.nextDouble(Heart.getMaximumYPosition()) + 20;
+                Heart heart = new Heart(randomX, randomY);
+                addHeart(heart);
+            }
         }
     }
 
