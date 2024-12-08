@@ -17,7 +17,7 @@ import com.example.demo.Level.LevelParent;
 public class Control_StartEndLess {
     /**
      * The class name for the level endless.
-     * This constant stores the fully qualified class name for the first level of the game.
+     * This constant stores the fully qualified class name for the level of the game.
      */
     private static final String LEVEL_ENDLESS_NAME = "com.example.demo.Level.LevelEndLess";
 
@@ -69,7 +69,7 @@ public class Control_StartEndLess {
     public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
             InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         stage.show();
-        goToLevel(LEVEL_ENDLESS_NAME); // Go to the first level when the game starts
+        goToLevel(LEVEL_ENDLESS_NAME);
     }
 
     /**
