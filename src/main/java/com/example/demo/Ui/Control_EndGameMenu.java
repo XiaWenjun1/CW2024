@@ -25,31 +25,9 @@ public class Control_EndGameMenu {
     private Button returnToMainButton; // Button to return to the main menu
 
     /**
-     * The current level parent to clean up when returning to the main menu.
-     * This object manages the state and resources for the current level.
-     */
-    private LevelParent levelParent; // The current level parent to clean up when returning to the main menu
-
-    /**
      * No-argument constructor for the Control_EndGameMenu class.
-     * <p>
-     * Initializes the levelParent field to null. This constructor is used for creating an instance of
-     * the Control_EndGameMenu class without any specific initialization, leaving the levelParent to
-     * be set later via the initialize method.
-     * </p>
      */
-    public Control_EndGameMenu() {
-        this.levelParent = null;
-    }
-
-    /**
-     * Initializes the controller with the provided LevelParent.
-     *
-     * @param levelParent The parent of the current level, used for cleanup.
-     */
-    public void initialize(LevelParent levelParent) {
-        this.levelParent = levelParent;
-    }
+    public Control_EndGameMenu() { }
 
     /**
      * Handles the action when the "Return to Main" button is clicked.
@@ -59,8 +37,6 @@ public class Control_EndGameMenu {
      */
     @FXML
     private void handleReturnToMainButton(ActionEvent event) {
-        levelParent.cleanUp(); // Clean up the current level before returning to the main menu
-
         try {
             // Load the main menu scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/Main/Main.fxml"));

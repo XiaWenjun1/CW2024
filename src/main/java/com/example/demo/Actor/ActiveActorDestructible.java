@@ -50,8 +50,8 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	 */
 	private void createAndAddHitbox(double width, double height) {
 		hitbox = new Rectangle(width, height);
-		hitbox.setFill(Color.TRANSPARENT); // Transparent fill for the hitbox
-		hitbox.setStrokeWidth(2); // Stroke width for visibility
+		hitbox.setFill(Color.TRANSPARENT);
+		hitbox.setStrokeWidth(2);
 		hitbox.setVisible(true);
 	}
 

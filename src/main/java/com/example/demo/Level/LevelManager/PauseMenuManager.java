@@ -1,5 +1,6 @@
 package com.example.demo.Level.LevelManager;
 
+import com.example.demo.Level.LevelParent;
 import com.example.demo.Ui.Control_PauseMenu;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
@@ -32,30 +33,38 @@ public class PauseMenuManager {
     /** The user input manager to handle input when the game is paused or resumed. */
     private UserInputManager userInputManager;
 
+    /** The current level being managed, used for cleanup and resource management. */
+    private LevelParent levelParent;
+
     /**
-     * Constructor to initialize the PauseMenuManager with the timeline, scene, and user input manager.
+     * Constructs a PauseMenuManager instance to manage the pause menu functionality.
      *
-     * @param timeline the game timeline to pause/resume
-     * @param scene the current scene
-     * @param userInputManager the user input manager to disable/enable input during pause
+     * @param timeline        the game timeline to control animations, which can be paused and resumed
+     * @param scene           the current scene of the game, used for managing visual elements and effects
+     * @param userInputManager the manager to enable or disable user input during game pause or resume
+     * @param levelParent     the LevelParent instance responsible for managing the current game level,
+     *                        allowing cleanup when switching levels or exiting the game
      */
-    public PauseMenuManager(Timeline timeline, Scene scene, UserInputManager userInputManager) {
+    public PauseMenuManager(Timeline timeline, Scene scene, UserInputManager userInputManager, LevelParent levelParent) {
         this.timeline = timeline;
         this.scene = scene;
         this.userInputManager = userInputManager;
+        this.levelParent = levelParent;
     }
 
     /**
      * Loads the pause menu layout from FXML and initializes the control.
      */
     public void loadPauseMenu() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/PauseMenu/PauseMenu.fxml"));
-            pauseMenuRoot = loader.load();
-            controlPauseMenu = loader.getController();
-            controlPauseMenu.initialize(this);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (pauseMenuRoot == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/PauseMenu/PauseMenu.fxml"));
+                pauseMenuRoot = loader.load();
+                controlPauseMenu = loader.getController();
+                controlPauseMenu.initialize(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -153,5 +162,16 @@ public class PauseMenuManager {
      */
     public Parent getPauseMenuRoot() {
         return pauseMenuRoot;
+    }
+
+    /**
+     * Cleans up resources associated with the current level.
+     * This method is typically called when exiting the current level
+     * or transitioning to another scene, ensuring all associated resources
+     * are released and properly managed.
+     * The cleanup operation delegates the task to the LevelParent instance.
+     */
+    public void cleanUp() {
+        levelParent.cleanUp();
     }
 }

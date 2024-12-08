@@ -50,7 +50,7 @@ public class EndGameMenuManager {
 
             // Transition to the end game menu after a 2-second delay
             PauseTransition delay = new PauseTransition(Duration.seconds(2));
-            delay.setOnFinished(event -> showEndGameMenu(currentStage, true));
+            delay.setOnFinished(event -> showEndGameMenu(currentStage));
             delay.play();
         });
     }
@@ -71,7 +71,7 @@ public class EndGameMenuManager {
 
             // Transition to the end game menu after a 2-second delay
             PauseTransition delay = new PauseTransition(Duration.seconds(2));
-            delay.setOnFinished(event -> showEndGameMenu(currentStage, false));
+            delay.setOnFinished(event -> showEndGameMenu(currentStage));
             delay.play();
         });
     }
@@ -95,28 +95,18 @@ public class EndGameMenuManager {
      * The menu is configured differently depending on whether the player won or lost.
      *
      * @param stage the current stage where the end game menu will be displayed.
-     * @param isWin {@code true} if the player won the game, {@code false} otherwise.
      */
-    private void showEndGameMenu(Stage stage, boolean isWin) {
+    private void showEndGameMenu(Stage stage) {
         try {
-            levelParent.cleanUp();
             // Load the FXML file for the end game menu layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/layout/EndGameMenu/EndGameMenu.fxml"));
             Parent endGameRoot = loader.load();
-
-            // Initialize the controller with the LevelParent reference
-            Control_EndGameMenu controller = loader.getController();
-            controller.initialize(levelParent);
-
-            // If the stage is null, create a new Stage
-            if (stage == null) {
-                stage = new Stage();  // Create a new Stage if current one is null
-            }
 
             // Set the new scene and display the end game menu
             Scene endGameScene = new Scene(endGameRoot);
             stage.setScene(endGameScene);
             stage.show();
+            levelParent.cleanUp();
         } catch (IOException e) {
             e.printStackTrace();
         }

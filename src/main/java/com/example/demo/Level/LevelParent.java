@@ -125,7 +125,7 @@ public abstract class LevelParent {
 
 		this.levelView = instantiateLevelView();
 		this.userInputManager = new UserInputManager(user, root, activeActorManager.getUserProjectiles(), null);
-		this.pauseMenuManager = new PauseMenuManager(timeline, scene, userInputManager);
+		this.pauseMenuManager = new PauseMenuManager(timeline, scene, userInputManager, this);
 		this.userInputManager.setPauseMenuManager(pauseMenuManager);
 		this.endGameMenuManager = new EndGameMenuManager(this);
 		this.cleanDestroyedManager = new CleanDestroyedManager(root, activeActorManager);

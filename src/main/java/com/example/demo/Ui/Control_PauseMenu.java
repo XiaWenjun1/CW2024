@@ -1,6 +1,5 @@
 package com.example.demo.Ui;
 
-import com.example.demo.Level.LevelParent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -120,6 +119,7 @@ public class Control_PauseMenu {
             Stage stage = (Stage) returnToMainButton.getScene().getWindow();
             stage.setScene(mainScene);
             stage.show();
+            pauseMenuManager.cleanUp();
         } catch (IOException e) {
             e.printStackTrace();
         }
