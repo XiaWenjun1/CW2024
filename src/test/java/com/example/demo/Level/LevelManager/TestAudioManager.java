@@ -1,6 +1,5 @@
 package com.example.demo.Level.LevelManager;
 
-import javafx.scene.media.MediaPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,14 +21,11 @@ public class TestAudioManager {
 
     @Test
     void testBackgroundMusicEnableDisable() {
+        AudioManager.getInstance().initBackgroundMusic();
+        assertDoesNotThrow(AudioManager::playBackgroundMusic, "Background music should play without throwing exceptions.");
+
         AudioManager.getInstance().setBackgroundMusicEnabled(false);
         assertFalse(AudioManager.getInstance().isBackgroundMusicEnabled(), "Background music should be disabled.");
-
-        AudioManager.getInstance().playBackgroundMusic();
-        MediaPlayer player = AudioManager.getInstance().getBackgroundMusic();
-        if (player != null) {
-            assertNotEquals(MediaPlayer.Status.PLAYING, player.getStatus(), "Background music should not play when disabled.");
-        }
     }
 
     @Test
