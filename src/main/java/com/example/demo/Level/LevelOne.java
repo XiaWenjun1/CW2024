@@ -8,7 +8,6 @@ import com.example.demo.Level.LevelView.LevelView;
 import com.example.demo.Level.LevelView.LevelViewLevelOne;
 import com.example.demo.Actor.Plane.EnemyPlane;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 /**
