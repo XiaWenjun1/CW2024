@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="UML Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;XiaWenjun1&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/XiaWenjun1/CW2024.git&quot;,
+    &quot;accountId&quot;: &quot;515fad28-9994-4471-b466-02091a54463e&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/test/java/com/example/demo/Actor/Plane/TestMutationBoss1.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2pNSDJ8hN70SlPvVFclqMtxY6wm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CW2024.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Class&quot;,
+    &quot;Maven.CW2024 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2024 [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2024 [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2024 [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2024 [test].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2024 [validate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Fakegray/Desktop/DMS/CW2024&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4448276&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.25688073&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.CW2024.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Fakegray\Desktop\DMS\CW2024\src\test\java\com\example\demo\Actor" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.demo.Level" />
+      <recent name="com.example.demo.Actor.Projectile" />
+      <recent name="com.example.demo.Actor.Plane" />
+      <recent name="com.example.demo.Actor.Plane.Boss" />
+      <recent name="com.example.demo.Display" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="CW2024" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.Controller.Main" />
+      <module name="CW2024" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="" />
+      <created>1732604919479</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732604919479</updated>
+      <workItem from="1732604921346" duration="174000" />
+      <workItem from="1732605441832" duration="730000" />
+      <workItem from="1732606334386" duration="3000" />
+      <workItem from="1732606373555" duration="3681000" />
+      <workItem from="1732610105632" duration="13710000" />
+      <workItem from="1732623840641" duration="162000" />
+      <workItem from="1732669329602" duration="424000" />
+      <workItem from="1732673094675" duration="2020000" />
+      <workItem from="1732675999610" duration="133000" />
+      <workItem from="1732676666843" duration="26000" />
+      <workItem from="1732676824311" duration="275000" />
+      <workItem from="1732677180640" duration="4766000" />
+      <workItem from="1732691435746" duration="4634000" />
+      <workItem from="1732696105545" duration="2046000" />
+      <workItem from="1732698381406" duration="2259000" />
+      <workItem from="1732700671403" duration="3058000" />
+      <workItem from="1732777982687" duration="857000" />
+      <workItem from="1732779139586" duration="7360000" />
+      <workItem from="1732786810423" duration="778000" />
+      <workItem from="1732842506747" duration="2061000" />
+      <workItem from="1732856129279" duration="1131000" />
+      <workItem from="1732870534743" duration="9764000" />
+      <workItem from="1732928299369" duration="8000" />
+      <workItem from="1732928312030" duration="9796000" />
+      <workItem from="1732948465992" duration="13000" />
+      <workItem from="1732957032086" duration="1337000" />
+      <workItem from="1732959665942" duration="6365000" />
+      <workItem from="1732977602077" duration="270000" />
+      <workItem from="1733014000638" duration="4828000" />
+      <workItem from="1733019463338" duration="4288000" />
+      <workItem from="1733024774873" duration="618000" />
+      <workItem from="1733052938313" duration="7264000" />
+      <workItem from="1733065368121" duration="49000" />
+      <workItem from="1733105018213" duration="11410000" />
+      <workItem from="1733124727225" duration="18238000" />
+      <workItem from="1733144896777" duration="15009000" />
+      <workItem from="1733209508660" duration="2478000" />
+      <workItem from="1733212323697" duration="125000" />
+      <workItem from="1733216979595" duration="831000" />
+      <workItem from="1733224197577" duration="6185000" />
+      <workItem from="1733231185447" duration="385000" />
+      <workItem from="1733234418902" duration="202000" />
+      <workItem from="1733235159896" duration="1643000" />
+      <workItem from="1733236837538" duration="79000" />
+      <workItem from="1733236937876" duration="184000" />
+      <workItem from="1733237488495" duration="58000" />
+      <workItem from="1733237562035" duration="207000" />
+      <workItem from="1733237777633" duration="2723000" />
+      <workItem from="1733241570995" duration="810000" />
+      <workItem from="1733277760705" duration="133000" />
+      <workItem from="1733278573886" duration="140000" />
+      <workItem from="1733281410915" duration="1000" />
+      <workItem from="1733282783167" duration="136000" />
+      <workItem from="1733291750106" duration="3160000" />
+      <workItem from="1733294943672" duration="32000" />
+      <workItem from="1733298030177" duration="734000" />
+      <workItem from="1733305977495" duration="1905000" />
+      <workItem from="1733308022673" duration="175000" />
+      <workItem from="1733313449954" duration="2347000" />
+      <workItem from="1733327057659" duration="192000" />
+      <workItem from="1733327460298" duration="64000" />
+      <workItem from="1733397859714" duration="11188000" />
+      <workItem from="1733412234944" duration="3547000" />
+      <workItem from="1733416045475" duration="602000" />
+      <workItem from="1733448943285" duration="13008000" />
+      <workItem from="1733468251655" duration="21757000" />
+      <workItem from="1733548210655" duration="6300000" />
+      <workItem from="1733556719090" duration="312000" />
+      <workItem from="1733557896764" duration="246000" />
+      <workItem from="1733566442503" duration="418000" />
+      <workItem from="1733567048999" duration="522000" />
+      <workItem from="1733572423219" duration="1890000" />
+      <workItem from="1733577325163" duration="2368000" />
+      <workItem from="1733583806093" duration="1137000" />
+      <workItem from="1733584974881" duration="51000" />
+      <workItem from="1733585144895" duration="308000" />
+      <workItem from="1733622211048" duration="4789000" />
+      <workItem from="1733627287033" duration="788000" />
+      <workItem from="1733634379541" duration="26847000" />
+      <workItem from="1733672054752" duration="1191000" />
+      <workItem from="1733710787817" duration="15453000" />
+      <workItem from="1733729791276" duration="21763000" />
+      <workItem from="1733766583908" duration="30000" />
+      <workItem from="1733797635863" duration="6797000" />
+      <workItem from="1733813803298" duration="52000" />
+      <workItem from="1733813908214" duration="8000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

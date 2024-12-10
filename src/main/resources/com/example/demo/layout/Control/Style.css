@@ -1,0 +1,19 @@
+/* Set the panel background */
+#controlPane {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+    -fx-padding: 20px;
+}
+
+/* Set title text style */
+.text-title {
+    -fx-font-size: 50px;
+    -fx-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Control label text style */
+.text-control {
+    -fx-font-size: 18px;
+    -fx-fill: #FFA500;
+    -fx-font-weight: bold;
+}

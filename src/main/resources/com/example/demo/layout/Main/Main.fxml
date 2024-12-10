@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.demo.Ui.Control_Main"
+            stylesheets="@Style.css"
+            prefHeight="1300"
+            prefWidth="750">
+
+    <StackPane fx:id="rootPane">
+        <fx:include fx:id="animationController" source="../Animation/Animation.fxml"/>
+
+        <AnchorPane>
+            <!-- Title -->
+            <Text fx:id="title" text="SKY BATTLE" styleClass="title" AnchorPane.leftAnchor="550" AnchorPane.topAnchor="200"/>
+
+            <!-- Button -->
+            <Button fx:id="startButton" text="START GAME" styleClass="button" AnchorPane.leftAnchor="400" AnchorPane.topAnchor="400"/>
+            <Button fx:id="controlButton" text="CONTROL" styleClass="button" AnchorPane.leftAnchor="800" AnchorPane.topAnchor="400"/>
+            <Button fx:id="settingsButton" text="SETTINGS" styleClass="button" AnchorPane.leftAnchor="620" AnchorPane.topAnchor="450"/>
+            <Button fx:id="startEndLessButton" text="START ENDLESS LEVEL" styleClass="button" AnchorPane.leftAnchor="560" AnchorPane.topAnchor="400"/>
+        </AnchorPane>
+    </StackPane>
+</AnchorPane>
