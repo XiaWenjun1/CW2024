@@ -22,11 +22,6 @@ public class UserPlane extends FighterPlane {
 	private final UserProjectile userProjectile;
 
 	/**
-	 * Flag to determine if the game is paused. If true, certain actions like firing projectiles are disabled.
-	 */
-	private boolean isPaused = false;
-
-	/**
 	 * The image name for the user plane.
 	 */
 	private static final String IMAGE_NAME = "userplane.png";
@@ -110,11 +105,6 @@ public class UserPlane extends FighterPlane {
 	 * Invincibility flag
 	 */
 	private boolean isInvincible = false;
-
-	/**
-	 * Indicates if an animation is in progress.
-	 */
-	private boolean isAnimating = false;
 
 	/**
 	 * Timer for invincibility duration
@@ -281,10 +271,6 @@ public class UserPlane extends FighterPlane {
 	 */
 	@Override
 	public List<ActiveActorDestructible> fireProjectiles() {
-		if (isPaused) {
-			return new ArrayList<>();
-		}
-
 		List<ActiveActorDestructible> projectiles = new ArrayList<>();
 
 		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
@@ -337,11 +323,6 @@ public class UserPlane extends FighterPlane {
 	 * The animation includes rotation, scaling, and fading out.
 	 */
 	public void spiralPortalExit() {
-		if (isAnimating) {
-			return;
-		}
-		isAnimating = true;
-
 		setOpacity(1);
 		setScaleX(1);
 		setScaleY(1);
@@ -357,10 +338,6 @@ public class UserPlane extends FighterPlane {
 		fadeOutTransition.setToValue(0);
 
 		ParallelTransition parallelTransition = new ParallelTransition(rotateTransition, scaleTransition, fadeOutTransition);
-
-		parallelTransition.setOnFinished(event -> {
-			isAnimating = false;
-		});
 
 		parallelTransition.play();
 	}

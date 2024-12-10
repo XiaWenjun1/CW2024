@@ -62,7 +62,7 @@ public class CleanDestroyedManager {
      *
      * @see #cleanObjects(List, List, List, List, Boundary, Boundary, Consumer)
      */
-    public void cleanObj() {
+    public void cleanObjAndProjectile() {
         Boundary RIGHT_BOUNDARY = Boundary.createRightBoundary();
         Boundary LEFT_BOUNDARY = Boundary.createLeftBoundary();
 

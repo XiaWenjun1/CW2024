@@ -105,6 +105,8 @@ public class EndGameMenuManager {
             Scene endGameScene = new Scene(endGameRoot);
 
             endGameStage.setScene(endGameScene);
+            endGameStage.setResizable(false);
+            endGameStage.setTitle("Sky Battle");
             endGameStage.show();
 
             if (currentStage != null) {

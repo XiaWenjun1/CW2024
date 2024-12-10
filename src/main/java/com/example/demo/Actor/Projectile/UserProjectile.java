@@ -49,7 +49,6 @@ public class UserProjectile extends Projectile {
 	public UserProjectile(double initialXPos, double initialYPos, int imageWidth, int imageHeight) {
 		super("userfire_level1.png", imageWidth, imageHeight, initialXPos, initialYPos);
 		this.imageView = new ImageView();
-		this.imageView.setPreserveRatio(true);
 		updateProjectileState();
 		setHitboxSize(PROPERTIES[powerLevel - 1].hitboxWidth, PROPERTIES[powerLevel - 1].hitboxHeight);
 		getHitbox().toFront();

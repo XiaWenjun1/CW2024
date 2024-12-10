@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/demo/Controller/TestMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/demo/Level/LevelManager/TestAudioManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/demo/Level/LevelManager/TestAudioManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/Boss/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/Boss/Boss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/UserPlane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/UserPlane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Projectile/UserProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Projectile/UserProjectile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +70,7 @@
     &quot;Maven.CW2024 [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.CW2024 [compile].executor&quot;: &quot;Run&quot;,
     &quot;Maven.CW2024 [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2024 [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.CW2024 [test].executor&quot;: &quot;Run&quot;,
     &quot;Maven.CW2024 [validate].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -203,6 +211,9 @@
       <workItem from="1733634379541" duration="26847000" />
       <workItem from="1733672054752" duration="1191000" />
       <workItem from="1733710787817" duration="15453000" />
+      <workItem from="1733729791276" duration="21763000" />
+      <workItem from="1733766583908" duration="30000" />
+      <workItem from="1733797635863" duration="6797000" />
     </task>
     <servers />
   </component>

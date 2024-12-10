@@ -172,7 +172,7 @@ public abstract class LevelParent {
 		spawnEnemyUnits();
 		handleCollisionsAndPenetration();
 		cleanUpDestroyedActors();
-		updateGameStatus();
+		updateStatus();
 	}
 
 	/**
@@ -249,7 +249,7 @@ public abstract class LevelParent {
 	 */
 	private void cleanUpDestroyedActors() {
 		cleanDestroyedManager.removeAllDestroyedActors();
-		cleanDestroyedManager.cleanObj();
+		cleanDestroyedManager.cleanObjAndProjectile();
 	}
 
 	/**
@@ -301,20 +301,13 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Updates the game status by updating the number of enemies, kill count, and level view.
-	 */
-	private void updateGameStatus() {
-		updateStatus();
-		checkIfGameOver();
-	}
-
-	/**
-	 * Updates the number of enemies, kill count, and the level view display.
+	 * Updates the number of enemies, kill count, and the level view display, and check if game over.
 	 */
 	public void updateStatus() {
 		updateNumberOfEnemies();
 		updateKillCount();
 		updateLevelView();
+		checkIfGameOver();
 	}
 
 	/**

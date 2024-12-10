@@ -56,6 +56,7 @@ public class MutationBoss2 extends Boss {
         this.firePattern = new BossFirePattern(this);
         setImage(MUTATION_BOSS_IMAGE_NAME); // Set the boss's image to the mutated version
         setImageSize(IMAGE_WIDTH, IMAGE_HEIGHT); // Set the size of the boss image
+        setHitboxSize(IMAGE_WIDTH, IMAGE_HEIGHT); // Set the hit box of the boss
     }
 
     /**
