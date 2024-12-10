@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/ActiveActor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/Boss/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/Boss/Boss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/MutationBoss3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/UserPlane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Plane/UserPlane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Projectile/UserProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Actor/Projectile/UserProjectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/CleanDestroyedManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelManager/EndGameMenuManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Level/LevelParent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,6 +203,8 @@
       <workItem from="1733729791276" duration="21763000" />
       <workItem from="1733766583908" duration="30000" />
       <workItem from="1733797635863" duration="6797000" />
+      <workItem from="1733813803298" duration="52000" />
+      <workItem from="1733813908214" duration="8000" />
     </task>
     <servers />
   </component>
