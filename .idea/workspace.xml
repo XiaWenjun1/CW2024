@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4265f097-9b10-4d16-b2a0-54af633d0e54" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,18 +22,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-    &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;XiaWenjun1&quot;
-    }
-    }</component>
-  <component name="GithubPullRequestsUISettings">{
-    &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/XiaWenjun1/CW2024.git&quot;,
-    &quot;accountId&quot;: &quot;515fad28-9994-4471-b466-02091a54463e&quot;
-    }
-    }</component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "XiaWenjun1"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/XiaWenjun1/CW2024.git",
+    "accountId": "515fad28-9994-4471-b466-02091a54463e"
+  }
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/test/java/com/example/demo/Actor/Plane/TestMutationBoss1.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -206,6 +204,7 @@
       <workItem from="1733813803298" duration="52000" />
       <workItem from="1733813908214" duration="8000" />
       <workItem from="1733814916206" duration="250000" />
+      <workItem from="1733969466690" duration="8000" />
     </task>
     <servers />
   </component>
